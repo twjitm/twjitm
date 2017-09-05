@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--自定义拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*.do"/>
+            <bean class="com.twjitm.aop.TwjItmInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 切入点 -->
+
+    <!-- <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+         &lt;!&ndash; spring事物管理 &ndash;&gt;
+         <tx:attributes>
+             <tx:method name="add*"/>
+             <tx:method name="save*"/>
+             <tx:method name="Save*"/>
+             <tx:method name="update*"/>
+             <tx:method name="modify*"/>
+             <tx:method name="edit*"/>
+             <tx:method name="delete*"/>
+             <tx:method name="remove*"/>
+             <tx:method name="change*"/>
+             <tx:method name="repair"/>
+             <tx:method name="deleteAndRepair"/>
+             <tx:method name="login*"/>
+             <tx:method name="get*" propagation="SUPPORTS"/>
+             <tx:method name="find*" propagation="SUPPORTS"/>
+             <tx:method name="load*" propagation="SUPPORTS"/>
+             <tx:method name="search*" propagation="SUPPORTS"/>
+             <tx:method name="datagrid*" propagation="SUPPORTS"/>
+             <tx:method name="*" propagation="SUPPORTS"/>
+         </tx:attributes>
+     </tx:advice>
+
+     <aop:config proxy-target-class="true">
+         <aop:pointcut id="transactionPointcut" expression="execution(* com.twjitm.*.service.Impl.*.*(..))"/>
+         <aop:advisor pointcut-ref="transactionPointcut"
+                      advice-ref="transactionAdvice"/>
+     </aop:config>-->
+</beans>
