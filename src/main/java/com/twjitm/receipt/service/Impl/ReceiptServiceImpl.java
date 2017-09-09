@@ -1,16 +1,21 @@
 package com.twjitm.receipt.service.Impl;
 
+import com.twjitm.mail.MailMessage;
+import com.twjitm.mail.MailServer;
 import com.twjitm.receipt.dao.IReceiptDao;
 import com.twjitm.receipt.entity.Equzlize;
 import com.twjitm.receipt.entity.Receipt;
 import com.twjitm.receipt.enums.ReceiptStateType;
 import com.twjitm.receipt.service.IReceiptService;
+import com.twjitm.user.entity.User;
+import com.twjitm.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,9 +26,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ReceiptServiceImpl implements IReceiptService {
     @Resource
     IReceiptDao receiptDao;
-
-    public void addReceipt(Receipt receipt) {
+     @Resource
+    IUserService userService;
+    public void addReceipt(Receipt receipt,boolean needSendMail) {
         receiptDao.insertReceipt(receipt);
+        MailMessage message=new MailMessage();
+       User user= userService.getUserById((int) receipt.getUid());
+       if(needSendMail){
+           SimpleDateFormat format=new SimpleDateFormat("yy-MM-dd HH:mm:ss am");
+           String datStr = format.format(new Date());
+           message.setContext(user.getUsername()+"在"+datStr+"购买了"+receipt.getMoney()+"元的" +receipt.getRemarke()+"消费记录已计入小助手");
+           List<User> concurrentJoin=userService.getUser();
+           this.sendMailToConcurrentPerson(message,concurrentJoin);
+       }
     }
 
     public void updateReceipt(Receipt receipt) {
@@ -90,44 +105,11 @@ public class ReceiptServiceImpl implements IReceiptService {
     }
 
     /**
-     * @param mailContext
-     * @param mails
+     * @param mailMessage
+     * @param users
      * @return
      */
-    public boolean sendMailToConcurrentPerson(String mailContext, List<String> mails) {
-
-        return false;
-
+    public boolean sendMailToConcurrentPerson(MailMessage mailMessage, List<User> users) {
+        return MailServer.sendMail(mailMessage,users);
     }
-
-    private MimeMessage createMineContext(Session session, String sendMail, String receiveMail) {
-        // 1. 创建一封邮件
-        MimeMessage message = new MimeMessage(session);
-
-        // 2. From: 发件人（昵称有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改昵称）
-        try {
-            message.setFrom(new InternetAddress(sendMail, "某宝网", "UTF-8"));
-
-
-            // 3. To: 收件人（可以增加多个收件人、抄送、密送）
-            message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(receiveMail, "XX用户", "UTF-8"));
-
-            // 4. Subject: 邮件主题（标题有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改标题）
-            message.setSubject("打折钜惠", "UTF-8");
-
-            // 5. Content: 邮件正文（可以使用html标签）（内容有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改发送内容）
-            message.setContent("XX用户你好, 今天全场5折, 快来抢购, 错过今天再等一年。。。", "text/html;charset=UTF-8");
-
-            // 6. 设置发件时间
-            message.setSentDate(new Date());
-
-            // 7. 保存设置
-            message.saveChanges();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return message;
-    }
-
-    ;
 }

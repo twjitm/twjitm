@@ -21,5 +21,4 @@ public interface IReceiptDao {
 
     public Receipt getReceiptByid(int id);
 
-
 }

@@ -18,4 +18,9 @@ public class UserServiceImpl implements IUserService{
     public List<User> getUser() {
         return userDao.getAllUser();
     }
+
+    public User getUserById(int id) {
+
+        return new User();
+    }
 }
