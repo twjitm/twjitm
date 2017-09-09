@@ -18,4 +18,6 @@ public interface IReceiptService {
 
     public List<Equzlize> getEquzlizeList(List<Receipt> reports, List<Long> uIds);
 
+    public boolean sendMailToConcurrentPerson(String mailContext, List<String> mails);
+
 }
