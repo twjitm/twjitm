@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twjitm.dao.ILogsDao">
+    <sql id="column" >
+        id as id ,context as context,
+    </sql>
+    <resultMap id="listLogs" type="com.twjitm.Logs">
+        <result property="id" column="id"></result>
+        <result property="context" column="context"></result>
+    </resultMap>
+    <select id="getAllLogs" resultType="listLogs" >
+        SELECT  <include refid="column"></include> FROM   logs
+    </select>
+<insert id="insertLogs" parameterType="com.twjitm.Logs" >
+    insert INTO  logs(<include refid="column"></include> ) VALUES ()
+</insert>
+
+</mapper>
