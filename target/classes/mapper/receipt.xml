@@ -9,8 +9,6 @@
         <result property="reMark" column="remark"></result>
         <result property="state" column="state"></result>
     </resultMap>
-    <insert id="insertReceipt" parameterType="com.twjitm.receipt.entity.Receipt">
-        INSERT into receipt(<include refid="receiptMap"></include> )
-    </insert>
+
 
 </mapper>

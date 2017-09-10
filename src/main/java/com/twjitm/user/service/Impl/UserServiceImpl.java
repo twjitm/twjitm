@@ -12,10 +12,13 @@ import java.util.List;
  * Created by Administrator on 2017/8/26.
  */
 @Service("userService")
-public class UserServiceImpl implements IUserService{
+public class UserServiceImpl implements IUserService {
     @Resource
     private IUserDao userDao;
+
     public List<User> getUser() {
+        User user = userDao.getUserById(1);
+        System.out.println(user.getEmail() + "-------------------");
         return userDao.getAllUser();
     }
 

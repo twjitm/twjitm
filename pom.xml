@@ -136,11 +136,11 @@
             <version>4.5.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
-        <!--   <dependency>
-               <groupId>javax.mail</groupId>
-               <artifactId>javax.mail</artifactId>
-               <version>1.5.6</version>
-           </dependency>-->
+        <!--  <dependency>
+              <groupId>javax.mail</groupId>
+              <artifactId>javax.mail</artifactId>
+              <version>1.5.6</version>
+          </dependency>-->
 
     </dependencies>
 

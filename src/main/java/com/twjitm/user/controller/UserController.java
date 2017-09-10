@@ -1,11 +1,12 @@
 package com.twjitm.user.controller;
 
 import com.twjitm.user.service.IUserService;
+import com.twjitm.utils.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -16,11 +17,12 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-  public IUserService userService;
+    public IUserService userService;
+
     @RequestMapping("info")
-    public List userInfor(){
+    public List userInfor(HttpServletRequest request) {
         System.out.println("----------------------------------------------");
-        System.out.println( userService.getUser().size());
+        System.out.println("Ip=" + IpUtils.getClientIP(request));
         return userService.getUser();
     }
 }

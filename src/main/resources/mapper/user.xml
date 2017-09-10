@@ -3,19 +3,23 @@
 
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
 <mapper namespace="com.twjitm.user.dao.IUserDao">
-<resultMap id="userList" type="com.twjitm.user.entity.User">
+    <resultMap id="userList" type="com.twjitm.user.entity.User">
 
-<id column="id" property="id" ></id>
-    <id column="email" property="email" ></id>
-    <id column="password" property="password" ></id>
-    <id column="username" property="username" ></id>
-    <id column="role" property="role" ></id>
-    <id column="status" property="status" ></id>
-    <id column="regTime" property="regTime" ></id>
-    <id column="regIp" property="regIp" ></id>
-</resultMap>
+        <id column="id" property="id"></id>
+        <id column="email" property="email"></id>
+        <id column="password" property="password"></id>
+        <id column="username" property="username"></id>
+        <id column="role" property="role"></id>
+        <id column="status" property="status"></id>
+        <id column="regTime" property="regTime"></id>
+        <id column="regIp" property="regIp"></id>
+    </resultMap>
+
     <select id="getAllUser" resultMap="userList">
         SELECT * FROM user
+    </select>
+    <select id="getUserById" resultMap="userList" parameterType="int">
+        SELECT * FROM  user WHERE  id=#{Id}
     </select>
 
 </mapper>
