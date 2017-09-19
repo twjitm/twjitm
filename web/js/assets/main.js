@@ -1,15 +1,15 @@
 //Sliding Effect Control
-head.js("assets/js/skin-select/jquery.cookie.js");
-head.js("assets/js/skin-select/skin-select.js");
+head.js("/js/assets/skin-select/jquery.cookie.js");
+head.js("/js/assets/skin-select/skin-select.js");
 
 //Showing Date
-head.js("assets/js/clock/date.js");
+head.js("/js/assets/clock/date.js");
 
 //Bootstrap
 //head.js("assets/js/bootstrap.js");
 
 //NEWS STICKER
-head.js("assets/js/newsticker/jquery.newsTicker.js", function() {
+head.js("/js/assets/newsticker/jquery.newsTicker.js", function () {
 
     var nt_title = $('#nt-title').newsTicker({
         row_height: 18,
@@ -26,25 +26,25 @@ head.js("assets/js/newsticker/jquery.newsTicker.js", function() {
 
 ////Acordion and Sliding menu
 
-head.js("assets/js/custom/scriptbreaker-multiple-accordion-1.js", function() {
+head.js("/js/assets/custom/scriptbreaker-multiple-accordion-1.js", function () {
 
     $(".topnav").accordionze({
         accordionze: true,
         speed: 500,
-        closedSign: '<img src="assets/img/plus.png">',
-        openedSign: '<img src="assets/img/minus.png">'
+        closedSign: '<img src="/img/assets/plus.png">',
+        openedSign: '<img src="/img/assets/minus.png">'
     });
 
 });
 
 ////Right Sliding menu
 
-head.js("assets/js/slidebars/slidebars.min.js", "http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js", function() {
+head.js("/js/assets/slidebars/slidebars.min.js", "http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js", function () {
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         var mySlidebars = new $.slidebars();
 
-        $('.toggle-left').on('click', function() {
+        $('.toggle-left').on('click', function () {
             mySlidebars.toggle('right');
         });
     });
@@ -53,21 +53,19 @@ head.js("assets/js/slidebars/slidebars.min.js", "http://cdnjs.cloudflare.com/aja
 //-------------------------------------------------------------
 
 //SEARCH MENU
-head.js("assets/js/search/jquery.quicksearch.js", function() {
+head.js("/js/assets/search/jquery.quicksearch.js", function () {
 
     $('input.id_search').quicksearch('#menu-showhide li, .menu-left-nest li');
-   
-   
+
 
 });
 //-------------------------------------------------------------
 
 
-
 //EASY PIE CHART
-head.js("assets/js/gage/jquery.easypiechart.min.js", function() {
+head.js("/js/assets/gage/jquery.easypiechart.min.js", function () {
 
-    $(function() {
+    $(function () {
 
 
         $('.chart').easyPieChart({
@@ -75,12 +73,12 @@ head.js("assets/js/gage/jquery.easypiechart.min.js", function() {
             trackColor: '#ffffff',
             scaleColor: '#ffffff',
             barColor: '#FF0064',
-            onStep: function(from, to, percent) {
+            onStep: function (from, to, percent) {
                 $(this.el).find('.percent').text(Math.round(percent));
             }
         });
         var chart = window.chart = $('.chart').data('easyPieChart');
-        $('.js_update').on('click', function() {
+        $('.js_update').on('click', function () {
             chart.update(Math.random() * 100);
         });
 
@@ -91,12 +89,12 @@ head.js("assets/js/gage/jquery.easypiechart.min.js", function() {
             barColor: '#0085DF',
 
             lineWidth: 8,
-            onStep: function(from, to, percent) {
+            onStep: function (from, to, percent) {
                 $(this.el).find('.percent2').text(Math.round(percent));
             }
         });
         var chart = window.chart = $('.chart2').data('easyPieChart');
-        $('.js_update').on('click', function() {
+        $('.js_update').on('click', function () {
             chart.update(Math.random() * 100);
         });
         $('.overall').easyPieChart({
@@ -106,7 +104,7 @@ head.js("assets/js/gage/jquery.easypiechart.min.js", function() {
             lineWidth: 35,
             lineCap: 'butt',
             barColor: '#FFB900',
-            onStep: function(from, to, percent) {
+            onStep: function (from, to, percent) {
                 $(this.el).find('.percent3').text(Math.round(percent));
             }
         });
@@ -117,7 +115,7 @@ head.js("assets/js/gage/jquery.easypiechart.min.js", function() {
 
 //TOOL TIP
 
-head.js("assets/js/tip/jquery.tooltipster.js", function() {
+head.js("/js/assets/tip/jquery.tooltipster.js", function () {
 
     $('.tooltip-tip-x').tooltipster({
         position: 'right'
@@ -166,13 +164,12 @@ head.js("assets/js/tip/jquery.tooltipster.js", function() {
     //For icon tooltip
 
 
-
 });
 //------------------------------------------------------------- 
 
 //NICE SCROLL
 
-head.js("assets/js/nano/jquery.nanoscroller.js", function() {
+head.js("/js/assets/nano/jquery.nanoscroller.js", function () {
 
     $(".nano").nanoScroller({
         //stop: true 
@@ -188,13 +185,9 @@ head.js("assets/js/nano/jquery.nanoscroller.js", function() {
 //------------------------------------------------------------- 
 
 
-
-
-
-
-//------------------------------------------------------------- 
+//-------------------------------------------------------------
 //PAGE LOADER
-head.js("assets/js/pace/pace.js", function() {
+head.js("/js/assets/pace/pace.js", function () {
 
     paceOptions = {
         ajax: false, // disabled
@@ -210,9 +203,9 @@ head.js("assets/js/pace/pace.js", function() {
 //------------------------------------------------------------- 
 
 //SPARKLINE CHART
-head.js("assets/js/chart/jquery.sparkline.js", function() {
+head.js("/js/assets/chart/jquery.sparkline.js", function () {
 
-    $(function() {
+    $(function () {
         $('.inlinebar').sparkline('html', {
             type: 'bar',
             barWidth: '8px',
@@ -243,8 +236,8 @@ head.js("assets/js/chart/jquery.sparkline.js", function() {
         });
     });
 
-    $(function() {
-        var sparklineLogin = function() {
+    $(function () {
+        var sparklineLogin = function () {
             $('#sparkline').sparkline(
                 [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
                     type: 'line',
@@ -262,7 +255,7 @@ head.js("assets/js/chart/jquery.sparkline.js", function() {
             );
         }
         var sparkResize;
-        $(window).resize(function(e) {
+        $(window).resize(function (e) {
             clearTimeout(sparkResize);
             sparkResize = setTimeout(sparklineLogin, 500);
         });
@@ -275,7 +268,7 @@ head.js("assets/js/chart/jquery.sparkline.js", function() {
 //------------------------------------------------------------- 
 
 //DIGITAL CLOCK
-head.js("assets/js/clock/jquery.clock.js", function() {
+head.js("/js/assets/clock/jquery.clock.js", function () {
 
     //clock
     $('#digital-clock').clock({
@@ -289,12 +282,11 @@ head.js("assets/js/clock/jquery.clock.js", function() {
 
 //------------------------------------------------------------- 
 
-head.js("assets/js/gage/raphael.2.1.0.min.js", "assets/js/gage/justgage.js", function() {
-
+head.js("/js/assets/gage/raphael.2.1.0.min.js", "assets/js/gage/justgage.js", function () {
 
 
     var g1;
-    window.onload = function() {
+    window.onload = function () {
         var g1 = new JustGage({
             id: "g1",
             value: getRandomInt(0, 1000),
@@ -303,15 +295,12 @@ head.js("assets/js/gage/raphael.2.1.0.min.js", "assets/js/gage/justgage.js", fun
             relativeGaugeSize: true,
             gaugeColor: "rgba(0,0,0,0.4)",
             levelColors: "#0DB8DF",
-            labelFontColor : "#ffffff",
+            labelFontColor: "#ffffff",
             titleFontColor: "#ffffff",
-            valueFontColor :"#ffffff",
+            valueFontColor: "#ffffff",
             label: "VISITORS",
             gaugeWidthScale: 0.2,
             donut: true
         });
     };
-
-
-
 });
