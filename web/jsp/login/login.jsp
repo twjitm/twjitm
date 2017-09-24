@@ -19,17 +19,11 @@
 <meta name="author" content="">
 
 <!-- Le styles -->
-<script type="text/javascript" src="<%= path%>/js/assets/jquery.min.js"></script>
-
-<!--  <link rel="stylesheet" href="assets/css/style.css"> -->
-<link rel="stylesheet" href="<%= path%>/css/assets/loader-style.css">
-<link rel="stylesheet" href="<%= path%>/css/assets/bootstrap.css">
-<link rel="stylesheet" href="<%= path%>/css/assets/signin.css">
 
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
-<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<!--<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
 <![endif]-->
 <!-- Fav and touch icons -->
 <link rel="shortcut icon" href="<%= path%>/img/minus.png">
@@ -48,7 +42,7 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div id="logo-login">
-                    <h1>602小助手
+                    <h1>title
                         <span>v1.3</span>
                     </h1>
                 </div>
@@ -103,11 +97,13 @@
 
 
 <!-- MAIN EFFECT -->
+<%--
 <script type="text/javascript" src="<%= path%>/js/assets/preloader.js"></script>
 <script type="text/javascript" src="<%= path%>/js/assets/bootstrap.js"></script>
 <script type="text/javascript" src="<%= path%>/js/assets/app.js"></script>
 <script type="text/javascript" src="<%= path%>/js/assets/load.js"></script>
 <script type="text/javascript" src="<%= path%>/js/assets/main.js"></script>
+--%>
 
 <%--<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>--%>
 <%--<script type="text/javascript" src="<%= path%>/js/assets/map/gmap3.js"></script>--%>

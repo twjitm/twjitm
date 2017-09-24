@@ -46,6 +46,10 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/error/404.html</location>
+    </error-page>
 
     <!-- 防止spring内存溢出监听器，比如quartz -->
     <listener>
@@ -54,4 +58,28 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
+
+    <!-- log4j2-begin -->
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>classpath:bean/log4j2-config.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+    <filter>
+        <filter-name>log4jServletFilter</filter-name>
+        <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>log4jServletFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    <!-- log4j2-end -->
+
+
 </web-app>

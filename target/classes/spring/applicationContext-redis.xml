@@ -4,20 +4,27 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--<context:property-placeholder location="classpath:redis/redis.properties" />-->
 
-    <!--<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">-->
-    <!--<property name="maxIdle" value="${redis.maxIdle}" />-->
-    <!--<property name="testOnBorrow" value="${redis.testOnBorrow}" />-->
-    <!--</bean>-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+    </bean>
 
-    <!--<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"-->
-    <!--p:host-name="${redis.host}"-->
-    <!--p:port="${redis.port}"-->
-    <!--p:password="${redis.pass}"-->
-    <!--p:pool-config-ref="poolConfig"/>-->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!--   p:host-name="${redis.host}"
+           p:port="${redis.port}"
+           p:password="${redis.pass}"
+           p:pool-config-ref="poolConfig"-->
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}"></property>
+        <property name="password" value="${redis.pass}"></property>
+        <property name="timeout" value="${redis.timeout}"></property>
+        <property name="usePool" value="${redis.usepool}"></property>
+        <property name="poolConfig" ref="poolConfig"></property>
+    </bean>
 
-    <!--<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">-->
-    <!--<property name="connectionFactory"   ref="connectionFactory" />-->
-    <!--</bean>- -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>
+
 </beans>

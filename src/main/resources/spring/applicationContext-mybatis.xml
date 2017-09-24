@@ -13,7 +13,7 @@
 
     <context:component-scan base-package="com.twjitm.*.service" use-default-filters="false"/>
     <!-- 配置数据库相关参数properties的属性：${url} -->
-    <context:property-placeholder location="classpath:jdbc/jdbc.properties"/>
+    <!--  <context:property-placeholder location="classpath:jdbc/jdbc.properties"/>-->
     <!--  <context:property-placeholder location="classpath:bean/mybatis-config.xml"/>-->
 
     <!--<bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
