@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
-
+    <mvc:annotation-driven/>
 
     <!--自定义拦截器-->
     <mvc:interceptors>
@@ -19,8 +19,11 @@
         </mvc:interceptor>
     </mvc:interceptors>
     <!-- 切入点 -->
-    <context:property-placeholder location="classpath:jdbc/jdbc.properties,classpath:redis/redis.properties"/>
+    <context:property-placeholder
+            location="classpath:jdbc/jdbc.properties,classpath:redis/redis.properties"/>
     <!--
         <context:property-placeholder location="classpath:redis/redis.properties" ignore-unresolvable="true"/>
     -->
+
+    <bean class="com.twjitm.common.listener.StartupServerListener"></bean>
 </beans>

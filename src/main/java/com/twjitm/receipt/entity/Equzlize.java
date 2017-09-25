@@ -1,5 +1,7 @@
 package com.twjitm.receipt.entity;
 
+import com.twjitm.receipt.service.Impl.ReceiptServiceImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,8 @@ public class Equzlize {
         reports.add(receipt3);
         reports.add(receipt4);
         reports.add(receipt5);
-        //  getEquzlizeList(reports, uIds);
+        ReceiptServiceImpl receiptService = new ReceiptServiceImpl();
+        receiptService.getEquzlizeList(reports, uIds);
     }
 
 
