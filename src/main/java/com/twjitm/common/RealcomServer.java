@@ -59,4 +59,8 @@ public class RealcomServer {
 
     }
 
+    public static void main(String[] args) {
+        RealcomServer.getInItStance().startServer();
+    }
+
 }
