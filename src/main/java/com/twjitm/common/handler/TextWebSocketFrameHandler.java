@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Created by 文江 on 2017/9/25.
+ * 玩家进入房间处理
  */
 public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
