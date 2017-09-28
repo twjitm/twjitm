@@ -5,155 +5,51 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 
-<html>
+<html lang="en" class="no-js">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="<%=path %>/css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=path %>/css/demo.css"/>
+    <!--必要样式-->
+    <link rel="stylesheet" type="text/css" href="<%=path %>/css/component.css"/>
+
+    <script src="<%=path %>/js/html5.js"></script>
+
 </head>
 <body>
-
-</body>
-<meta charset="utf-8">
-<title>602小助手</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<!-- Le styles -->
-
-
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-<!--<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
-<![endif]-->
-<!-- Fav and touch icons -->
-<link rel="shortcut icon" href="<%= path%>/img/minus.png">
-</head>
-
-<body>
-<!-- Preloader -->
-<div id="preloader">
-    <div id="status">&nbsp;</div>
-</div>
-
-<div class="container">
-
-
-    <div class="" id="login-wrapper">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div id="logo-login">
-                    <h1>title
-                        <span>v1.3</span>
-                    </h1>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="account-box">
-                    <form role="form" action="index.html">
-                        <div class="form-group">
-                            <!--a href="#" class="pull-right label-forgot">Forgot email?</a-->
-                            <label for="inputUsernameEmail">用户名</label>
-                            <input type="text" id="inputUsernameEmail" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <!--a href="#" class="pull-right label-forgot">Forgot password?</a-->
-                            <label for="inputPassword">密码</label>
-                            <input type="password" id="inputPassword" class="form-control">
-                        </div>
-                        <div class="checkbox pull-left">
-                            <label>
-                                <input type="checkbox">记住用户名</label>
-                        </div>
-                        <button class="btn btn btn-primary pull-right" type="submit">
-                            登 录
-                        </button>
-                    </form>
-                    <a class="forgotLnk" href="index.html"></a>
-
-                    <div class="row-block">
-                        <div class="row">
-                        </div>
+<div class="container demo-1">
+    <div class="content">
+        <div id="large-header" class="large-header">
+            <canvas id="demo-canvas"></canvas>
+            <div class="logo_box">
+                <h3>欢迎你</h3>
+                <form action="<%=path%>/user/login.do" name="f" method="post">
+                    <div class="input_outer">
+                        <span class="u_user"></span>
+                        <input name="userName" class="text" style="color: #FFFFFF !important" type="text"
+                               autocomplete="off" placeholder="请输入账户">
                     </div>
-                </div>
+                    <div class="input_outer">
+                        <span class="us_uer"></span>
+                        <input name="userPsd" class="text"
+                               style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
+                               autocomplete="off" type="password" placeholder="请输入密码">
+                    </div>
+                    <input type="submit" class="mb2"><a class="act-but submit" href="javascript:;"
+                                                        style="color: #FFFFFF">登录</a></input>
+                </form>
             </div>
         </div>
     </div>
-
-    <p>&nbsp;</p>
-    <div style="text-align:center;margin:0 auto;">
-        <h6 style="color:#fff;">Copyright(C)2014 fjcloudsoft.com All Rights Reserved<br/>
-            唐文江 版权所有 闽IP备07021605号</h6>
-    </div>
-
+</div><!-- /container -->
+<script src="<%=path %>/js/TweenLite.min.js"></script>
+<script src="<%=path %>/js/EasePack.min.js"></script>
+<script src="<%=path %>/js/rAF.js"></script>
+<script src="<%=path %>/js/demo-1.js"></script>
+<div style="text-align:center;">
 </div>
-<div id="test1" class="gmap3"></div>
-
-
-<!--  END OF PAPER WRAP -->
-
-
-<!-- MAIN EFFECT -->
-<%--
-<script type="text/javascript" src="<%= path%>/js/assets/preloader.js"></script>
-<script type="text/javascript" src="<%= path%>/js/assets/bootstrap.js"></script>
-<script type="text/javascript" src="<%= path%>/js/assets/app.js"></script>
-<script type="text/javascript" src="<%= path%>/js/assets/load.js"></script>
-<script type="text/javascript" src="<%= path%>/js/assets/main.js"></script>
---%>
-
-<%--<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>--%>
-<%--<script type="text/javascript" src="<%= path%>/js/assets/map/gmap3.js"></script>--%>
-<script type="text/javascript">
-    $(function () {
-
-        $("#test1").gmap3({
-            marker: {
-                latLng: [-7.782893, 110.402645],
-                options: {
-                    draggable: true
-                },
-                events: {
-                    dragend: function (marker) {
-                        $(this).gmap3({
-                            getaddress: {
-                                latLng: marker.getPosition(),
-                                callback: function (results) {
-                                    var map = $(this).gmap3("get"),
-                                        infowindow = $(this).gmap3({
-                                            get: "infowindow"
-                                        }),
-                                        content = results && results[1] ? results && results[1].formatted_address : "no address";
-                                    if (infowindow) {
-                                        infowindow.open(map, marker);
-                                        infowindow.setContent(content);
-                                    } else {
-                                        $(this).gmap3({
-                                            infowindow: {
-                                                anchor: marker,
-                                                options: {
-                                                    content: content
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            },
-            map: {
-                options: {
-                    zoom: 15
-                }
-            }
-        });
-
-    });
-</script>
 </body>
 </html>

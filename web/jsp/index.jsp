@@ -52,7 +52,7 @@
     <h3>WebSocket 聊天室：</h3>
     <textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
     <br>
-    <input type="text" name="message" style="width: 300px" value="这里是聊天内容">
+    <input type="text" name="message" style="width: 300px" placeholder="输入聊天内容">
     <input type="button" value="发送消息" onclick="send(this.form.message.value)">
     <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空聊天记录">
 </form>
