@@ -1,5 +1,7 @@
 package com.twjitm.user.controller;
 
+import com.twjitm.base.BaseController;
+import com.twjitm.user.entity.User;
 import com.twjitm.user.service.IUserService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
     private static final Logger logger = LogManager.getLogger(UserController.class.getName());
 
     @Autowired
@@ -26,4 +28,16 @@ public class UserController {
         logger.info("进入这个方法了");
         return userService.getUser();
     }
+
+    @RequestMapping("login")
+    public String login(HttpServletRequest request, String userName, String userPsd) {
+        User user = userService.login(userName, userPsd);
+        if (user != null) {
+            setconcurrentUser(user, request);
+            return "/index";
+        }
+        return "/login/login";
+    }
+
+
 }

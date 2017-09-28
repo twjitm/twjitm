@@ -17,13 +17,23 @@ public class UserServiceImpl implements IUserService {
     private IUserDao userDao;
 
     public List<User> getUser() {
-        User user = userDao.getUserById(1);
-        System.out.println(user.getEmail() + "-------------------");
+        // User user = userDao.getUserById(1);
+        //  System.out.println(user.getEmail() + "-------------------");
         return userDao.getAllUser();
     }
 
     public User getUserById(int id) {
 
         return new User();
+    }
+
+    public User login(String name, String psd) {
+        List<User> list = this.getUser();
+        for (User user : list) {
+            if (user.getUsername().equals(name) && user.getPassword().equals(psd)) {
+                return user;
+            }
+        }
+        return null;
     }
 }
