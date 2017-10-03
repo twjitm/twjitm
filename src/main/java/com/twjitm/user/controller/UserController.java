@@ -39,5 +39,10 @@ public class UserController extends BaseController {
         return "/login/login";
     }
 
+    @RequestMapping("register")
+    public String register(HttpServletRequest request, User user) {
+        userService.register(user);
+        return "/login/register";
+    }
 
 }

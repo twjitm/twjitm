@@ -14,4 +14,7 @@ public interface IUserService {
     public User getUserById(int id);
 
     public User login(String name, String psd);
+
+    public void register(User user);
+
 }

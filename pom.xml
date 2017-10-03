@@ -195,6 +195,13 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.15.Final</version>
         </dependency>
+        <!--jstl-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -36,4 +36,16 @@ public class UserServiceImpl implements IUserService {
         }
         return null;
     }
+
+    public void register(User user) {
+        List<User> users = this.getUser();
+        for (User user1 : users) {
+            if (user1.getUsername().equals(user.getUsername())) {
+                return;
+            }
+        }
+        userDao.addUser(user);
+    }
+
+
 }

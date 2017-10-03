@@ -38,8 +38,8 @@
                                style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
                                autocomplete="off" type="password" placeholder="请输入密码">
                     </div>
-                    <input type="submit" class="mb2"><a class="act-but submit" href="javascript:;"
-                                                        style="color: #FFFFFF">登录</a></input>
+                    <a class="act-but submit" href="javascript:;"
+                       style="color: #FFFFFF">登录</a>
                 </form>
             </div>
         </div>
