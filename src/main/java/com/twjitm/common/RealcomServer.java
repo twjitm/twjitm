@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class RealcomServer {
     private static RealcomServer realcomServer;
-    private Logger logger = LogManager.getLogManager().getLogger(RealcomServer.class.getName());
+    private static Logger logger = LogManager.getLogManager().getLogger(RealcomServer.class.getName());
 
     public static RealcomServer getInItStance() {
         if (realcomServer == null) {
@@ -38,7 +38,7 @@ public class RealcomServer {
                     .childHandler(new WebsocketChatServerInitializer())  //(4)
                     .option(ChannelOption.SO_BACKLOG, 128)          // (5)
                     .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-            logger.info("WebsocketChatServer 启动了");
+            System.out.println("WebsocketChatServer 启动了");
 
             // 绑定端口，开始接收进来的连接
             ChannelFuture f = b.bind("127.0.0.1", 8088).sync(); // (7)
@@ -50,7 +50,7 @@ public class RealcomServer {
         } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
-            logger.info("WebsocketChatServer 关闭了");
+            System.out.println("WebsocketChatServer 关闭了");
         }
     }
 
