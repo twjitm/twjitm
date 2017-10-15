@@ -1,7 +1,6 @@
 package com.twjitm.receipt.dao;
 
 import com.twjitm.receipt.entity.Receipt;
-import com.twjitm.receipt.enums.ReceiptStateType;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public interface IReceiptDao {
 
     public void deleteReceipt(int receiptId);
 
-    public List<Receipt> getReceiptByState(ReceiptStateType type);
+    public List<Receipt> getReceiptByState(int state);
 
     public Receipt getReceiptByid(int id);
 

@@ -12,9 +12,6 @@ import com.twjitm.user.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,19 +23,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ReceiptServiceImpl implements IReceiptService {
     @Resource
     IReceiptDao receiptDao;
-     @Resource
+    @Resource
     IUserService userService;
-    public void addReceipt(Receipt receipt,boolean needSendMail) {
+
+    public void addReceipt(Receipt receipt, boolean needSendMail) {
         receiptDao.insertReceipt(receipt);
-        MailMessage message=new MailMessage();
-       User user= userService.getUserById((int) receipt.getUid());
-       if(needSendMail){
-           SimpleDateFormat format=new SimpleDateFormat("yy-MM-dd HH:mm:ss am");
-           String datStr = format.format(new Date());
-           message.setContext(user.getUsername()+"在"+datStr+"购买了"+receipt.getMoney()+"元的" +receipt.getRemarke()+"消费记录已计入小助手");
-           List<User> concurrentJoin=userService.getUser();
-           this.sendMailToConcurrentPerson(message,concurrentJoin);
-       }
+        MailMessage message = new MailMessage();
+        User user = userService.getUserById((int) receipt.getUid());
+        if (needSendMail) {
+            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm:ss am");
+            String datStr = format.format(new Date());
+            message.setContext(user.getUsername() + "在" + datStr + "购买了" + receipt.getMoney() + "元的" + receipt.getRemarke() + "消费记录已计入小助手");
+            List<User> concurrentJoin = userService.getUser();
+            this.sendMailToConcurrentPerson(message, concurrentJoin);
+        }
     }
 
     public void updateReceipt(Receipt receipt) {
@@ -46,7 +44,7 @@ public class ReceiptServiceImpl implements IReceiptService {
     }
 
     public List<Receipt> getReceiptByState(ReceiptStateType type) {
-        return receiptDao.getReceiptByState(type);
+        return receiptDao.getReceiptByState(type.getValue());
     }
 
     public List<Equzlize> getEquzlizeList(List<Receipt> reports, List<Long> uIds) {
@@ -110,6 +108,6 @@ public class ReceiptServiceImpl implements IReceiptService {
      * @return
      */
     public boolean sendMailToConcurrentPerson(MailMessage mailMessage, List<User> users) {
-        return MailServer.sendMail(mailMessage,users);
+        return MailServer.sendMail(mailMessage, users);
     }
 }

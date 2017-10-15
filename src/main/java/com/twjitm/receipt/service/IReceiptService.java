@@ -12,7 +12,7 @@ import java.util.List;
  * Created by 文江 on 2017/9/6.
  */
 public interface IReceiptService {
-    public void addReceipt(Receipt receipt,boolean needSendMail);
+    public void addReceipt(Receipt receipt, boolean needSendMail);
 
     public void updateReceipt(Receipt receipt);
 

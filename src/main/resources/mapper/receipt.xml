@@ -6,11 +6,15 @@
         <result property="uid" column="uid"></result>
         <result property="money" column="money"></result>
         <result property="inTime" column="in_time"></result>
-        <result property="reMark" column="remark"></result>
+        <result property="remarke" column="remark"></result>
         <result property="state" column="state"></result>
     </resultMap>
     <insert id="insertReceipt" parameterType="com.twjitm.receipt.entity.Receipt">
         <!-- INSERT into receipt(<include refid="receiptMap"></include> )-->
     </insert>
+    <select id="getReceiptByState" resultMap="receiptMap" parameterType="int">
+
+        SELECT  * from receipt WHERE  state=#{state}
+    </select>
 
 </mapper>

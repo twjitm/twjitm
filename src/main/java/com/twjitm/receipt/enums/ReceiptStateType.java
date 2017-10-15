@@ -14,4 +14,19 @@ public enum ReceiptStateType {
         this.context = context;
     }
 
+    public short getValue() {
+        return value;
+    }
+
+    public void setValue(short value) {
+        this.value = value;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
 }

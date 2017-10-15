@@ -10,7 +10,7 @@ public class Receipt {
     private long uid;
     private double money;
 
-    private Date inTiem;
+    private Date inTime;
 
     private int Id;
 
@@ -38,12 +38,12 @@ public class Receipt {
         this.uid = uid;
     }
 
-    public Date getInTiem() {
-        return inTiem;
+    public Date getInTime() {
+        return inTime;
     }
 
-    public void setInTiem(Date inTiem) {
-        this.inTiem = inTiem;
+    public void setInTime(Date inTime) {
+        this.inTime = inTime;
     }
 
     public int getId() {
