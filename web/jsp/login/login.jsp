@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="<%=path %>/css/component.css"/>
 
     <script src="<%=path %>/js/html5.js"></script>
-
+    <script src="<%=path%>/js/pager/jquery.min.js"></script>
 </head>
 <body>
 <div class="container demo-1">
@@ -35,16 +35,42 @@
                     <div class="input_outer">
                         <span class="us_uer"></span>
                         <input name="userPsd" class="text"
-                               style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
+                               style="color: #FFFFFF !important; position:absolute; z-index:100;"
                                autocomplete="off" type="password" placeholder="请输入密码">
                     </div>
-                    <a class="act-but submit" href="javascript:;"
+                    <a class="act-but submit" href="javascript:void(0);" onclick="javascript:login()"
                        style="color: #FFFFFF">登录</a>
                 </form>
             </div>
         </div>
     </div>
 </div><!-- /container -->
+<script type="application/javascript">
+    function login() {
+        var userName = $("input[name='userName']").val();
+        var psd = $("input[name='userPsd']").val();
+        console.log("userName=" + userName + "psd=" + psd)
+        if (userName == null || userName == "" || psd == null || psd == "") {
+            return;
+        }
+        $.ajax({
+            type: 'POSt',
+            url: '<%=path%>/user/login.do?userName=' + userName + "&userPsd=" + psd,
+            date: '',
+            success: function (data) {
+                console.log(typeof data)
+                if (data == "success") {
+                    window.location.href = "<%=path%>/user/index.do";
+                } else {
+                    alert("用户名或者密码有问题！");
+                }
+            },
+            error: function (ero) {
+                alert("系统错误！");
+            }
+        })
+    }
+</script>
 <script src="<%=path %>/js/TweenLite.min.js"></script>
 <script src="<%=path %>/js/EasePack.min.js"></script>
 <script src="<%=path %>/js/rAF.js"></script>

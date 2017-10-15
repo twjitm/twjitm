@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -30,19 +31,26 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("login")
+    @ResponseBody
     public String login(HttpServletRequest request, String userName, String userPsd) {
         User user = userService.login(userName, userPsd);
         if (user != null) {
             setconcurrentUser(user, request);
-            return "/index";
+            return "success";
         }
-        return "/login/login";
+        return "error";
     }
 
     @RequestMapping("register")
     public String register(HttpServletRequest request, User user) {
         userService.register(user);
         return "/login/register";
+    }
+
+    @RequestMapping("index")
+    public String index(HttpServletRequest request) {
+        return "/index";
+
     }
 
 }

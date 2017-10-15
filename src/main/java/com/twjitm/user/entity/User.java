@@ -5,7 +5,8 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/8/26.
  */
-public class User {private long id;
+public class User {
+    private long id;
     private String email;
     private String password;
     private String username;
