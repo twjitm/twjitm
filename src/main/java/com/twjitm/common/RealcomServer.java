@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 
 /**
  * Created by 文江 on 2017/9/25.
+ * 长连接服务启动类
+ * 佛祖保佑！永无bug
  */
 
 public class RealcomServer {

@@ -17,4 +17,6 @@ public interface IUserService {
 
     public void register(User user);
 
+    public List<User> getUsersByIds(List<Integer> ids);
+
 }

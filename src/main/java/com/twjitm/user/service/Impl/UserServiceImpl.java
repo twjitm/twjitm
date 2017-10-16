@@ -23,8 +23,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     public User getUserById(int id) {
+        return userDao.getUserById(id);
 
-        return new User();
     }
 
     public User login(String name, String psd) {
@@ -45,6 +45,10 @@ public class UserServiceImpl implements IUserService {
             }
         }
         userDao.addUser(user);
+    }
+
+    public List<User> getUsersByIds(List<Integer> ids) {
+        return null;
     }
 
 

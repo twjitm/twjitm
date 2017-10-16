@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,20 +32,16 @@ public class ReceiptController {
     public String init(HttpServletRequest request) {
         List<Receipt> list = receiptService.getReceiptByState(ReceiptStateType.DOING);
         logger.info("list" + list.size());
-
+        List<User> userList = userService.getUser();
+        request.setAttribute("userList", userList);
         request.setAttribute("list", list);
         return "/receipt/list";
     }
 
     @RequestMapping("equzlize")
     @ResponseBody
-    public List<Equzlize> equzlize(HttpServletRequest request) {
+    public List<Equzlize> equzlize(HttpServletRequest request, List<Integer> uIds, List<Integer> eqIds) {
         List<Receipt> list = receiptService.getReceiptByState(ReceiptStateType.DOING);
-        List<User> users = userService.getUser();
-        List<Long> uIds = new ArrayList<Long>();
-        for (int i = 0; i < users.size(); i++) {
-            uIds.add(users.get(i).getId());
-        }
         List<Equzlize> equzlizes = receiptService.getEquzlizeList(list, uIds);
         request.setAttribute("equzlizes", equzlizes);
         return equzlizes;

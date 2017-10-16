@@ -44,13 +44,17 @@ public class ReceiptServiceImpl implements IReceiptService {
     }
 
     public List<Receipt> getReceiptByState(ReceiptStateType type) {
-        return receiptDao.getReceiptByState(type.getValue());
+        List<Receipt> list = receiptDao.getReceiptByState(type.getValue());
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setUserNameVS(userService.getUserById(list.get(i).getUid()).getUsername());
+        }
+        return list;
     }
 
-    public List<Equzlize> getEquzlizeList(List<Receipt> reports, List<Long> uIds) {
+    public List<Equzlize> getEquzlizeList(List<Receipt> reports, List<Integer> uIds) {
         List<Equzlize> list = new ArrayList<Equzlize>();
         float allNum = 0;
-        Map<Long, Double> anyOne = new HashMap<Long, Double>();
+        Map<Integer, Double> anyOne = new HashMap<Integer, Double>();
         for (Receipt report : reports) {
             allNum += report.getMoney();
             if (anyOne.containsKey(report.getUid())) {
@@ -60,8 +64,8 @@ public class ReceiptServiceImpl implements IReceiptService {
             }
         }
         float avg = allNum / uIds.size();
-        Map<Long, Double> havgMap = new HashMap<Long, Double>();//insert
-        Map<Long, Double> davgMap = new ConcurrentHashMap<Long, Double>();//out
+        Map<Integer, Double> havgMap = new HashMap<Integer, Double>();//insert
+        Map<Integer, Double> davgMap = new ConcurrentHashMap<Integer, Double>();//out
         for (int i = 0; i < uIds.size(); i++) {
             double value = anyOne.get(uIds.get(i)) - avg;
             if (value > 0) {
@@ -70,10 +74,10 @@ public class ReceiptServiceImpl implements IReceiptService {
                 davgMap.put(uIds.get(i), value);
             }
         }
-        for (Map.Entry<Long, Double> entry : havgMap.entrySet()) {
+        for (Map.Entry<Integer, Double> entry : havgMap.entrySet()) {
             double inmoney = entry.getValue();
             double chamoney = entry.getValue();
-            for (Map.Entry<Long, Double> dentry : davgMap.entrySet()) {
+            for (Map.Entry<Integer, Double> dentry : davgMap.entrySet()) {
                 inmoney = inmoney - Math.abs(dentry.getValue());
                 if (inmoney < 0) {
                     Equzlize equzlize = new Equzlize();
@@ -110,4 +114,5 @@ public class ReceiptServiceImpl implements IReceiptService {
     public boolean sendMailToConcurrentPerson(MailMessage mailMessage, List<User> users) {
         return MailServer.sendMail(mailMessage, users);
     }
+
 }

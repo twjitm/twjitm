@@ -7,7 +7,7 @@ import java.util.Date;
  * 日常消费报表
  */
 public class Receipt {
-    private long uid;
+    private int uid;
     private double money;
 
     private Date inTime;
@@ -17,6 +17,8 @@ public class Receipt {
     private String remarke;
 
     private int state;
+    //用户名：前台用
+    private String userNameVS;
 
     public void setUid(int uid) {
         this.uid = uid;
@@ -30,13 +32,10 @@ public class Receipt {
         return money;
     }
 
-    public long getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
 
     public Date getInTime() {
         return inTime;
@@ -68,5 +67,13 @@ public class Receipt {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getUserNameVS() {
+        return userNameVS;
+    }
+
+    public void setUserNameVS(String userNameVS) {
+        this.userNameVS = userNameVS;
     }
 }

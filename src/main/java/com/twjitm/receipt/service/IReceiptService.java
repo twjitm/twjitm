@@ -18,7 +18,7 @@ public interface IReceiptService {
 
     public List<Receipt> getReceiptByState(ReceiptStateType type);
 
-    public List<Equzlize> getEquzlizeList(List<Receipt> reports, List<Long> uIds);
+    public List<Equzlize> getEquzlizeList(List<Receipt> reports, List<Integer> uIds);
 
     public boolean sendMailToConcurrentPerson(MailMessage mailMessage, List<User> users);
 

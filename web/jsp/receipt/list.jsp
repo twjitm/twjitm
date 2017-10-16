@@ -64,7 +64,7 @@
                                 <c:forEach items="${list}" var="lis">
                                     <tr class="odd gradeX">
                                         <td>${lis.id}</td>
-                                        <td>${lis.uid}</td>
+                                        <td>${lis.userNameVS}</td>
                                         <td>${lis.money}元</td>
                                         <td>
                                             <fmt:formatDate type="time" pattern="yyyy-MM-dd"

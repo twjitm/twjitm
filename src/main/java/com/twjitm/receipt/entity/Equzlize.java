@@ -12,8 +12,8 @@ import java.util.List;
 public class Equzlize {
 
     public static void main(String[] args) {
-        List<Long> uIds = new ArrayList<Long>();
-        for (long i = 1; i < 6; i++) {
+        List<Integer> uIds = new ArrayList<Integer>();
+        for (int i = 1; i < 6; i++) {
             uIds.add(i);
         }
         List<Receipt> reports = new ArrayList<Receipt>();
@@ -42,23 +42,23 @@ public class Equzlize {
     }
 
 
-    private Long equxUid;
-    private Long beqUzUid;
+    private Integer equxUid;
+    private Integer beqUzUid;
     private Double muchMoney;
 
-    public Long getEquxUid() {
+    public Integer getEquxUid() {
         return equxUid;
     }
 
-    public void setEquxUid(Long equxUid) {
+    public void setEquxUid(Integer equxUid) {
         this.equxUid = equxUid;
     }
 
-    public Long getBeqUzUid() {
+    public Integer getBeqUzUid() {
         return beqUzUid;
     }
 
-    public void setBeqUzUid(Long beqUzUid) {
+    public void setBeqUzUid(Integer beqUzUid) {
         this.beqUzUid = beqUzUid;
     }
 
