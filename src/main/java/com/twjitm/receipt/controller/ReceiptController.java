@@ -1,5 +1,6 @@
 package com.twjitm.receipt.controller;
 
+import com.twjitm.aop.RequestEndType;
 import com.twjitm.receipt.entity.Equzlize;
 import com.twjitm.receipt.entity.Receipt;
 import com.twjitm.receipt.enums.ReceiptStateType;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,13 +31,22 @@ public class ReceiptController {
     public IUserService userService;
 
     @RequestMapping("init")
-    public String init(HttpServletRequest request) {
+    public ModelAndView init(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        String type = (String) request.getAttribute("reqType");
+
         List<Receipt> list = receiptService.getReceiptByState(ReceiptStateType.DOING);
         logger.info("list" + list.size());
         List<User> userList = userService.getUser();
         request.setAttribute("userList", userList);
         request.setAttribute("list", list);
-        return "/receipt/list";
+        if (type.equals(RequestEndType.DO_REQ)) {
+            modelAndView.setViewName("/receipt/list");
+        } else {
+            modelAndView.addObject("user", userList);
+        }
+        modelAndView.setViewName("");
+        return modelAndView;
     }
 
     @RequestMapping("equzlize")

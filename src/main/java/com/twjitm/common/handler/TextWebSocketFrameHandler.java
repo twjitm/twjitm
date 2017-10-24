@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
  * 玩家进入房间处理
  */
 public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static Logger logger = LogManager.getLogger(TextWebSocketFrameHandler.class.getName());
 

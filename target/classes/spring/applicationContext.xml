@@ -14,7 +14,8 @@
     <!--自定义拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/*.do"/>
+            <mvc:mapping path="/*/*.do"/>
+            <mvc:mapping path="/*/*.json"/>
             <bean class="com.twjitm.aop.TwjItmInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

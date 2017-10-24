@@ -20,8 +20,10 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SpringMVC</servlet-name>
-        <!-- 此处也可以配置成 *.do 形式 -->
+        <!-- 前台发起调用格式此-处也可以配置成 *.do 形式 -->
         <url-pattern>*.do</url-pattern>
+        <!-- 后台发起格式调用-.json格式-->
+        <url-pattern>*.json</url-pattern>
     </servlet-mapping>
     <context-param>
         <param-name>contextConfigLocation</param-name>
