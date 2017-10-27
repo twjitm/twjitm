@@ -8,7 +8,9 @@
 
 
 <%-- <script src="<%=path%>/js/layer/jquery-3.1.1.min.js"></script> --%>
-<script src="<%=path%>/js/newpagejs/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="<%=path%>/js/chat/jquery.min.js"></script>
+<script type="text/javascript" src="<%=path%>/js/chat/chat.js"></script>
+<%--<script src="<%=path%>/js/newpagejs/jquery-1.10.2.js"></script>--%>
 <script src="<%=path%>/js/newpagejs/dataTables/jquery.dataTables.js"></script>
 <script src="<%=path%>/js/newpagejs/dataTables/dataTables.bootstrap.js"></script>
 

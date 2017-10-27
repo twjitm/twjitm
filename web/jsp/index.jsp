@@ -51,7 +51,9 @@
         </script>
         <form onsubmit="return false;">
             <h3>WebSocket 聊天室：</h3>
-            <textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
+            <div><textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
+                <%-- <a onclick="send()">111111111111111</a>--%>
+            </div>
             <br>
             <input type="text" name="message" style="width: 300px" placeholder="输入聊天内容">
             <input type="button" value="发送消息" onclick="send(this.form.message.value)">

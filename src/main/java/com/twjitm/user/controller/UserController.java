@@ -49,7 +49,7 @@ public class UserController extends BaseController {
 
     @RequestMapping("index")
     public String index(HttpServletRequest request) {
-        return "/index";
+        return "/chat";
 
     }
 
