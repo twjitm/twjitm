@@ -6,9 +6,9 @@ import java.util.Stack;
  * Created by 文江 on 2017/9/24.
  */
 public class Test {
-    public static void main(String[] args) {
-        String value1 = "999";
-        String value2 = "999";
+    // public static void main(String[] args) {
+    String value1 = "999";
+    String value2 = "999";
        /* Stack<Integer> stack = new Stack();
         Stack<Integer> stack1 = new Stack();
         for (int i = 0; i < 4; i++) {
@@ -19,8 +19,9 @@ public class Test {
         for (int i = 0; i < stack2.size(); i++) {
             System.out.println(stack2.pop());
         }*/
-        System.out.println(accumulateNum(value1, value2));
-    }
+    //  System.out.println(accumulateNum(value1, value2));
+
+    // }
 
     /**
      * 2个大数相加加法
@@ -131,5 +132,26 @@ public class Test {
         return now;
     }
 
+    public static void main(String[] args) {
+        int a[] = {1, 2, 1, 4, 5, 5};
+        getInverse(a);
+    }
+
+    /**
+     * 求逆序对
+     */
+    public static String getInverse(int[] array) {
+        int startIndex = 0;
+        int endIndex = array.length - 1;
+        int middleIndex = startIndex + endIndex / 2;//小于
+        System.out.println(middleIndex);
+
+        return "";
+    }
+
+
+    public void mroge(int[] array1, int[] array2[]) {
+
+    }
 
 }

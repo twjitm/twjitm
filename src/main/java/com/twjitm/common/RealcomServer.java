@@ -1,6 +1,7 @@
 package com.twjitm.common;
 
 import com.twjitm.common.initalizer.WebsocketChatServerInitializer;
+import com.twjitm.common.service.ControllerService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -58,6 +59,10 @@ public class RealcomServer {
 
     public void stopServer() {
 
+    }
+
+    public void initController() {
+        ControllerService.init();
     }
 
     public static void main(String[] args) {

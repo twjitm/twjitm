@@ -115,6 +115,7 @@
 
 
 <script type="application/javascript">
+    //****************************及时通讯--------------------------------
     var socket;
     if (!window.WebSocket) {
         window.WebSocket = window.MozWebSocket;
@@ -122,33 +123,33 @@
     if (window.WebSocket) {
         socket = new WebSocket("ws://127.0.0.1:8088/ws");
         socket.onmessage = function (event) {
-            var ta = document.getElementById('responseText');
-            ta.value = ta.value + '\n' + event.data
+            // var ta = document.getElementById('responseText');
+            console.log(event.data)
+            var data = event.data;
+            answers(data);
         };
         socket.onopen = function (event) {
-            var ta = document.getElementById('responseText');
-            ta.value = "连接开启!";
+            console.log("连接开启!");
         };
         socket.onclose = function (event) {
-            var ta = document.getElementById('responseText');
-            ta.value = ta.value + "连接被关闭";
+            console.log("连接关闭!");
         };
     } else {
         alert("你的浏览器不支持 WebSocket！");
     }
 
     function send(message) {
-
         if (!window.WebSocket) {
             return;
         }
         if (socket.readyState == WebSocket.OPEN) {
+            //将消息封装成json对象发送出去，服务器判断接受方信息和消息类型，
+            
 
             socket.send(message);
         } else {
             alert("服务器已经宕机，请重启.");
         }
-
         var news = $('#dope').val();
         if (news == '') {
             alert('不能为空');
@@ -160,26 +161,51 @@
                 '<div class="answers"><img class="jiao" src="<%=path%>/img/20170926103645_03_02.jpg">' + news + '</div>' +
                 '</li>';
             $('.newsList').append(str);
-            setTimeout(answers, 1000);
+            /*setTimeout(answers, 1000);*/
             $('.conLeft').find('li.bg').children('.liRight').children('.infor').text(news);
             $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
         }
-
-        //-----------------------回复----------------
-        function answers() {
-            var arr = ["你好", "今天天气很棒啊", "你吃饭了吗？", "我最美我最美", "我是可爱的僵小鱼", "你们忍心这样子对我吗？", "spring天下无敌，实习工资850", "我不管，我最帅，我是你们的小可爱", "段友出征，寸草不生", "一入段子深似海，从此节操是路人", "馒头：嗷", "突然想开个车", "段子界混的最惨的两个狗：拉斯，普拉达。。。"];
-            var aa = Math.floor((Math.random() * arr.length));
-            var answer = '';
-            answer += '<li>' +
-                '<div class="nesHead"><img src="<%=path%>/img/tou.jpg"/></div>' +
-                '<div class="news"><img class="jiao" src="<%=path%>/img/jiao.jpg">' + arr[aa] + '</div>' +
-                '</li>';
-            $('.newsList').append(answer);
-            $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
-        }
-
-
     }
+    //---------------------------消息接受--------------------------------------
+    function answers(json) {
+        var chatMessage = JSON.parse(json);
+        var messageContext = chatMessage.context;// Math.floor((Math.random() * arr.length));
+        var answer = '';
+        answer += '<li>' +
+            '<div class="nesHead"><img src="<%=path%>/img/tou.jpg"/></div>' +
+            '<div class="news"><img class="jiao" src="<%=path%>/img/jiao.jpg">' + messageContext + '</div>' +
+            '</li>';
+        $('.newsList').append(answer);
+        $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
+    }
+    //-------------------------UI操作-------------------------------------------------
+    $('.conLeft li').on('click', function () {
+        $(this).addClass('bg').siblings().removeClass('bg');
+        var intername = $(this).children('.liRight').children('.intername').text();
+        $('.headName').text(intername);
+        $('.newsList').html('');
+    })
+    $('.sendBtn').on('click', function () {
+    });
+
+    $('.ExP').on('mouseenter', function () {
+        $('.emjon').show();
+    })
+    $('.emjon').on('mouseleave', function () {
+        $('.emjon').hide();
+    })
+    $('.emjon li').on('click', function () {
+        var imgSrc = $(this).children('img').attr('src');
+        var str = "";
+        str += '<li>' +
+            '<div class="nesHead"><img src="<%=path%>/img/6.jpg"/></div>' +
+            '<div class="news"><img class="jiao" src="<%=path%>/img/20170926103645_03_02.jpg"><img class="Expr" src="' + imgSrc + '"></div>' +
+            '</li>';
+        $('.newsList').append(str);
+        $('.emjon').hide();
+        $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
+    })
+
 
 </script>
 </body>

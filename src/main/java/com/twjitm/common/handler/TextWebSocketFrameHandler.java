@@ -1,5 +1,9 @@
 package com.twjitm.common.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.twjitm.common.entity.BaseMessage;
+import com.twjitm.common.entity.ChatMessage;
+import com.twjitm.common.entity.OnlineUserPo;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -10,6 +14,9 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 /**
  * Created by 文江 on 2017/9/25.
@@ -19,16 +26,25 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static Logger logger = LogManager.getLogger(TextWebSocketFrameHandler.class.getName());
+    public static Map<Integer, OnlineUserPo> onlineUserMap = new ConcurrentHashMap<Integer, OnlineUserPo>();
 
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
             if (channel != incoming) {
                 channel.writeAndFlush(new TextWebSocketFrame("[" + incoming.remoteAddress() + "]" + msg.text()));
+                ChatMessage chat = new ChatMessage();
+                chat.setContext(msg.text());
+                sendMessagetoClient(channel, chat);
             } else {
                 // channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
             }
         }
+    }
+
+    private void sendMessagetoClient(Channel channel, BaseMessage message) {
+        String json = JSON.toJSONString(message);
+        channel.writeAndFlush(new TextWebSocketFrame(json));
     }
 
     /**
@@ -44,6 +60,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
         for (Channel channel : channels) {
             channel.writeAndFlush(new TextWebSocketFrame("[SERVER] - " + incoming.remoteAddress() + " 加入"));
         }
+        // if (onlineUserMap.containsKey())
         channels.add(ctx.channel());
         logger.info("Client:" + incoming.remoteAddress() + "加入");
     }
