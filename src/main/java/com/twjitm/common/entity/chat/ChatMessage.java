@@ -1,20 +1,26 @@
-package com.twjitm.common.entity;
+package com.twjitm.common.entity.chat;
 
 import com.alibaba.fastjson.JSON;
+import com.twjitm.common.entity.BaseMessage;
 
 /**
  * Created by 文江 on 2017/10/27.
+ * 聊天消息类型
  */
 public class ChatMessage extends BaseMessage {
     private String sendUid;
     private String sendSession;
-    private int messageType;
     private int chatType;
     private String context;
     private String receiveUid;
     private String receiveSession;
     private boolean read;
+    private int chatContextType;
+    private long messageTime;
 
+    public ChatMessage(String json) {
+        super(json);
+    }
 
     public String getSendUid() {
         return sendUid;
@@ -30,14 +36,6 @@ public class ChatMessage extends BaseMessage {
 
     public void setSendSession(String sendSession) {
         this.sendSession = sendSession;
-    }
-
-    public int getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(int messageType) {
-        this.messageType = messageType;
     }
 
     public int getChatType() {
@@ -83,5 +81,21 @@ public class ChatMessage extends BaseMessage {
     public ChatMessage serializable(String json) {
         ChatMessage obj = (ChatMessage) JSON.parse(json);
         return obj;
+    }
+
+    public int getChatContextType() {
+        return chatContextType;
+    }
+
+    public void setChatContextType(int chatContextType) {
+        this.chatContextType = chatContextType;
+    }
+
+    public long getMessageTime() {
+        return messageTime;
+    }
+
+    public void setMessageTime(long messageTime) {
+        this.messageTime = messageTime;
     }
 }

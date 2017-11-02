@@ -1,4 +1,4 @@
-package com.twjitm.common.entity;
+package com.twjitm.common.entity.online;
 
 import com.twjitm.user.entity.User;
 import io.netty.channel.Channel;

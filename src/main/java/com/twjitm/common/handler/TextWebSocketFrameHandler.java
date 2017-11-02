@@ -2,8 +2,9 @@ package com.twjitm.common.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.twjitm.common.entity.BaseMessage;
-import com.twjitm.common.entity.ChatMessage;
-import com.twjitm.common.entity.OnlineUserPo;
+import com.twjitm.common.entity.chat.ChatMessage;
+import com.twjitm.common.entity.online.OnlineUserPo;
+import com.twjitm.common.enums.MessageType;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -30,16 +31,29 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         Channel incoming = ctx.channel();
-        for (Channel channel : channels) {
-            if (channel != incoming) {
-                channel.writeAndFlush(new TextWebSocketFrame("[" + incoming.remoteAddress() + "]" + msg.text()));
-                ChatMessage chat = new ChatMessage();
-                chat.setContext(msg.text());
-                sendMessagetoClient(channel, chat);
-            } else {
-                // channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
-            }
+        dispatcherNetty(incoming, msg.text());
+    }
+
+    private void dispatcherNetty(Channel incoming, String message) {
+        BaseMessage baseMessage = new BaseMessage(message);
+        switch (baseMessage.getMessageType()) {
+            case MessageType.CHAT_MESSAGE:
+                break;
+            case MessageType.PUBLIC_CHART_MESSAGE://聊天
+                ChatMessage chatMessage = (ChatMessage) JSON.parse(message);
+                for (Channel channel : channels) {
+                    if (channel != incoming) {
+                        sendMessagetoClient(channel, chatMessage);
+                    } else {
+                        // channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
+                    }
+                }
+                break;
+            case MessageType.PLAYER_LOGIN_MESSAGE://用户登录
+
+                break;
         }
+
     }
 
     private void sendMessagetoClient(Channel channel, BaseMessage message) {
@@ -57,6 +71,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();
+        dispatcherNetty(incoming, null);
         for (Channel channel : channels) {
             channel.writeAndFlush(new TextWebSocketFrame("[SERVER] - " + incoming.remoteAddress() + " 加入"));
         }

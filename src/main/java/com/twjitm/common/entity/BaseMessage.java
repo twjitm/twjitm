@@ -1,5 +1,7 @@
 package com.twjitm.common.entity;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ public class BaseMessage implements Serializable {
     private long MessageId;
     private long commId;
     private String sendIp;
+    private int messageType;
 
     public long getMessageId() {
         return MessageId;
@@ -32,5 +35,24 @@ public class BaseMessage implements Serializable {
 
     public void setSendIp(String sendIp) {
         this.sendIp = sendIp;
+    }
+
+    public int getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
+    }
+
+    public BaseMessage() {
+    }
+
+    public BaseMessage(String json) {
+        BaseMessage baseMessage= (BaseMessage) JSON.parse(json);
+        this.commId=baseMessage.getCommId();
+        this.MessageId=baseMessage.getMessageId();
+        this.messageType=baseMessage.getMessageType();
+        this.sendIp=baseMessage.getSendIp();
     }
 }
