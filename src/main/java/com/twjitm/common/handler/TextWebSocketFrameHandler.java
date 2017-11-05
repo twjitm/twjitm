@@ -3,6 +3,8 @@ package com.twjitm.common.handler;
 import com.alibaba.fastjson.JSON;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.entity.chat.ChatMessage;
+import com.twjitm.common.entity.chat.GroupChatMessage;
+import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageType;
 import io.netty.channel.Channel;
@@ -27,19 +29,25 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static Logger logger = LogManager.getLogger(TextWebSocketFrameHandler.class.getName());
-    public static Map<Integer, OnlineUserPo> onlineUserMap = new ConcurrentHashMap<Integer, OnlineUserPo>();
+    public volatile static Map<Long, OnlineUserPo> onlineUserMap = new ConcurrentHashMap<Long, OnlineUserPo>();
 
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         Channel incoming = ctx.channel();
         dispatcherNetty(incoming, msg.text());
     }
 
+    /**
+     * 分发器
+     *
+     * @param incoming
+     * @param message
+     */
     private void dispatcherNetty(Channel incoming, String message) {
         BaseMessage baseMessage = new BaseMessage(message);
         switch (baseMessage.getMessageType()) {
             case MessageType.CHAT_MESSAGE:
                 break;
-            case MessageType.PUBLIC_CHART_MESSAGE://聊天
+            case MessageType.PUBLIC_CHART_MESSAGE://单聊：聊天
                 ChatMessage chatMessage = (ChatMessage) JSON.parse(message);
                 for (Channel channel : channels) {
                     if (channel != incoming) {
@@ -49,8 +57,21 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
                     }
                 }
                 break;
+            case MessageType.PRIVATE_CHAT_MESSAGE://群聊
+                GroupChatMessage groupChatMessage = new GroupChatMessage(message);
+                //一步发送消息通知:
+                /**
+                 * step1; 获取群中的所有用户；
+                 * step2; 获取用户对否在线，在线即推送消息，若不在线，发送心跳广播协议
+                 * step3：将消息存储在消息队列中；
+                 */
+                
+                break;
             case MessageType.PLAYER_LOGIN_MESSAGE://用户登录
-
+                OnlineUserBroadCastMessage broadCastMessage = new OnlineUserBroadCastMessage(message);
+                OnlineUserPo po = new OnlineUserPo();
+                po.setChannel(incoming);
+                onlineUserMap.put(broadCastMessage.getUser().getId(), po);
                 break;
         }
 

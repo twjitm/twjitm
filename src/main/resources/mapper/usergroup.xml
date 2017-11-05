@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twjitm.group.dao.UserGroupDao">
+    <resultMap id="BaseResultMap" type="com.twjitm.group.entity.UserGroup">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="INTEGER"/>
+        <result column="groupId" property="groupid" jdbcType="INTEGER"/>
+        <result column="join_time" property="joinTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, uid, groupId, join_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from usergroup
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from usergroup
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.twjitm.group.entity.UserGroup">
+    insert into usergroup (id, uid, groupId, 
+      join_time)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{groupid,jdbcType=INTEGER}, 
+      #{joinTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.twjitm.group.entity.UserGroup">
+        insert into usergroup
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="groupid != null">
+                groupId,
+            </if>
+            <if test="joinTime != null">
+                join_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="groupid != null">
+                #{groupid,jdbcType=INTEGER},
+            </if>
+            <if test="joinTime != null">
+                #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.twjitm.group.entity.UserGroup">
+        update usergroup
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="groupid != null">
+                groupId = #{groupid,jdbcType=INTEGER},
+            </if>
+            <if test="joinTime != null">
+                join_time = #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.twjitm.group.entity.UserGroup">
+    update usergroup
+    set uid = #{uid,jdbcType=INTEGER},
+      groupId = #{groupid,jdbcType=INTEGER},
+      join_time = #{joinTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
