@@ -17,6 +17,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -65,13 +66,20 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
                  * step2; 获取用户对否在线，在线即推送消息，若不在线，发送心跳广播协议
                  * step3：将消息存储在消息队列中；
                  */
-                
+
                 break;
             case MessageType.PLAYER_LOGIN_MESSAGE://用户登录
                 OnlineUserBroadCastMessage broadCastMessage = new OnlineUserBroadCastMessage(message);
                 OnlineUserPo po = new OnlineUserPo();
+                broadCastMessage.setMessageTime(new Date().getTime());
+                broadCastMessage.setOutOrInType(0);
+                //broadCastMessage.setCommId();
                 po.setChannel(incoming);
                 onlineUserMap.put(broadCastMessage.getUser().getId(), po);
+                break;
+
+            default:
+                System.out.println("----------------消息协议号出错了--------------");
                 break;
         }
 
