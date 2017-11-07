@@ -49,10 +49,15 @@ public class BaseMessage implements Serializable {
     }
 
     public BaseMessage(String json) {
-        BaseMessage baseMessage= (BaseMessage) JSON.parse(json);
-        this.commId=baseMessage.getCommId();
-        this.MessageId=baseMessage.getMessageId();
-        this.messageType=baseMessage.getMessageType();
-        this.sendIp=baseMessage.getSendIp();
+        BaseMessage baseMessage = (BaseMessage) JSON.parse(json);
+        this.commId = baseMessage.getCommId();
+        this.MessageId = baseMessage.getMessageId();
+        this.messageType = baseMessage.getMessageType();
+        this.sendIp = baseMessage.getSendIp();
+    }
+
+    public String desSerializable() {
+        String jsonString = JSON.toJSONString(this);
+        return jsonString;
     }
 }

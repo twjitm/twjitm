@@ -144,9 +144,8 @@
         }
         if (socket.readyState == WebSocket.OPEN) {
             //将消息封装成json对象发送出去，服务器判断接受方信息和消息类型，
-            
-
-            socket.send(message);
+            var messageObj = bulidMessageToJson(message);
+            socket.send(messageObj);
         } else {
             alert("服务器已经宕机，请重启.");
         }
@@ -166,6 +165,17 @@
             $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
         }
     }
+
+    /**
+     * 将私聊消息封装成一个json对象
+     * @param messageContext
+     */
+    function bulidMessageToJson(messageContext) {
+        var json = "";
+        json = '{"chatType":' + 2 + ',"context":' + messageContext + ',"messageType":' + 1 + ' }';
+        return json;
+    }
+
     //---------------------------消息接受--------------------------------------
     function answers(json) {
         var chatMessage = JSON.parse(json);

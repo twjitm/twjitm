@@ -44,7 +44,11 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
      * @param message
      */
     private void dispatcherNetty(Channel incoming, String message) {
-        BaseMessage baseMessage = new BaseMessage(message);
+        BaseMessage baseMessage = null;
+        if (message != null) {
+            baseMessage = new BaseMessage(message);
+            ;
+        }
         switch (baseMessage.getMessageType()) {
             case MessageType.CHAT_MESSAGE:
                 break;
@@ -100,7 +104,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();
-        dispatcherNetty(incoming, null);
+        //  dispatcherNetty(incoming, null);
         for (Channel channel : channels) {
             channel.writeAndFlush(new TextWebSocketFrame("[SERVER] - " + incoming.remoteAddress() + " 加入"));
         }

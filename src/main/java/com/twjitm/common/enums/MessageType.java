@@ -13,7 +13,7 @@ public interface MessageType {
      */
     public int PUBLIC_CHART_MESSAGE = 1;
     /**
-     * 群聊
+     * 单聊
      */
     public int PRIVATE_CHAT_MESSAGE = 2;
     /**
