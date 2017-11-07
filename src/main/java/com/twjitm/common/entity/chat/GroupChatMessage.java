@@ -8,6 +8,10 @@ import com.alibaba.fastjson.JSON;
 public class GroupChatMessage extends ChatMessage {
     private long groupId;
 
+    public GroupChatMessage() {
+        
+    }
+
     public GroupChatMessage(String json) {
         super(json);
         GroupChatMessage chatMessage = (GroupChatMessage) JSON.parse(json);

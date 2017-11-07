@@ -166,27 +166,46 @@
         }
     }
 
+    //消息枚举类型
+
+
     /**
      * 将私聊消息封装成一个json对象
      * @param messageContext
      */
     function bulidMessageToJson(messageContext) {
         var json = "";
-        json = '{"chatType":' + 2 + ',"context":' + messageContext + ',"messageType":' + 1 + ' }';
+        json = '{"chatType":"' + 2 + '","context":"' + messageContext + '","messageType":"' + 1 + '" }';
         return json;
     }
 
     //---------------------------消息接受--------------------------------------
     function answers(json) {
         var chatMessage = JSON.parse(json);
-        var messageContext = chatMessage.context;// Math.floor((Math.random() * arr.length));
-        var answer = '';
-        answer += '<li>' +
-            '<div class="nesHead"><img src="<%=path%>/img/tou.jpg"/></div>' +
-            '<div class="news"><img class="jiao" src="<%=path%>/img/jiao.jpg">' + messageContext + '</div>' +
-            '</li>';
-        $('.newsList').append(answer);
-        $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
+        //接受到不同消息后进行处理
+        if (chatMessage.messageType == 1) {//私聊消息枚举
+            var messageContext = chatMessage.context;// Math.floor((Math.random() * arr.length));
+            var answer = '';
+            answer += '<li>' +
+                '<div class="nesHead"><img src="<%=path%>/img/tou.jpg"/></div>' +
+                '<div class="news"><img class="jiao" src="<%=path%>/img/jiao.jpg">' + messageContext + '</div>' +
+                '</li>';
+            $('.newsList').append(answer);
+            $('.RightCont').scrollTop($('.RightCont')[0].scrollHeight);
+        }
+        if (chatMessage.messageType == 2) {//群聊消息枚举
+
+        }
+        if (chatMessage.messageType == 3) {//玩家上线消息
+
+        }
+        if (chatMessage.messageType == 4) {//玩家掉线消息
+
+        }
+        switch (chatMessage.messageType) {
+
+        }
+
     }
     //-------------------------UI操作-------------------------------------------------
     $('.conLeft li').on('click', function () {

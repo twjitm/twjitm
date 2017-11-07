@@ -18,8 +18,22 @@ public class ChatMessage extends BaseMessage {
     private int chatContextType;
     private long messageTime;
 
+    public ChatMessage() {
+
+    }
+
     public ChatMessage(String json) {
         super(json);
+        ChatMessage chatMessage = JSON.parseObject(json, ChatMessage.class);
+        this.sendUid = chatMessage.getSendUid();
+        this.sendSession = chatMessage.getSendSession();
+        this.chatType = chatMessage.getChatType();
+        this.context = chatMessage.getContext();
+        this.receiveUid = chatMessage.getReceiveUid();
+        this.receiveSession = chatMessage.getSendSession();
+        this.read = chatMessage.isRead();
+        this.chatContextType = chatMessage.getChatContextType();
+        this.messageTime = chatMessage.getMessageTime();
     }
 
     public String getSendUid() {

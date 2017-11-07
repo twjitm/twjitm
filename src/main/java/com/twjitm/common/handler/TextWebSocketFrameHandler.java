@@ -6,6 +6,7 @@ import com.twjitm.common.entity.chat.ChatMessage;
 import com.twjitm.common.entity.chat.GroupChatMessage;
 import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
+import com.twjitm.common.enums.MessageComm;
 import com.twjitm.common.enums.MessageType;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -47,13 +48,12 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
         BaseMessage baseMessage = null;
         if (message != null) {
             baseMessage = new BaseMessage(message);
-            ;
         }
         switch (baseMessage.getMessageType()) {
             case MessageType.CHAT_MESSAGE:
                 break;
             case MessageType.PUBLIC_CHART_MESSAGE://单聊：聊天
-                ChatMessage chatMessage = (ChatMessage) JSON.parse(message);
+                ChatMessage chatMessage = new ChatMessage(message);
                 for (Channel channel : channels) {
                     if (channel != incoming) {
                         sendMessagetoClient(channel, chatMessage);
@@ -104,7 +104,12 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();
-        //  dispatcherNetty(incoming, null);
+        OnlineUserBroadCastMessage broadCastMessagePo = new OnlineUserBroadCastMessage();
+        broadCastMessagePo.setCommId(MessageComm.getVaule(MessageComm.PLAYER_LOGIN_MESSAGE));
+        broadCastMessagePo.setOutOrInType(0);
+        broadCastMessagePo.setMessageTime(new Date().getTime());
+        broadCastMessagePo.setMessageType(MessageType.PLAYER_LOGIN_MESSAGE);
+        dispatcherNetty(incoming, JSON.toJSONString(broadCastMessagePo));
         for (Channel channel : channels) {
             channel.writeAndFlush(new TextWebSocketFrame("[SERVER] - " + incoming.remoteAddress() + " 加入"));
         }

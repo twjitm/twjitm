@@ -12,6 +12,10 @@ public class OnlineUserBroadCastMessage extends BaseMessage {
     private int outOrInType;//类型
     private long messageTime;//时间
 
+    public OnlineUserBroadCastMessage() {
+
+    }
+
     public OnlineUserBroadCastMessage(String json) {
         super(json);
         OnlineUserBroadCastMessage broadCastMessage = (OnlineUserBroadCastMessage) JSON.parse(json);

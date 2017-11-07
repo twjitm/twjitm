@@ -16,4 +16,8 @@ public enum MessageComm {
         this.vaule = value;
     }
 
+    public static int getVaule(MessageComm messageComm) {
+        return messageComm.vaule;
+    }
+
 }
