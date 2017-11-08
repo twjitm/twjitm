@@ -1,9 +1,11 @@
 package com.twjitm.common.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.twjitm.common.dispatcher.Dispatcher;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.entity.chat.ChatMessage;
 import com.twjitm.common.entity.chat.GroupChatMessage;
+import com.twjitm.common.entity.chat.ResponseMessage;
 import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageComm;
@@ -29,12 +31,27 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
+    public Dispatcher dispatcher;
+
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static Logger logger = LogManager.getLogger(TextWebSocketFrameHandler.class.getName());
     public volatile static Map<Long, OnlineUserPo> onlineUserMap = new ConcurrentHashMap<Long, OnlineUserPo>();
 
+    /**
+     * 消息到来
+     *
+     * @param ctx
+     * @param msg
+     * @throws Exception
+     */
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         Channel incoming = ctx.channel();
+        String json = msg.text();
+        BaseMessage baseMessage = JSON.parseObject(json, BaseMessage.class);
+        //新分发器
+        dispatcher = new Dispatcher();
+        ResponseMessage responseMessage = (ResponseMessage) dispatcher.dispatcher(baseMessage);
+        //老的分发器（即将废弃）
         dispatcherNetty(incoming, msg.text());
     }
 
