@@ -1,7 +1,7 @@
 package com.twjitm.common.initalizer;
 
 import com.twjitm.common.handler.HttpRequestHandler;
-import com.twjitm.common.handler.TextWebSocketFrameHandler;
+import com.twjitm.common.handler.NettyCommonSessionWebSocketHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -24,7 +24,7 @@ public class WebsocketChatServerInitializer extends ChannelInitializer<SocketCha
         //请求handler
         pipeline.addLast(new HttpRequestHandler("/ws"));
         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
-        pipeline.addLast(new TextWebSocketFrameHandler());
+        pipeline.addLast(new NettyCommonSessionWebSocketHandler());
 
     }
 }

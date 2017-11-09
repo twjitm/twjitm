@@ -9,6 +9,7 @@ import io.netty.channel.Channel;
 public class OnlineUserPo extends User {
     private Channel channel;
     private String sessionId;
+    private long uId;
 
     public Channel getChannel() {
         return channel;
@@ -24,5 +25,13 @@ public class OnlineUserPo extends User {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public long getuId() {
+        return uId;
+    }
+
+    public void setuId(long uId) {
+        this.uId = uId;
     }
 }

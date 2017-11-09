@@ -29,12 +29,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by 文江 on 2017/9/25.
  * 玩家进入房间处理
  */
-public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     public Dispatcher dispatcher;
 
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private static Logger logger = LogManager.getLogger(TextWebSocketFrameHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(NettyCommonSessionWebSocketHandler.class.getName());
     public volatile static Map<Long, OnlineUserPo> onlineUserMap = new ConcurrentHashMap<Long, OnlineUserPo>();
 
     /**

@@ -5,6 +5,7 @@ import com.twjitm.common.logic.handler.BaseHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -23,7 +24,6 @@ public class Dispatcher implements IDispatcher {
         try {
             Object object = method.invoke(baseHandler,
                     message);
-
             BaseMessage baseMessage = null;
             if (object != null) {
                 baseMessage = (BaseMessage) object;
@@ -44,12 +44,25 @@ public class Dispatcher implements IDispatcher {
     }
 
 
-    public void loadPackage() {
-
+    public void loadPackage(String namespace) {
         // getBaseHandler(clzz)
         Class clzz = null;
-        clzz = this.getClass().getClassLoader().getClass();
-        BaseHandler handler = getBaseHandler(clzz);
+        URL url = ClassLoader.getSystemClassLoader().getResource("");
+        String classPath = url.getFile();
+        // classPath.replace(".")
+        String s = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        System.out.println(s);
+        System.out.println(classPath);
+
+        //  BaseHandler handler = getBaseHandler(clzz);
+      /*  Method[] methods = clzz.getClass().getMethods();
+        for (Method method : methods) {
+            MessageCommandAnntation messageCommandAnntation = (MessageCommandAnntation) method.getAnnotation(MessageCommandAnntation.class);
+            if (messageCommandAnntation != null) {
+                BaseHandler handler = null;
+                addHandler(messageCommandAnntation.messagecmd().commId, handler);
+            }
+        }*/
 
 
     }
@@ -59,7 +72,6 @@ public class Dispatcher implements IDispatcher {
             if (classes == null) {
                 return null;
             }
-
             BaseHandler messageHandler = (BaseHandler) classes
                     .newInstance();
             return messageHandler;
@@ -68,5 +80,10 @@ public class Dispatcher implements IDispatcher {
         }
         return null;
 
+    }
+
+    public static void main(String[] args) {
+        Dispatcher dispatcher = new Dispatcher();
+        dispatcher.loadPackage("");
     }
 }

@@ -5,7 +5,7 @@ import com.twjitm.common.entity.chat.ChatMessage;
 
 public class ChatHandlerImpl extends ChatHandler {
     //业务逻辑代码了
-    public BaseMessage chatMessageImp(ChatMessage chatMessage) {
+    public BaseMessage chatMessageImpl(ChatMessage chatMessage) {
         // chatMessage.getSendUid();
         System.out.println("注解分离消息机制----------");
 

@@ -10,10 +10,10 @@ public abstract class ChatHandler extends AbstractBaseHandler {
 
     @MessageCommandAnntation(messagecmd = MessageComm.PRIVATE_CHAT_MESSAGE)
     public BaseMessage chatMessage(ChatMessage chatMessage) {
-
-        return chatMessageImp(chatMessage);
+        System.out.println("实现代理注解方法了");
+        return chatMessageImpl(chatMessage);
     }
 
-    public abstract BaseMessage chatMessageImp(ChatMessage chatMessage);
+    public abstract BaseMessage chatMessageImpl(ChatMessage chatMessage);
 
 }
