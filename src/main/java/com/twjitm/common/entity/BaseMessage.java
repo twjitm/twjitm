@@ -1,15 +1,17 @@
 package com.twjitm.common.entity;
 
 import com.alibaba.fastjson.JSON;
+import io.netty.buffer.ByteBuf;
 
 import java.io.Serializable;
 
 /**
  * Created by 文江 on 2017/10/27.
  */
-public class BaseMessage implements Serializable {
+public abstract class BaseMessage implements IMessage,Serializable {
     private long MessageId;
-    private long commId;
+    private int commId;
+    private long uid;
     private String sendIp;
     private int messageType;
 
@@ -21,11 +23,11 @@ public class BaseMessage implements Serializable {
         MessageId = messageId;
     }
 
-    public long getCommId() {
+    public int getCommId() {
         return commId;
     }
 
-    public void setCommId(long commId) {
+    public void setCommId(int commId) {
         this.commId = commId;
     }
 
@@ -60,4 +62,54 @@ public class BaseMessage implements Serializable {
         String jsonString = JSON.toJSONString(this);
         return jsonString;
     }
+
+    public long getSessionId() {
+        return MessageId;
+    }
+
+    public int getCommandId() {
+        return commId;
+    }
+
+    public int getSerial() {
+        return 0;
+    }
+
+    public long getUserId() {
+        return uid;
+    }
+
+    public void release() {
+
+    }
+
+    public String toAllInfoString() {
+        return null;
+    }
+
+
+
+    public final  void decode(ByteBuf in){
+        decodeHeader(in);
+        decodeBody(in);
+    }
+
+
+    public  final void encode(ByteBuf out){
+        encodeHeader(out);
+        encodeBody(out);
+    }
+    public final  void decodeHeader(ByteBuf in){
+
+    }
+    public final  void encodeHeader(ByteBuf out){
+
+    }
+
+
+
+    public abstract void decodeBody(ByteBuf in);
+    public abstract void encodeBody(ByteBuf out);
+
+
 }

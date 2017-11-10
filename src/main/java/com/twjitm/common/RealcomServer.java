@@ -2,6 +2,7 @@ package com.twjitm.common;
 
 import com.twjitm.common.initalizer.WebsocketChatServerInitializer;
 import com.twjitm.common.service.ControllerService;
+import com.twjitm.common.utils.Globals;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -17,7 +18,15 @@ import java.util.logging.Logger;
  * 长连接服务启动类
  * 佛祖保佑！永无bug
  */
-
+/*
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ @@@@  @@@@@@@@        @@  @@@@@@@  @@        @@  @@@@@@@@@  @@@@@@@@@@
+ @@@@  @@@@@@@@  @@@@  @@@  @@@@@  @@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@@@
+ @@@@  @@@@@@@@  @@@@  @@@@  @@@  @@@@       @@@  @@@@@@@@@  @@@@@@@@@@
+ @@@@  @@@@@@@@  @@@@  @@@@@  @  @@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@@@
+ @@@@        @@        @@@@@@   @@@@@@        @@        @@@        @@@@
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ */
 public class RealcomServer {
     private static RealcomServer realcomServer;
     private static Logger logger = LogManager.getLogManager().getLogger(RealcomServer.class.getName());
@@ -48,6 +57,12 @@ public class RealcomServer {
             // 等待服务器  socket 关闭 。
             // 在这个例子中，这不会发生，但你可以优雅地关闭你的服务器。
             f.channel().closeFuture().sync();
+            try {
+                Globals.init();
+                Globals.startUp();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {

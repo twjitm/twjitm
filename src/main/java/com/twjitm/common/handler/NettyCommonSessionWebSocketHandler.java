@@ -10,12 +10,15 @@ import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageComm;
 import com.twjitm.common.enums.MessageType;
+import com.twjitm.common.manager.LocalManager;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -45,26 +48,29 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
      * @throws Exception
      */
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+        ByteBuf buff = msg.content();
+
         Channel incoming = ctx.channel();
         String json = msg.text();
-        BaseMessage baseMessage = JSON.parseObject(json, BaseMessage.class);
         //新分发器
-        dispatcher = new Dispatcher();
-        ResponseMessage responseMessage = (ResponseMessage) dispatcher.dispatcher(baseMessage);
+        dispatcher= LocalManager.getInstance().get(Dispatcher.class);
+        dispatcher.dispatchAction(incoming,msg.copy().content());
+
         //老的分发器（即将废弃）
         dispatcherNetty(incoming, msg.text());
     }
 
     /**
-     * 分发器
-     *
+     * 最简单的分发器
+     *缺点：臃肿，难用
+     * 有点：代码简单
      * @param incoming
      * @param message
      */
     private void dispatcherNetty(Channel incoming, String message) {
         BaseMessage baseMessage = null;
         if (message != null) {
-            baseMessage = new BaseMessage(message);
+           // baseMessage = new BaseMessage(message);
         }
         switch (baseMessage.getMessageType()) {
             case MessageType.CHAT_MESSAGE:
