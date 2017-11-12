@@ -56,13 +56,16 @@ public class RealcomServer {
             ChannelFuture f = b.bind("127.0.0.1", 8088).sync(); // (7)
             // 等待服务器  socket 关闭 。
             // 在这个例子中，这不会发生，但你可以优雅地关闭你的服务器。
-            f.channel().closeFuture().sync();
             try {
                 Globals.init();
                 Globals.startUp();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
+            f.channel().closeFuture().sync();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {

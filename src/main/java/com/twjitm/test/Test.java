@@ -1,7 +1,5 @@
 package com.twjitm.test;
 
-import com.alibaba.fastjson.JSON;
-
 import java.util.Stack;
 
 /**
@@ -10,12 +8,9 @@ import java.util.Stack;
 public class Test {
 
 
-
-
-
     // public static void main(String[] args) {
-  //  String value1 = "999";
-   // String value2 = "999";
+    //  String value1 = "999";
+    // String value2 = "999";
        /* Stack<Integer> stack = new Stack();
         Stack<Integer> stack1 = new Stack();
         for (int i = 0; i < 4; i++) {
@@ -140,17 +135,20 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        //int a[] = {1, 2, 1, 4, 5, 5};
-       // getInverse(a);
+        create(World.class, World.class);
+    }
 
-        China china=new China();
-        china.setName("china");
-        china.setTopNum(1l);
-        String json = JSON.toJSONString(china);
-        World world = JSON.parseObject(json, World.class);
-        China china1= (China) world;
-        System.out.println(china1.getTopNum());
-
+    public static <X, Y extends X> void create(Class<Y> clazz, Class<X> inter) {
+        Object obj = null;
+        try {
+            obj = clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        System.out.println(obj.getClass().isAssignableFrom(inter));
+        System.out.println(obj.getClass().equals(inter));
     }
 
     /**

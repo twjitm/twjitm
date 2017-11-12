@@ -2,10 +2,12 @@ package com.twjitm.common.dispatcher;
 
 import com.twjitm.common.annotation.MessageCommandAnntation;
 import com.twjitm.common.entity.BaseMessage;
+import com.twjitm.common.factory.MessageRegistryFactory;
 import com.twjitm.common.factory.classload.DynamicGameClassLoader;
 import com.twjitm.common.factory.classload.FileClassLoader;
 import com.twjitm.common.logic.handler.AbstractBaseHandler;
 import com.twjitm.common.logic.handler.BaseHandler;
+import com.twjitm.common.manager.LocalManager;
 import com.twjitm.common.utils.PackageScaner;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -19,25 +21,34 @@ import java.util.Map;
 
 /**
  * 基于注解的分发器
+ * 作者：twjitm
  */
 public class Dispatcher implements IDispatcher {
 
-    public Map<Integer, BaseHandler> handlerMap=new HashMap<Integer, BaseHandler>();;
-    public  String[] filesName;
+    public Map<Integer, BaseHandler> handlerMap = new HashMap<Integer, BaseHandler>();
+    ;
+    public String[] filesName;
 
 
-    public void dispatchAction(Channel channel, ByteBuf byteBuf){
-
+    public void dispatchAction(Channel channel, ByteBuf byteBuf) {
+        MessageRegistryFactory messageRegistryFactory = LocalManager.getInstance().getRegistryFactory();
+        short messageCommId = 2;// byteBuf.getShort(BaseMessage.MESSAGE_COMMID_INDEX);
+        BaseMessage baseMessage = messageRegistryFactory.get(messageCommId);
+        dispatcher(baseMessage);
     }
 
     /**
      * 隔离器
+     *
      * @param message
      * @return
      */
     public BaseMessage dispatcher(BaseMessage message) {
-        long commId = message.getCommId();
+        int commId = message.getCommandId();
         BaseHandler baseHandler = handlerMap.get(commId);
+        if (baseHandler == null) {
+            return null;
+        }
         Method method = baseHandler.getMethod(commId);
         method.setAccessible(true);
         try {
@@ -58,6 +69,7 @@ public class Dispatcher implements IDispatcher {
 
     /**
      * 保存handler
+     *
      * @param commId
      * @param handler
      */
@@ -68,10 +80,11 @@ public class Dispatcher implements IDispatcher {
 
     /**
      * 通过class 文件所在的名称空间，和后缀名加载class上的方法注解
+     *
      * @param namespace
      * @param suffix
      */
-    public void loadPackage(String namespace,String suffix) {
+    public void loadPackage(String namespace, String suffix) {
         if (filesName == null) {
             filesName = PackageScaner.scanNamespaceFiles(namespace, suffix, false, true);
         }
@@ -87,9 +100,7 @@ public class Dispatcher implements IDispatcher {
             File classFile = new File(url.getPath());
             try {
                 FileClassLoader fileClassLoader = new FileClassLoader(classFile);
-
                 byte[] classFileDate = fileClassLoader.getClassData(realClass);
-
                 messageClass = classLoader.findClass(realClass, classFileDate);
                 System.out.println("handler load:" + messageClass.toString());
                 BaseHandler baseHandler = getBaseHandler(messageClass);
@@ -113,6 +124,7 @@ public class Dispatcher implements IDispatcher {
 
     /**
      * 通过class对象获取反射的类
+     *
      * @param classes
      * @return
      */
@@ -133,7 +145,7 @@ public class Dispatcher implements IDispatcher {
 
     public static void main(String[] args) {
         Dispatcher dispatcher = new Dispatcher();
-       // System.out.println(MessageComm.MESSAGE_TRUE_RETURN.commId);
-     dispatcher.loadPackage("com.twjitm.common.logic.chat.Impl",".class");
+        // System.out.println(MessageComm.MESSAGE_TRUE_RETURN.commId);
+        dispatcher.loadPackage("com.twjitm.common.logic.chat.Impl", ".class");
     }
 }

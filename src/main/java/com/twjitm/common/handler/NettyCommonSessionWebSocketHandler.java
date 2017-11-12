@@ -5,7 +5,6 @@ import com.twjitm.common.dispatcher.Dispatcher;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.entity.chat.ChatMessage;
 import com.twjitm.common.entity.chat.GroupChatMessage;
-import com.twjitm.common.entity.chat.ResponseMessage;
 import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageComm;
@@ -18,7 +17,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -34,7 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-    public Dispatcher dispatcher;
 
     public static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static Logger logger = LogManager.getLogger(NettyCommonSessionWebSocketHandler.class.getName());
@@ -53,24 +50,25 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
         Channel incoming = ctx.channel();
         String json = msg.text();
         //新分发器
-        dispatcher= LocalManager.getInstance().get(Dispatcher.class);
-        dispatcher.dispatchAction(incoming,msg.copy().content());
+        Dispatcher dispatcher = LocalManager.getInstance().getDispatcher();
+        dispatcher.dispatchAction(incoming, msg.copy().content());
 
         //老的分发器（即将废弃）
-        dispatcherNetty(incoming, msg.text());
+        //  dispatcherNetty(incoming, msg.text());
     }
 
     /**
      * 最简单的分发器
-     *缺点：臃肿，难用
+     * 缺点：臃肿，难用
      * 有点：代码简单
+     *
      * @param incoming
      * @param message
      */
     private void dispatcherNetty(Channel incoming, String message) {
         BaseMessage baseMessage = null;
         if (message != null) {
-           // baseMessage = new BaseMessage(message);
+            // baseMessage = new BaseMessage(message);
         }
         switch (baseMessage.getMessageType()) {
             case MessageType.CHAT_MESSAGE:
@@ -132,7 +130,7 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
         broadCastMessagePo.setOutOrInType(0);
         broadCastMessagePo.setMessageTime(new Date().getTime());
         broadCastMessagePo.setMessageType(MessageType.PLAYER_LOGIN_MESSAGE);
-        dispatcherNetty(incoming, JSON.toJSONString(broadCastMessagePo));
+        // dispatcherNetty(incoming, JSON.toJSONString(broadCastMessagePo));
         for (Channel channel : channels) {
             channel.writeAndFlush(new TextWebSocketFrame("[SERVER] - " + incoming.remoteAddress() + " 加入"));
         }

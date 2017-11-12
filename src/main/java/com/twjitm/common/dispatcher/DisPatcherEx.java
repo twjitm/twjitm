@@ -1,13 +1,23 @@
 package com.twjitm.common.dispatcher;
 
 
-public class DisPatcherEx extends  Dispatcher{
+import com.twjitm.common.service.ILocalService;
 
- private void reload(){
-     loadPackage("com.twjitm.common.logic.chat.Impl",".class");
- }
- public void startUp(){
-     reload();
- }
+public class DisPatcherEx extends Dispatcher implements ILocalService {
 
+    private void reload() {
+        loadPackage("com.twjitm.common.logic.chat.Impl", ".class");
+    }
+
+    public String getId() {
+        return null;
+    }
+
+    public void startup() throws Exception {
+        reload();
+    }
+
+    public void shutdown() throws Exception {
+
+    }
 }

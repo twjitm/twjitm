@@ -28,7 +28,7 @@ public abstract class AbstractBaseHandler implements BaseHandler {
 
     }
 
-    public Method getMethod(long commid) {
+    public Method getMethod(int commid) {
         return handlerMethods.get(commid);
     }
 

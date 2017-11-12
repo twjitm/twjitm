@@ -8,20 +8,16 @@ import java.io.Serializable;
 /**
  * Created by 文江 on 2017/10/27.
  */
-public abstract class BaseMessage implements IMessage,Serializable {
-    private long MessageId;
+public abstract class BaseMessage implements IMessage, Serializable {
+    //辅助字段
+    public static final short MESSAGE_COMMID_INDEX = 0;
+
+
+    private long sessionId;
     private int commId;
-    private long uid;
     private String sendIp;
     private int messageType;
 
-    public long getMessageId() {
-        return MessageId;
-    }
-
-    public void setMessageId(long messageId) {
-        MessageId = messageId;
-    }
 
     public int getCommId() {
         return commId;
@@ -35,9 +31,6 @@ public abstract class BaseMessage implements IMessage,Serializable {
         return sendIp;
     }
 
-    public void setSendIp(String sendIp) {
-        this.sendIp = sendIp;
-    }
 
     public int getMessageType() {
         return messageType;
@@ -53,9 +46,9 @@ public abstract class BaseMessage implements IMessage,Serializable {
     public BaseMessage(String json) {
         BaseMessage baseMessage = JSON.parseObject(json, BaseMessage.class);
         this.commId = baseMessage.getCommId();
-        this.MessageId = baseMessage.getMessageId();
         this.messageType = baseMessage.getMessageType();
         this.sendIp = baseMessage.getSendIp();
+        this.sessionId = baseMessage.getSessionId();
     }
 
     public String desSerializable() {
@@ -64,7 +57,7 @@ public abstract class BaseMessage implements IMessage,Serializable {
     }
 
     public long getSessionId() {
-        return MessageId;
+        return sessionId;
     }
 
     public int getCommandId() {
@@ -75,12 +68,13 @@ public abstract class BaseMessage implements IMessage,Serializable {
         return 0;
     }
 
-    public long getUserId() {
-        return uid;
-    }
 
     public void release() {
 
+    }
+
+    public long getUserId() {
+        return 0;
     }
 
     public String toAllInfoString() {
@@ -88,27 +82,28 @@ public abstract class BaseMessage implements IMessage,Serializable {
     }
 
 
-
-    public final  void decode(ByteBuf in){
+    public final void decode(ByteBuf in) {
         decodeHeader(in);
         decodeBody(in);
     }
 
 
-    public  final void encode(ByteBuf out){
+    public final void encode(ByteBuf out) {
         encodeHeader(out);
         encodeBody(out);
     }
-    public final  void decodeHeader(ByteBuf in){
+
+    public final void decodeHeader(ByteBuf in) {
 
     }
-    public final  void encodeHeader(ByteBuf out){
+
+    public final void encodeHeader(ByteBuf out) {
 
     }
-
 
 
     public abstract void decodeBody(ByteBuf in);
+
     public abstract void encodeBody(ByteBuf out);
 
 

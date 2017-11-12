@@ -1,12 +1,16 @@
 package com.twjitm.common.entity.chat;
 
 import com.alibaba.fastjson.JSON;
+import com.twjitm.common.annotation.MessageCommandAnntation;
 import com.twjitm.common.entity.BaseMessage;
+import com.twjitm.common.enums.MessageComm;
+import io.netty.buffer.ByteBuf;
 
 /**
  * Created by 文江 on 2017/10/27.
  * 聊天消息类型
  */
+@MessageCommandAnntation(messagecmd = MessageComm.PRIVATE_CHAT_MESSAGE)
 public class ChatMessage extends BaseMessage {
     private String sendUid;
     private String sendSession;
@@ -34,6 +38,14 @@ public class ChatMessage extends BaseMessage {
         this.read = chatMessage.isRead();
         this.chatContextType = chatMessage.getChatContextType();
         this.messageTime = chatMessage.getMessageTime();
+    }
+
+    public void decodeBody(ByteBuf in) {
+
+    }
+
+    public void encodeBody(ByteBuf out) {
+
     }
 
     public String getSendUid() {
