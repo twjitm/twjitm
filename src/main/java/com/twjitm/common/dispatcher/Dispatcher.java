@@ -9,7 +9,6 @@ import com.twjitm.common.logic.handler.AbstractBaseHandler;
 import com.twjitm.common.logic.handler.BaseHandler;
 import com.twjitm.common.manager.LocalManager;
 import com.twjitm.common.utils.PackageScaner;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 
 import java.io.File;
@@ -30,10 +29,11 @@ public class Dispatcher implements IDispatcher {
     public String[] filesName;
 
 
-    public void dispatchAction(Channel channel, ByteBuf byteBuf) {
+    public void dispatchAction(Channel channel, Object byteBuf) {
         MessageRegistryFactory messageRegistryFactory = LocalManager.getInstance().getRegistryFactory();
         short messageCommId = 2;// byteBuf.getShort(BaseMessage.MESSAGE_COMMID_INDEX);
         BaseMessage baseMessage = messageRegistryFactory.get(messageCommId);
+        baseMessage.decodeMessage(byteBuf);
         dispatcher(baseMessage);
     }
 

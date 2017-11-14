@@ -1,6 +1,8 @@
 package com.twjitm.common.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.twjitm.common.enums.MessageComm;
+import com.twjitm.common.proto.BaseMessageProto;
 import io.netty.buffer.ByteBuf;
 
 import java.io.Serializable;
@@ -12,11 +14,16 @@ public abstract class BaseMessage implements IMessage, Serializable {
     //辅助字段
     public static final short MESSAGE_COMMID_INDEX = 0;
 
-
+    //session
     private long sessionId;
+    //协议id
     private int commId;
-    private String sendIp;
-    private int messageType;
+    //总长度
+    private int length;
+    //用户id
+    private long uId;
+    //时间
+    private long timeStamp;
 
 
     public int getCommId() {
@@ -27,28 +34,12 @@ public abstract class BaseMessage implements IMessage, Serializable {
         this.commId = commId;
     }
 
-    public String getSendIp() {
-        return sendIp;
-    }
-
-
-    public int getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(int messageType) {
-        this.messageType = messageType;
-    }
 
     public BaseMessage() {
     }
 
-    public BaseMessage(String json) {
-        BaseMessage baseMessage = JSON.parseObject(json, BaseMessage.class);
-        this.commId = baseMessage.getCommId();
-        this.messageType = baseMessage.getMessageType();
-        this.sendIp = baseMessage.getSendIp();
-        this.sessionId = baseMessage.getSessionId();
+    public BaseMessage(MessageComm comm) {
+        commId = comm.commId;
     }
 
     public String desSerializable() {
@@ -62,6 +53,34 @@ public abstract class BaseMessage implements IMessage, Serializable {
 
     public int getCommandId() {
         return commId;
+    }
+
+    public void setSessionId(long sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public long getuId() {
+        return uId;
+    }
+
+    public void setuId(long uId) {
+        this.uId = uId;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public int getSerial() {
@@ -82,29 +101,36 @@ public abstract class BaseMessage implements IMessage, Serializable {
     }
 
 
-    public final void decode(ByteBuf in) {
+    public final void decodeMessage(Object in) {
         decodeHeader(in);
         decodeBody(in);
     }
 
 
-    public final void encode(ByteBuf out) {
+    public final void encodeMessage(ByteBuf out) {
         encodeHeader(out);
         encodeBody(out);
     }
 
-    public final void decodeHeader(ByteBuf in) {
+    public final void decodeHeader(Object in) {
+        // this.sessionId = in.r
+        BaseMessageProto.BaseMessageProBuf baseMessageProBuf = (BaseMessageProto.BaseMessageProBuf) in;
+        this.sessionId = baseMessageProBuf.getSessionId();
+        this.commId = baseMessageProBuf.getCommid();
+        this.length = baseMessageProBuf.getLength();
+        this.uId = baseMessageProBuf.getUId();
+        this.timeStamp = System.currentTimeMillis();
+    }
+
+    public final void encodeHeader(Object out) {
+        BaseMessageProto.BaseMessageProBuf baseMessageProBuf = (BaseMessageProto.BaseMessageProBuf) out;
 
     }
 
-    public final void encodeHeader(ByteBuf out) {
 
-    }
+    public abstract void decodeBody(Object in);
 
-
-    public abstract void decodeBody(ByteBuf in);
-
-    public abstract void encodeBody(ByteBuf out);
+    public abstract void encodeBody(Object out);
 
 
 }

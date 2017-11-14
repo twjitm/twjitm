@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.twjitm.common.annotation.MessageCommandAnntation;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.enums.MessageComm;
-import io.netty.buffer.ByteBuf;
+import com.twjitm.common.proto.BaseMessageProto;
 
 /**
  * Created by 文江 on 2017/10/27.
@@ -12,57 +12,41 @@ import io.netty.buffer.ByteBuf;
  */
 @MessageCommandAnntation(messagecmd = MessageComm.PRIVATE_CHAT_MESSAGE)
 public class ChatMessage extends BaseMessage {
-    private String sendUid;
-    private String sendSession;
-    private int chatType;
-    private String context;
-    private String receiveUid;
-    private String receiveSession;
-    private boolean read;
-    private int chatContextType;
-    private long messageTime;
+    private int chatType;//文件，语言，文字，等
+    private String context;//消息内容
+    private long receiveUId;//接收者id
+    private String receiveSession;//接收者session
+    private String receiveNickName;//接收者昵称
+    private String receiveHaldUrl;//接收者头像
+    private boolean read;//接收者是否阅读
+
 
     public ChatMessage() {
-
+        super(MessageComm.PRIVATE_CHAT_MESSAGE);
     }
 
     public ChatMessage(String json) {
-        super(json);
         ChatMessage chatMessage = JSON.parseObject(json, ChatMessage.class);
-        this.sendUid = chatMessage.getSendUid();
-        this.sendSession = chatMessage.getSendSession();
         this.chatType = chatMessage.getChatType();
         this.context = chatMessage.getContext();
-        this.receiveUid = chatMessage.getReceiveUid();
-        this.receiveSession = chatMessage.getSendSession();
         this.read = chatMessage.isRead();
-        this.chatContextType = chatMessage.getChatContextType();
-        this.messageTime = chatMessage.getMessageTime();
     }
 
-    public void decodeBody(ByteBuf in) {
+    public void decodeBody(Object in) {
+        BaseMessageProto.ChatMessageProBuf chatMessageProBuf = (BaseMessageProto.ChatMessageProBuf) in;
+        this.chatType = chatMessageProBuf.getChatType();
+        this.context = chatMessageProBuf.getContext();
+        this.receiveUId = chatMessageProBuf.getReceiveUId();
+        this.receiveSession = chatMessageProBuf.getReceiveSession();
+        this.receiveNickName = chatMessageProBuf.getReceiveNickName();
+        this.receiveHaldUrl = chatMessageProBuf.getReceiveHaldUrl();
+        this.read = false;
+    }
+
+    public void encodeBody(Object out) {
 
     }
 
-    public void encodeBody(ByteBuf out) {
-
-    }
-
-    public String getSendUid() {
-        return sendUid;
-    }
-
-    public void setSendUid(String sendUid) {
-        this.sendUid = sendUid;
-    }
-
-    public String getSendSession() {
-        return sendSession;
-    }
-
-    public void setSendSession(String sendSession) {
-        this.sendSession = sendSession;
-    }
 
     public int getChatType() {
         return chatType;
@@ -80,13 +64,6 @@ public class ChatMessage extends BaseMessage {
         this.context = context;
     }
 
-    public String getReceiveUid() {
-        return receiveUid;
-    }
-
-    public void setReceiveUid(String receiveUid) {
-        this.receiveUid = receiveUid;
-    }
 
     public String getReceiveSession() {
         return receiveSession;
@@ -109,19 +86,28 @@ public class ChatMessage extends BaseMessage {
         return obj;
     }
 
-    public int getChatContextType() {
-        return chatContextType;
+
+    public String getReceiveNickName() {
+        return receiveNickName;
     }
 
-    public void setChatContextType(int chatContextType) {
-        this.chatContextType = chatContextType;
+    public void setReceiveNickName(String receiveNickName) {
+        this.receiveNickName = receiveNickName;
     }
 
-    public long getMessageTime() {
-        return messageTime;
+    public String getReceiveHaldUrl() {
+        return receiveHaldUrl;
     }
 
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
+    public void setReceiveHaldUrl(String receiveHaldUrl) {
+        this.receiveHaldUrl = receiveHaldUrl;
+    }
+
+    public long getReceiveUId() {
+        return receiveUId;
+    }
+
+    public void setReceiveUId(long receiveUId) {
+        this.receiveUId = receiveUId;
     }
 }

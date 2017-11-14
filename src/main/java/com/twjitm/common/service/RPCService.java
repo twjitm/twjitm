@@ -14,6 +14,13 @@ public class RPCService implements ILocalService {
 
     }
 
+    /**
+     * 初始化rpc设置
+     */
+    public void init() {
+
+    }
+
     public void shutdown() throws Exception {
 
     }

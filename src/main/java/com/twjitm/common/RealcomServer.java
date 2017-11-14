@@ -63,7 +63,6 @@ public class RealcomServer {
                 e.printStackTrace();
             }
 
-
             f.channel().closeFuture().sync();
 
         } catch (InterruptedException e) {

@@ -3,12 +3,9 @@ package com.twjitm.common.handler;
 import com.alibaba.fastjson.JSON;
 import com.twjitm.common.dispatcher.Dispatcher;
 import com.twjitm.common.entity.BaseMessage;
-import com.twjitm.common.entity.chat.ChatMessage;
-import com.twjitm.common.entity.chat.GroupChatMessage;
 import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageComm;
-import com.twjitm.common.enums.MessageType;
 import com.twjitm.common.manager.LocalManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -45,13 +42,13 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
      * @throws Exception
      */
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-        ByteBuf buff = msg.content();
+        ByteBuf buff = msg.copy().content();
 
         Channel incoming = ctx.channel();
         String json = msg.text();
         //新分发器
         Dispatcher dispatcher = LocalManager.getInstance().getDispatcher();
-        dispatcher.dispatchAction(incoming, msg.copy().content());
+        dispatcher.dispatchAction(incoming, msg);
 
         //老的分发器（即将废弃）
         //  dispatcherNetty(incoming, msg.text());
@@ -62,54 +59,53 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
      * 缺点：臃肿，难用
      * 有点：代码简单
      *
-     * @param incoming
+     * @param
      * @param message
      */
-    private void dispatcherNetty(Channel incoming, String message) {
-        BaseMessage baseMessage = null;
-        if (message != null) {
-            // baseMessage = new BaseMessage(message);
-        }
-        switch (baseMessage.getMessageType()) {
-            case MessageType.CHAT_MESSAGE:
-                break;
-            case MessageType.PUBLIC_CHART_MESSAGE://单聊：聊天
-                ChatMessage chatMessage = new ChatMessage(message);
-                for (Channel channel : channels) {
-                    if (channel != incoming) {
-                        sendMessagetoClient(channel, chatMessage);
-                    } else {
-                        // channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
-                    }
-                }
-                break;
-            case MessageType.PRIVATE_CHAT_MESSAGE://群聊
-                GroupChatMessage groupChatMessage = new GroupChatMessage(message);
-                //一步发送消息通知:
-                /**
-                 * step1; 获取群中的所有用户；
-                 * step2; 获取用户对否在线，在线即推送消息，若不在线，发送心跳广播协议
-                 * step3：将消息存储在消息队列中；
-                 */
-
-                break;
-            case MessageType.PLAYER_LOGIN_MESSAGE://用户登录
-                OnlineUserBroadCastMessage broadCastMessage = new OnlineUserBroadCastMessage(message);
-                OnlineUserPo po = new OnlineUserPo();
-                broadCastMessage.setMessageTime(new Date().getTime());
-                broadCastMessage.setOutOrInType(0);
-                //broadCastMessage.setCommId();
-                po.setChannel(incoming);
-                onlineUserMap.put(broadCastMessage.getUser().getId(), po);
-                break;
-
-            default:
-                System.out.println("----------------消息协议号出错了--------------");
-                break;
-        }
-
-    }
-
+//    private void dispatcherNetty(Channel incoming, String message) {
+//        BaseMessage baseMessage = null;
+//        if (message != null) {
+//            // baseMessage = new BaseMessage(message);
+//        }
+//        switch (baseMessage.getMessageType()) {
+//            case MessageType.CHAT_MESSAGE:
+//                break;
+//            case MessageType.PUBLIC_CHART_MESSAGE://单聊：聊天
+//                ChatMessage chatMessage = new ChatMessage(message);
+//                for (Channel channel : channels) {
+//                    if (channel != incoming) {
+//                        sendMessagetoClient(channel, chatMessage);
+//                    } else {
+//                        // channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
+//                    }
+//                }
+//                break;
+//            case MessageType.PRIVATE_CHAT_MESSAGE://群聊
+//                GroupChatMessage groupChatMessage = new GroupChatMessage(message);
+//                //一步发送消息通知:
+//                /**
+//                 * step1; 获取群中的所有用户；
+//                 * step2; 获取用户对否在线，在线即推送消息，若不在线，发送心跳广播协议
+//                 * step3：将消息存储在消息队列中；
+//                 */
+//
+//                break;
+//            case MessageType.PLAYER_LOGIN_MESSAGE://用户登录
+//                OnlineUserBroadCastMessage broadCastMessage = new OnlineUserBroadCastMessage(message);
+//                OnlineUserPo po = new OnlineUserPo();
+//                broadCastMessage.setMessageTime(new Date().getTime());
+//                broadCastMessage.setOutOrInType(0);
+//                //broadCastMessage.setCommId();
+//                po.setChannel(incoming);
+//                onlineUserMap.put(broadCastMessage.getUser().getId(), po);
+//                break;
+//
+//            default:
+//                System.out.println("----------------消息协议号出错了--------------");
+//                break;
+//        }
+//
+//    }
     private void sendMessagetoClient(Channel channel, BaseMessage message) {
         String json = JSON.toJSONString(message);
         channel.writeAndFlush(new TextWebSocketFrame(json));
@@ -129,7 +125,7 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
         broadCastMessagePo.setCommId(MessageComm.getVaule(MessageComm.PLAYER_LOGIN_MESSAGE));
         broadCastMessagePo.setOutOrInType(0);
         broadCastMessagePo.setMessageTime(new Date().getTime());
-        broadCastMessagePo.setMessageType(MessageType.PLAYER_LOGIN_MESSAGE);
+        // broadCastMessagePo.setMessageType(MessageType.PLAYER_LOGIN_MESSAGE);
         // dispatcherNetty(incoming, JSON.toJSONString(broadCastMessagePo));
         for (Channel channel : channels) {
             channel.writeAndFlush(new TextWebSocketFrame("[SERVER] - " + incoming.remoteAddress() + " 加入"));
