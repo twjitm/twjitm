@@ -9,7 +9,9 @@ public enum MessageComm {
     PRIVATE_CHAT_MESSAGE(2),
     PLAYER_LOGIN_MESSAGE(3),
     PLAYER_LOGOUT_MESSAGE(4),
-    HEART_MESSAGE(5);
+    DELETE_CHAT_MESSAGE(5),
+    HEART_MESSAGE(6);
+
     public int commId;
 
     MessageComm(int commId) {

@@ -3,7 +3,6 @@ package com.twjitm.common.entity.chat;
 import com.twjitm.common.annotation.MessageCommandAnntation;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.enums.MessageComm;
-import io.netty.buffer.ByteBuf;
 
 import java.util.List;
 
@@ -19,10 +18,10 @@ public class BoradCastAllChatMessage extends BaseMessage {
         this.messages = messages;
     }
 
-    public void decodeBody(ByteBuf in) {
+    public void decodeBody(Object in) {
     }
 
-    public void encodeBody(ByteBuf out) {
+    public void encodeBody(Object out) {
 
     }
 }

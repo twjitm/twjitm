@@ -1,14 +1,9 @@
-package com.twjitm.test.netty;
+package com.twjitm.test.netty.client;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
-
-import java.util.logging.SocketHandler;
 
 /**
  * Created by 文江 on 2017/11/13.

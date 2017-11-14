@@ -814,6 +814,21 @@ public final class BaseMessageProto {
          * <code>bool read = 7;</code>
          */
         boolean getRead();
+
+        /**
+         * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+         */
+        boolean hasBaseMessageBuf();
+
+        /**
+         * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+         */
+        BaseMessageProBuf getBaseMessageBuf();
+
+        /**
+         * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+         */
+        BaseMessageProBufOrBuilder getBaseMessageBufOrBuilder();
     }
 
     /**
@@ -901,6 +916,19 @@ public final class BaseMessageProto {
                         case 56: {
 
                             read_ = input.readBool();
+                            break;
+                        }
+                        case 66: {
+                            BaseMessageProBuf.Builder subBuilder = null;
+                            if (baseMessageBuf_ != null) {
+                                subBuilder = baseMessageBuf_.toBuilder();
+                            }
+                            baseMessageBuf_ = input.readMessage(BaseMessageProBuf.parser(), extensionRegistry);
+                            if (subBuilder != null) {
+                                subBuilder.mergeFrom(baseMessageBuf_);
+                                baseMessageBuf_ = subBuilder.buildPartial();
+                            }
+
                             break;
                         }
                     }
@@ -1101,6 +1129,30 @@ public final class BaseMessageProto {
             return read_;
         }
 
+        public static final int BASEMESSAGEBUF_FIELD_NUMBER = 8;
+        private BaseMessageProBuf baseMessageBuf_;
+
+        /**
+         * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+         */
+        public boolean hasBaseMessageBuf() {
+            return baseMessageBuf_ != null;
+        }
+
+        /**
+         * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+         */
+        public BaseMessageProBuf getBaseMessageBuf() {
+            return baseMessageBuf_ == null ? BaseMessageProBuf.getDefaultInstance() : baseMessageBuf_;
+        }
+
+        /**
+         * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+         */
+        public BaseMessageProBufOrBuilder getBaseMessageBufOrBuilder() {
+            return getBaseMessageBuf();
+        }
+
         private byte memoizedIsInitialized = -1;
 
         public final boolean isInitialized() {
@@ -1135,6 +1187,9 @@ public final class BaseMessageProto {
             if (read_ != false) {
                 output.writeBool(7, read_);
             }
+            if (baseMessageBuf_ != null) {
+                output.writeMessage(8, getBaseMessageBuf());
+            }
         }
 
         public int getSerializedSize() {
@@ -1165,6 +1220,10 @@ public final class BaseMessageProto {
             if (read_ != false) {
                 size += com.google.protobuf.CodedOutputStream
                         .computeBoolSize(7, read_);
+            }
+            if (baseMessageBuf_ != null) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeMessageSize(8, getBaseMessageBuf());
             }
             memoizedSize = size;
             return size;
@@ -1197,6 +1256,11 @@ public final class BaseMessageProto {
                     .equals(other.getReceiveHaldUrl());
             result = result && (getRead()
                     == other.getRead());
+            result = result && (hasBaseMessageBuf() == other.hasBaseMessageBuf());
+            if (hasBaseMessageBuf()) {
+                result = result && getBaseMessageBuf()
+                        .equals(other.getBaseMessageBuf());
+            }
             return result;
         }
 
@@ -1223,6 +1287,10 @@ public final class BaseMessageProto {
             hash = (37 * hash) + READ_FIELD_NUMBER;
             hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                     getRead());
+            if (hasBaseMessageBuf()) {
+                hash = (37 * hash) + BASEMESSAGEBUF_FIELD_NUMBER;
+                hash = (53 * hash) + getBaseMessageBuf().hashCode();
+            }
             hash = (29 * hash) + unknownFields.hashCode();
             memoizedHashCode = hash;
             return hash;
@@ -1372,6 +1440,12 @@ public final class BaseMessageProto {
 
                 read_ = false;
 
+                if (baseMessageBufBuilder_ == null) {
+                    baseMessageBuf_ = null;
+                } else {
+                    baseMessageBuf_ = null;
+                    baseMessageBufBuilder_ = null;
+                }
                 return this;
             }
 
@@ -1401,6 +1475,11 @@ public final class BaseMessageProto {
                 result.receiveNickName_ = receiveNickName_;
                 result.receiveHaldUrl_ = receiveHaldUrl_;
                 result.read_ = read_;
+                if (baseMessageBufBuilder_ == null) {
+                    result.baseMessageBuf_ = baseMessageBuf_;
+                } else {
+                    result.baseMessageBuf_ = baseMessageBufBuilder_.build();
+                }
                 onBuilt();
                 return result;
             }
@@ -1472,6 +1551,9 @@ public final class BaseMessageProto {
                 }
                 if (other.getRead() != false) {
                     setRead(other.getRead());
+                }
+                if (other.hasBaseMessageBuf()) {
+                    mergeBaseMessageBuf(other.getBaseMessageBuf());
                 }
                 onChanged();
                 return this;
@@ -1882,6 +1964,132 @@ public final class BaseMessageProto {
                 return this;
             }
 
+            private BaseMessageProBuf baseMessageBuf_ = null;
+            private com.google.protobuf.SingleFieldBuilderV3<
+                    BaseMessageProBuf, BaseMessageProBuf.Builder, BaseMessageProBufOrBuilder> baseMessageBufBuilder_;
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public boolean hasBaseMessageBuf() {
+                return baseMessageBufBuilder_ != null || baseMessageBuf_ != null;
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public BaseMessageProBuf getBaseMessageBuf() {
+                if (baseMessageBufBuilder_ == null) {
+                    return baseMessageBuf_ == null ? BaseMessageProBuf.getDefaultInstance() : baseMessageBuf_;
+                } else {
+                    return baseMessageBufBuilder_.getMessage();
+                }
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public Builder setBaseMessageBuf(BaseMessageProBuf value) {
+                if (baseMessageBufBuilder_ == null) {
+                    if (value == null) {
+                        throw new NullPointerException();
+                    }
+                    baseMessageBuf_ = value;
+                    onChanged();
+                } else {
+                    baseMessageBufBuilder_.setMessage(value);
+                }
+
+                return this;
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public Builder setBaseMessageBuf(
+                    BaseMessageProBuf.Builder builderForValue) {
+                if (baseMessageBufBuilder_ == null) {
+                    baseMessageBuf_ = builderForValue.build();
+                    onChanged();
+                } else {
+                    baseMessageBufBuilder_.setMessage(builderForValue.build());
+                }
+
+                return this;
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public Builder mergeBaseMessageBuf(BaseMessageProBuf value) {
+                if (baseMessageBufBuilder_ == null) {
+                    if (baseMessageBuf_ != null) {
+                        baseMessageBuf_ =
+                                BaseMessageProBuf.newBuilder(baseMessageBuf_).mergeFrom(value).buildPartial();
+                    } else {
+                        baseMessageBuf_ = value;
+                    }
+                    onChanged();
+                } else {
+                    baseMessageBufBuilder_.mergeFrom(value);
+                }
+
+                return this;
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public Builder clearBaseMessageBuf() {
+                if (baseMessageBufBuilder_ == null) {
+                    baseMessageBuf_ = null;
+                    onChanged();
+                } else {
+                    baseMessageBuf_ = null;
+                    baseMessageBufBuilder_ = null;
+                }
+
+                return this;
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public BaseMessageProBuf.Builder getBaseMessageBufBuilder() {
+
+                onChanged();
+                return getBaseMessageBufFieldBuilder().getBuilder();
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            public BaseMessageProBufOrBuilder getBaseMessageBufOrBuilder() {
+                if (baseMessageBufBuilder_ != null) {
+                    return baseMessageBufBuilder_.getMessageOrBuilder();
+                } else {
+                    return baseMessageBuf_ == null ?
+                            BaseMessageProBuf.getDefaultInstance() : baseMessageBuf_;
+                }
+            }
+
+            /**
+             * <code>.BaseMessageProBuf baseMessageBuf = 8;</code>
+             */
+            private com.google.protobuf.SingleFieldBuilderV3<
+                    BaseMessageProBuf, BaseMessageProBuf.Builder, BaseMessageProBufOrBuilder>
+            getBaseMessageBufFieldBuilder() {
+                if (baseMessageBufBuilder_ == null) {
+                    baseMessageBufBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                            BaseMessageProBuf, BaseMessageProBuf.Builder, BaseMessageProBufOrBuilder>(
+                            getBaseMessageBuf(),
+                            getParentForChildren(),
+                            isClean());
+                    baseMessageBuf_ = null;
+                }
+                return baseMessageBufBuilder_;
+            }
+
             public final Builder setUnknownFields(
                     final com.google.protobuf.UnknownFieldSet unknownFields) {
                 return this;
@@ -1955,13 +2163,14 @@ public final class BaseMessageProto {
         String[] descriptorData = {
                 "\n\nchat.proto\"f\n\021BaseMessageProBuf\022\021\n\tses" +
                         "sionId\030\001 \001(\003\022\016\n\006commid\030\002 \001(\005\022\016\n\006length\030\003" +
-                        " \001(\005\022\013\n\003uId\030\004 \001(\003\022\021\n\ttimeStamp\030\005 \001(\003\"\241\001\n" +
+                        " \001(\005\022\013\n\003uId\030\004 \001(\003\022\021\n\ttimeStamp\030\005 \001(\003\"\315\001\n" +
                         "\021ChatMessageProBuf\022\020\n\010chatType\030\001 \001(\005\022\017\n\007" +
                         "context\030\002 \001(\t\022\022\n\nreceiveUId\030\003 \001(\003\022\026\n\016rec" +
                         "eiveSession\030\004 \001(\t\022\027\n\017receiveNickName\030\005 \001" +
                         "(\t\022\026\n\016receiveHaldUrl\030\006 \001(\t\022\014\n\004read\030\007 \001(\010" +
-                        "B+\n\027com.twjitm.common.protoB\020BaseMessage" +
-                        "Protob\006proto3"
+                        "\022*\n\016baseMessageBuf\030\010 \001(\0132\022.BaseMessagePr" +
+                        "oBufB+\n\027com.twjitm.common.protoB\020BaseMes" +
+                        "sageProtob\006proto3"
         };
         com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
                 new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1986,7 +2195,7 @@ public final class BaseMessageProto {
         internal_static_ChatMessageProBuf_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
                 internal_static_ChatMessageProBuf_descriptor,
-                new String[]{"ChatType", "Context", "ReceiveUId", "ReceiveSession", "ReceiveNickName", "ReceiveHaldUrl", "Read",});
+                new String[]{"ChatType", "Context", "ReceiveUId", "ReceiveSession", "ReceiveNickName", "ReceiveHaldUrl", "Read", "BaseMessageBuf",});
     }
 
     // @@protoc_insertion_point(outer_class_scope)

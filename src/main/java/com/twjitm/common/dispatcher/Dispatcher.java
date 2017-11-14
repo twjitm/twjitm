@@ -29,7 +29,7 @@ public class Dispatcher implements IDispatcher {
     public String[] filesName;
 
 
-    public void dispatchAction(Channel channel, Object byteBuf) {
+    public void dispatchAction(Channel channel, Object byteBuf) throws Exception {
         MessageRegistryFactory messageRegistryFactory = LocalManager.getInstance().getRegistryFactory();
         short messageCommId = 2;// byteBuf.getShort(BaseMessage.MESSAGE_COMMID_INDEX);
         BaseMessage baseMessage = messageRegistryFactory.get(messageCommId);

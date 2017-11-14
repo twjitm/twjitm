@@ -1,6 +1,7 @@
 package com.twjitm.common.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.twjitm.common.enums.MessageComm;
 import com.twjitm.common.proto.BaseMessageProto;
 import io.netty.buffer.ByteBuf;
@@ -101,9 +102,9 @@ public abstract class BaseMessage implements IMessage, Serializable {
     }
 
 
-    public final void decodeMessage(Object in) {
-        decodeHeader(in);
+    public final void decodeMessage(Object in) throws Exception {
         decodeBody(in);
+        decodeHeader(in);
     }
 
 
@@ -112,8 +113,7 @@ public abstract class BaseMessage implements IMessage, Serializable {
         encodeBody(out);
     }
 
-    public final void decodeHeader(Object in) {
-        // this.sessionId = in.r
+    public final void decodeHeader(Object in) throws InvalidProtocolBufferException {
         BaseMessageProto.BaseMessageProBuf baseMessageProBuf = (BaseMessageProto.BaseMessageProBuf) in;
         this.sessionId = baseMessageProBuf.getSessionId();
         this.commId = baseMessageProBuf.getCommid();
@@ -128,7 +128,7 @@ public abstract class BaseMessage implements IMessage, Serializable {
     }
 
 
-    public abstract void decodeBody(Object in);
+    public abstract void decodeBody(Object in) throws InvalidProtocolBufferException;
 
     public abstract void encodeBody(Object out);
 

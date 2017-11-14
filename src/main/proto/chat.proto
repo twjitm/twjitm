@@ -1,0 +1,20 @@
+syntax = "proto3";
+option java_package="com.twjitm.common.proto";
+option java_outer_classname="BaseMessageProto";
+message BaseMessageProBuf{
+ int64 sessionId=1;
+ int32 commid=2;
+ int32 length=3;
+ int64 uId=4;
+ int64 timeStamp=5;
+}
+
+message ChatMessageProBuf{
+int32 chatType=1;
+string context=2;
+int64 receiveUId=3;
+string receiveSession=4;
+string receiveNickName=5;
+string receiveHaldUrl=6;
+bool read=7;
+}

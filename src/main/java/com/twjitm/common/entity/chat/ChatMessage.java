@@ -1,6 +1,7 @@
 package com.twjitm.common.entity.chat;
 
 import com.alibaba.fastjson.JSON;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.twjitm.common.annotation.MessageCommandAnntation;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.enums.MessageComm;
@@ -32,8 +33,10 @@ public class ChatMessage extends BaseMessage {
         this.read = chatMessage.isRead();
     }
 
-    public void decodeBody(Object in) {
+    public void decodeBody(Object in) throws InvalidProtocolBufferException {
+
         BaseMessageProto.ChatMessageProBuf chatMessageProBuf = (BaseMessageProto.ChatMessageProBuf) in;
+
         this.chatType = chatMessageProBuf.getChatType();
         this.context = chatMessageProBuf.getContext();
         this.receiveUId = chatMessageProBuf.getReceiveUId();
