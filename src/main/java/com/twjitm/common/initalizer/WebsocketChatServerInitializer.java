@@ -1,5 +1,7 @@
 package com.twjitm.common.initalizer;
 
+import com.twjitm.common.netstack.coder.decode.RepeatNettyMessageDecoder;
+import com.twjitm.common.netstack.coder.encode.RepeatNettyMessageEccoder;
 import com.twjitm.common.proto.BaseMessageProto;
 import com.twjitm.test.netty.server.TestServerHandler;
 import io.netty.channel.ChannelInitializer;
@@ -26,7 +28,8 @@ public class WebsocketChatServerInitializer extends ChannelInitializer<SocketCha
         // pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
         //pipeline.addLast(new NettyCommonSessionWebSocketHandler());
         pipeline.addLast(new ProtobufVarint32FrameDecoder());
-       pipeline.addLast(new ProtobufDecoder(BaseMessageProto.BaseMessageProBuf.getDefaultInstance()));
+        pipeline.addLast(new RepeatNettyMessageDecoder());
+        pipeline.addLast(new RepeatNettyMessageEccoder());
         pipeline.addLast(new TestServerHandler());
     }
 }

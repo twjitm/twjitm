@@ -3,6 +3,7 @@ package com.twjitm.common.entity;
 import com.alibaba.fastjson.JSON;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.twjitm.common.enums.MessageComm;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.proto.BaseMessageProto;
 import io.netty.buffer.ByteBuf;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
 /**
  * Created by 文江 on 2017/10/27.
  */
-public abstract class BaseMessage implements IMessage, Serializable {
+public abstract class BaseMessage extends AbstractNettyNetProtoBufMessage implements IMessage, Serializable {
     //辅助字段
     public static final short MESSAGE_COMMID_INDEX = 0;
 

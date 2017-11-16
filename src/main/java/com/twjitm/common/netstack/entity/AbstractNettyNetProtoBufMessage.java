@@ -9,8 +9,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * Created by 文江 on 2017/11/15.
  * 基础protobuf协议消息
  */
-public abstract class AbstractNetProtoBufMessage extends AbstractNettyNetMessage {
-    public AbstractNetProtoBufMessage() {
+public abstract class AbstractNettyNetProtoBufMessage extends AbstractNettyNetMessage {
+    public AbstractNettyNetProtoBufMessage() {
         setNettyNetMessageHead(new NettyNetMessageHead());
         setNettyNetMessageBody(new NettyNetMessageBody());
     }

@@ -1,6 +1,6 @@
 package com.twjitm.common.netstack.entity.udp;
 
-import com.twjitm.common.netstack.entity.AbstractNetProtoBufMessage;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.netstack.entity.NettyNetProtoBufMessageBody;
 
 import java.net.InetSocketAddress;
@@ -9,7 +9,7 @@ import java.net.InetSocketAddress;
  * Created by jwp on 2017/2/16.
  * 抽象的udp消息
  */
-public abstract class AbstractNettyNetProtoBufUdpMessage extends AbstractNetProtoBufMessage {
+public abstract class AbstractNettyNetProtoBufUdpMessage extends AbstractNettyNetProtoBufMessage {
     /**
      * 发送方
      */

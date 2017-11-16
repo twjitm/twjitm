@@ -21,6 +21,7 @@ public class LocalManager implements ILocalManager {
     //缓存调用
     protected MessageRegistryFactory registryFactory;
     protected Dispatcher dispatcher;
+    protected  LocalSpringBeanManager springBeanManager;
 
     private Map<Class, Object> service;
 
@@ -53,6 +54,8 @@ public class LocalManager implements ILocalManager {
         }
         if (services instanceof Dispatcher) {
             dispatcher = (Dispatcher) services;
+        }if(services instanceof  LocalSpringBeanManager){
+            springBeanManager= (LocalSpringBeanManager) services;
         }
 
     }
@@ -79,5 +82,13 @@ public class LocalManager implements ILocalManager {
 
     public void setDispatcher(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
+    }
+
+    public LocalSpringBeanManager getSpringBeanManager() {
+        return springBeanManager;
+    }
+
+    public void setSpringBeanManager(LocalSpringBeanManager springBeanManager) {
+        this.springBeanManager = springBeanManager;
     }
 }

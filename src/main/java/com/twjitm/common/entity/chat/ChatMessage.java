@@ -6,6 +6,7 @@ import com.twjitm.common.annotation.MessageCommandAnntation;
 import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.enums.MessageComm;
 import com.twjitm.common.proto.BaseMessageProto;
+import io.netty.handler.codec.CodecException;
 
 /**
  * Created by 文江 on 2017/10/27.
@@ -24,6 +25,10 @@ public class ChatMessage extends BaseMessage {
 
     public ChatMessage() {
         super(MessageComm.PRIVATE_CHAT_MESSAGE);
+    }
+
+    public void encodeNetProtoBufMessageBody() throws CodecException, Exception {
+
     }
 
     public ChatMessage(String json) {
