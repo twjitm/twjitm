@@ -2,11 +2,11 @@ package com.twjitm.common.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.twjitm.common.dispatcher.Dispatcher;
-import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageComm;
 import com.twjitm.common.manager.LocalManager;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -106,7 +106,7 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
 //        }
 //
 //    }
-    private void sendMessagetoClient(Channel channel, BaseMessage message) {
+    private void sendMessagetoClient(Channel channel, AbstractNettyNetProtoBufMessage message) {
         String json = JSON.toJSONString(message);
         channel.writeAndFlush(new TextWebSocketFrame(json));
     }
@@ -122,7 +122,7 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();
         OnlineUserBroadCastMessage broadCastMessagePo = new OnlineUserBroadCastMessage();
-        broadCastMessagePo.setCommId(MessageComm.getVaule(MessageComm.PLAYER_LOGIN_MESSAGE));
+       // broadCastMessagePo.setCommId(MessageComm.getVaule(MessageComm.PLAYER_LOGIN_MESSAGE));
         broadCastMessagePo.setOutOrInType(0);
         broadCastMessagePo.setMessageTime(new Date().getTime());
         // broadCastMessagePo.setMessageType(MessageType.PLAYER_LOGIN_MESSAGE);

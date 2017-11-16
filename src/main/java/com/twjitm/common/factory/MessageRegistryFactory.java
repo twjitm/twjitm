@@ -1,8 +1,8 @@
 package com.twjitm.common.factory;
 
 import com.twjitm.common.annotation.MessageCommandAnntation;
-import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.enums.MessageComm;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.utils.PackageScaner;
 
 import java.util.HashMap;
@@ -22,23 +22,23 @@ public class MessageRegistryFactory {
 
     private Map<Integer, MessageComm> messageCommMap = new ConcurrentHashMap<Integer, MessageComm>();
 
-    private Map<Integer, Class<? extends BaseMessage>> messages = new HashMap<Integer, Class<? extends BaseMessage>>();
+    private Map<Integer, Class<? extends AbstractNettyNetProtoBufMessage>> messages = new HashMap<Integer, Class<? extends AbstractNettyNetProtoBufMessage>>();
 
 
     public void putMessages(int key, Class message) {
         messages.put(key, message);
     }
 
-    public BaseMessage get(int commId) {
+    public AbstractNettyNetProtoBufMessage get(int commId) {
         if (commId < 0) {
             throw new RuntimeException();
         }
-        Class<? extends BaseMessage> clzz = messages.get(commId);
+        Class<? extends AbstractNettyNetProtoBufMessage> clzz = messages.get(commId);
         if (clzz == null) {
             return null;
         }
         try {
-            BaseMessage message = clzz.newInstance();
+            AbstractNettyNetProtoBufMessage message = clzz.newInstance();
             //message.setCommId(commId);
             return message;
         } catch (InstantiationException e) {

@@ -1,10 +1,9 @@
 package com.twjitm.common.entity.chat;
 
 import com.alibaba.fastjson.JSON;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.twjitm.common.annotation.MessageCommandAnntation;
-import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.enums.MessageComm;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.proto.BaseMessageProto;
 import io.netty.handler.codec.CodecException;
 
@@ -13,7 +12,7 @@ import io.netty.handler.codec.CodecException;
  * 聊天消息类型
  */
 @MessageCommandAnntation(messagecmd = MessageComm.PRIVATE_CHAT_MESSAGE)
-public class ChatMessage extends BaseMessage {
+public class ChatMessage extends AbstractNettyNetProtoBufMessage {
     private int chatType;//文件，语言，文字，等
     private String context;//消息内容
     private long receiveUId;//接收者id
@@ -24,11 +23,22 @@ public class ChatMessage extends BaseMessage {
 
 
     public ChatMessage() {
-        super(MessageComm.PRIVATE_CHAT_MESSAGE);
+
+    }
+
+    public void release() throws CodecException {
+
     }
 
     public void encodeNetProtoBufMessageBody() throws CodecException, Exception {
 
+    }
+
+    public void decoderNetProtoBufMessageBody() throws CodecException, Exception {
+             byte[] bytes=  getNettyNetMessageBody().getBytes();
+            // BaseMessageProto.ChatMessageProBuf chatMessageProBuf= BaseMessageProto.ChatMessageProBuf.parseFrom(bytes);
+            // this.chatType=chatMessageProBuf.getChatType();
+            //后面添加就行
     }
 
     public ChatMessage(String json) {
@@ -36,23 +46,6 @@ public class ChatMessage extends BaseMessage {
         this.chatType = chatMessage.getChatType();
         this.context = chatMessage.getContext();
         this.read = chatMessage.isRead();
-    }
-
-    public void decodeBody(Object in) throws InvalidProtocolBufferException {
-
-        BaseMessageProto.ChatMessageProBuf chatMessageProBuf = (BaseMessageProto.ChatMessageProBuf) in;
-
-        this.chatType = chatMessageProBuf.getChatType();
-        this.context = chatMessageProBuf.getContext();
-        this.receiveUId = chatMessageProBuf.getReceiveUId();
-        this.receiveSession = chatMessageProBuf.getReceiveSession();
-        this.receiveNickName = chatMessageProBuf.getReceiveNickName();
-        this.receiveHaldUrl = chatMessageProBuf.getReceiveHaldUrl();
-        this.read = false;
-    }
-
-    public void encodeBody(Object out) {
-
     }
 
 

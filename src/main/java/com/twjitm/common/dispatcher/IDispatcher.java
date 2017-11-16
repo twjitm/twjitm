@@ -1,7 +1,8 @@
 package com.twjitm.common.dispatcher;
 
-import com.twjitm.common.entity.BaseMessage;
+
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 
 public interface IDispatcher {
-    public BaseMessage dispatcher(BaseMessage message);
+    public AbstractNettyNetProtoBufMessage dispatcher(AbstractNettyNetProtoBufMessage message);
 }

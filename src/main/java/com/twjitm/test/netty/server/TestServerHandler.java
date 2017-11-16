@@ -2,7 +2,6 @@ package com.twjitm.test.netty.server;
 
 import com.alibaba.fastjson.JSON;
 import com.twjitm.common.dispatcher.Dispatcher;
-import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.entity.online.OnlineUserBroadCastMessage;
 import com.twjitm.common.entity.online.OnlineUserPo;
 import com.twjitm.common.enums.MessageComm;
@@ -42,11 +41,9 @@ public class TestServerHandler extends SimpleChannelInboundHandler {
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         //  BaseMessageProto.BaseMessageProBuf baseMessageProBuf = (BaseMessageProto.BaseMessageProBuf) msg;
         Channel incoming = ctx.channel();
-        String json = msg.toString();
         //新分发器
         Dispatcher dispatcher = LocalManager.getInstance().getDispatcher();
         dispatcher.dispatchAction(incoming, msg);
-
         //老的分发器（即将废弃）
         //  dispatcherNetty(incoming, msg.text());
     }
@@ -103,10 +100,7 @@ public class TestServerHandler extends SimpleChannelInboundHandler {
 //        }
 //
 //    }
-    private void sendMessagetoClient(Channel channel, BaseMessage message) {
-        String json = JSON.toJSONString(message);
-        channel.writeAndFlush(new TextWebSocketFrame(json));
-    }
+
 
     /**
      * 覆盖了 handlerAdded() 事件处理方法。每当从服务端收到新的客户端连接时，客户端的 Channel
@@ -119,9 +113,9 @@ public class TestServerHandler extends SimpleChannelInboundHandler {
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel incoming = ctx.channel();
         OnlineUserBroadCastMessage broadCastMessagePo = new OnlineUserBroadCastMessage();
-        broadCastMessagePo.setCommId(MessageComm.getVaule(MessageComm.PLAYER_LOGIN_MESSAGE));
-        broadCastMessagePo.setOutOrInType(0);
-        broadCastMessagePo.setMessageTime(new Date().getTime());
+//        broadCastMessagePo.getNettyNetMessageHead().setCmd(MessageComm.getVaule(MessageComm.PLAYER_LOGIN_MESSAGE));
+//        broadCastMessagePo.setOutOrInType(0);
+//        broadCastMessagePo.setMessageTime(new Date().getTime());
         // broadCastMessagePo.setMessageType(MessageType.PLAYER_LOGIN_MESSAGE);
         // dispatcherNetty(incoming, JSON.toJSONString(broadCastMessagePo));
         for (Channel channel : channels) {

@@ -1,13 +1,13 @@
 package com.twjitm.common.dispatcher;
 
 import com.twjitm.common.annotation.MessageCommandAnntation;
-import com.twjitm.common.entity.BaseMessage;
 import com.twjitm.common.factory.MessageRegistryFactory;
 import com.twjitm.common.factory.classload.DynamicGameClassLoader;
 import com.twjitm.common.factory.classload.FileClassLoader;
 import com.twjitm.common.logic.handler.AbstractBaseHandler;
 import com.twjitm.common.logic.handler.BaseHandler;
 import com.twjitm.common.manager.LocalManager;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.utils.PackageScaner;
 import io.netty.channel.Channel;
 
@@ -32,9 +32,9 @@ public class Dispatcher implements IDispatcher {
     public void dispatchAction(Channel channel, Object byteBuf) throws Exception {
         MessageRegistryFactory messageRegistryFactory = LocalManager.getInstance().getRegistryFactory();
         short messageCommId = 2;// byteBuf.getShort(BaseMessage.MESSAGE_COMMID_INDEX);
-        BaseMessage baseMessage = messageRegistryFactory.get(messageCommId);
-        baseMessage.decodeMessage(byteBuf);
-        dispatcher(baseMessage);
+        AbstractNettyNetProtoBufMessage baseMessage = messageRegistryFactory.get(messageCommId);
+       // baseMessage.decodeMessage(byteBuf);
+        dispatcher((AbstractNettyNetProtoBufMessage) byteBuf);
     }
 
     /**
@@ -43,8 +43,8 @@ public class Dispatcher implements IDispatcher {
      * @param message
      * @return
      */
-    public BaseMessage dispatcher(BaseMessage message) {
-        int commId = message.getCommandId();
+    public AbstractNettyNetProtoBufMessage dispatcher(AbstractNettyNetProtoBufMessage message) {
+        int commId = message.getNetMessageHead().getCmd();
         BaseHandler baseHandler = handlerMap.get(commId);
         if (baseHandler == null) {
             return null;
@@ -54,9 +54,9 @@ public class Dispatcher implements IDispatcher {
         try {
             Object object = method.invoke(baseHandler,
                     message);
-            BaseMessage baseMessage = null;
+            AbstractNettyNetProtoBufMessage baseMessage = null;
             if (object != null) {
-                baseMessage = (BaseMessage) object;
+                baseMessage = (AbstractNettyNetProtoBufMessage) object;
             }
             return baseMessage;
         } catch (IllegalAccessException e) {

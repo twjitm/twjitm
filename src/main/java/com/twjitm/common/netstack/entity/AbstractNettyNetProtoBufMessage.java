@@ -16,11 +16,11 @@ public abstract class AbstractNettyNetProtoBufMessage extends AbstractNettyNetMe
     }
 
     public NettyNetMessageHead getNetMessageHead() {
-        return null;
+        return getNettyNetMessageHead();
     }
 
     public NettyNetMessageBody getNetMessageBody() {
-        return null;
+        return getNettyNetMessageBody();
     }
 
     protected void initHeadCommId() {
@@ -37,16 +37,12 @@ public abstract class AbstractNettyNetProtoBufMessage extends AbstractNettyNetMe
     public abstract void release() throws CodecException;
 
     public abstract  void encodeNetProtoBufMessageBody() throws CodecException, Exception;
+    public  abstract  void  decoderNetProtoBufMessageBody() throws  CodecException, Exception;
 
     public void setSerial(int serial){
         getNetMessageHead().setSerial(serial);
     }
 
-    @Override
-    public String toString()
-    {
-        return getClass().getSimpleName() + ": commandId=" + getNetMessageHead().getCmd();
-    }
 
     public String toAllInfoString(){
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE).replaceAll("\n", "");

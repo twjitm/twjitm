@@ -30,10 +30,11 @@ public class RepeatNettyMessageDecoder  extends ByteToMessageDecoder {
             byte dataType = in.readByte();
 
             // 如果可读长度小于body长度，恢复读指针，退出。
-
+            System.out.println(in.readableBytes());
+            System.out.println(length);
             if (in.readableBytes() < length) {
                 in.resetReaderIndex();
-                return;
+            //    return;
             }
 
             // 读取body

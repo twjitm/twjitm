@@ -1,19 +1,32 @@
 package com.twjitm.common.entity.online;
 
 import com.alibaba.fastjson.JSON;
-import com.twjitm.common.entity.BaseMessage;
+import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.user.entity.User;
+import io.netty.handler.codec.CodecException;
 
 /**
  * 玩家广播上线／下现消息
  */
-public class OnlineUserBroadCastMessage extends BaseMessage {
+public class OnlineUserBroadCastMessage extends AbstractNettyNetProtoBufMessage {
     private User user;//上线／下限用户
     private int outOrInType;//类型
     private long messageTime;//时间
 
     public OnlineUserBroadCastMessage() {
         //super(json);
+    }
+
+    public void release() throws CodecException {
+
+    }
+
+    public void encodeNetProtoBufMessageBody() throws CodecException, Exception {
+
+    }
+
+    public void decoderNetProtoBufMessageBody() throws CodecException, Exception {
+
     }
 
     public OnlineUserBroadCastMessage(String json) {

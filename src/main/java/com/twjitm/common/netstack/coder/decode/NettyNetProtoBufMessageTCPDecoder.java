@@ -33,6 +33,11 @@ public class NettyNetProtoBufMessageTCPDecoder  extends MessageToMessageDecoder<
     }
 
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
-       out.add(iNettyNetProtoBuffTCPToMessageDecoerFactory.praseMessage(msg));
+        if(iNettyNetProtoBuffTCPToMessageDecoerFactory==null){
+            System.out.println("iNettyNetProtoBuffTCPToMessageDecoerFactory  is null ");
+        }else {
+            out.add(iNettyNetProtoBuffTCPToMessageDecoerFactory.praseMessage(msg));
+
+        }
     }
 }
