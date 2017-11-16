@@ -103,7 +103,7 @@ public abstract class BaseMessage implements IMessage, Serializable {
 
 
     public final void decodeMessage(Object in) throws Exception {
-        decodeBody(in);
+       // decodeBody(in);
         decodeHeader(in);
     }
 

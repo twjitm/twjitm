@@ -39,7 +39,7 @@ public class MessageRegistryFactory {
         }
         try {
             BaseMessage message = clzz.newInstance();
-            message.setCommId(commId);
+            //message.setCommId(commId);
             return message;
         } catch (InstantiationException e) {
             e.printStackTrace();

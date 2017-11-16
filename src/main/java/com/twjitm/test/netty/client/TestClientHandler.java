@@ -31,19 +31,19 @@ public class TestClientHandler extends ChannelInboundHandlerAdapter {
         BaseMessageProto.BaseMessageProBuf.Builder builder = BaseMessageProto.BaseMessageProBuf.newBuilder();
         builder.setCommid(MessageComm.PRIVATE_CHAT_MESSAGE.commId);
         builder.setLength(context.length());
-        builder.setUId(1);
-        builder.setSessionId(111);
+        builder.setUId(1l);
+        builder.setSessionId(111l);
         builder.setTimeStamp(System.currentTimeMillis());
         BaseMessageProto.ChatMessageProBuf.Builder chatMessageProBuf = BaseMessageProto.ChatMessageProBuf.newBuilder();
         ///builder.mergeFrom(chatMessageProBuf);
-        chatMessageProBuf.setChatType(0);
-        chatMessageProBuf.setContext("hello");
-        chatMessageProBuf.setRead(false);
-        chatMessageProBuf.setReceiveHaldUrl("http://img");
-        chatMessageProBuf.setReceiveNickName("twjitm");
-        chatMessageProBuf.setReceiveSession("ggg");
-        chatMessageProBuf.setReceiveUId(1);
-        chatMessageProBuf.setBaseMessageBuf(builder);
-        ctx.channel().writeAndFlush(builder.build());
+//        chatMessageProBuf.setChatType(0);
+//        chatMessageProBuf.setContext("hello");
+//        chatMessageProBuf.setRead(false);
+//        chatMessageProBuf.setReceiveHaldUrl("http://img");
+//        chatMessageProBuf.setReceiveNickName("twjitm");
+//        chatMessageProBuf.setReceiveSession("ggg");
+//        chatMessageProBuf.setReceiveUId(1);
+//        chatMessageProBuf.setBaseMessageBuf(builder);
+        ctx.channel().writeAndFlush(builder);
     }
 }

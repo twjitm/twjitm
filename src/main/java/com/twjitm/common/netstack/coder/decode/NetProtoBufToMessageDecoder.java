@@ -1,4 +1,4 @@
-package com.twjitm.common.coder.decode;
+package com.twjitm.common.netstack.coder.decode;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
