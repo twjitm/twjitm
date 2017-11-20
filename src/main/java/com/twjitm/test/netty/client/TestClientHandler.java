@@ -1,5 +1,6 @@
 package com.twjitm.test.netty.client;
 
+import com.twjitm.common.entity.chat.ChatMessage;
 import com.twjitm.common.enums.MessageComm;
 import com.twjitm.common.proto.BaseMessageProto;
 import io.netty.channel.ChannelHandlerContext;
@@ -36,14 +37,16 @@ public class TestClientHandler extends ChannelInboundHandlerAdapter {
         builder.setTimeStamp(System.currentTimeMillis());
         BaseMessageProto.ChatMessageProBuf.Builder chatMessageProBuf = BaseMessageProto.ChatMessageProBuf.newBuilder();
         ///builder.mergeFrom(chatMessageProBuf);
-//        chatMessageProBuf.setChatType(0);
-//        chatMessageProBuf.setContext("hello");
-//        chatMessageProBuf.setRead(false);
-//        chatMessageProBuf.setReceiveHaldUrl("http://img");
-//        chatMessageProBuf.setReceiveNickName("twjitm");
-//        chatMessageProBuf.setReceiveSession("ggg");
-//        chatMessageProBuf.setReceiveUId(1);
-//        chatMessageProBuf.setBaseMessageBuf(builder);
-        ctx.channel().writeAndFlush(builder);
+        chatMessageProBuf.setChatType(0);
+        chatMessageProBuf.setContext("hello");
+        chatMessageProBuf.setRead(false);
+        chatMessageProBuf.setReceiveHaldUrl("http://img");
+        chatMessageProBuf.setReceiveNickName("twjitm");
+        chatMessageProBuf.setReceiveSession("ggg");
+        chatMessageProBuf.setReceiveUId(1);
+        chatMessageProBuf.setBaseMessageBuf(builder);
+        ChatMessage chatMessage=new ChatMessage();
+        chatMessage.setContext("twjitm");
+        ctx.channel().writeAndFlush(chatMessageProBuf.build());
     }
 }

@@ -31,14 +31,15 @@ public class ChatMessage extends AbstractNettyNetProtoBufMessage {
     }
 
     public void encodeNetProtoBufMessageBody() throws CodecException, Exception {
-
+        BaseMessageProto.ChatMessageProBuf.Builder builder= BaseMessageProto.ChatMessageProBuf.newBuilder();
+        byte[] bytes = builder.build().toByteArray();
+        getNetMessageBody().setBytes(bytes);
     }
 
     public void decoderNetProtoBufMessageBody() throws CodecException, Exception {
-             byte[] bytes=  getNettyNetMessageBody().getBytes();
-            // BaseMessageProto.ChatMessageProBuf chatMessageProBuf= BaseMessageProto.ChatMessageProBuf.parseFrom(bytes);
-            // this.chatType=chatMessageProBuf.getChatType();
-            //后面添加就行
+        byte[] bytes =  getNettyNetMessageBody().getBytes();
+        BaseMessageProto.ChatMessageProBuf req= BaseMessageProto.ChatMessageProBuf.parseFrom(bytes);
+        nettyNetMessageHead.setCmd((short) req.getBaseMessageBuf().getCommid());
     }
 
     public ChatMessage(String json) {
