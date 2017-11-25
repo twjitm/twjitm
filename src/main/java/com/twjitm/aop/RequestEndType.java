@@ -7,4 +7,5 @@ package com.twjitm.aop;
 public interface RequestEndType {
     final String DO_REQ = "do";
     final String JSON_REQ = "json";
+    final  String USER_SESSION_KEY="user_session_key";
 }

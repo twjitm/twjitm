@@ -116,12 +116,13 @@
 
 <script type="application/javascript">
     //****************************及时通讯--------------------------------
-    var socket;
+    var socket=WebSocketSession.getInstance();
     if (!window.WebSocket) {
         window.WebSocket = window.MozWebSocket;
     }
     if (window.WebSocket) {
-        socket = new WebSocket("ws://127.0.0.1:9090/ws");
+       // debugger
+
         socket.onmessage = function (event) {
             // var ta = document.getElementById('responseText');
             console.log(event.data)
@@ -137,6 +138,17 @@
     } else {
         alert("你的浏览器不支持 WebSocket！");
     }
+
+    var WebSocketSession={
+        instance:null,
+        getInstance:function () {
+            if(this.instance){
+                this.instance= new WebSocket("ws://127.0.0.1:9090/ws");
+            }
+            return this.instance ;
+        }
+    }
+
 
     function send(message) {
         if (!window.WebSocket) {

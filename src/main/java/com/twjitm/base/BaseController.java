@@ -64,6 +64,7 @@ public class BaseController {
      * @param user
      */
     protected void setconcurrentUser(User user, HttpServletRequest request) {
+        request.getSession().setAttribute(request.getSession().getId(),user);
         System.out.println("当前session=id" + request.getSession().getId());
         session.getServletContext().setAttribute(request.getSession().getId(), user);
         linePerson.put(request.getSession().getId(), user);

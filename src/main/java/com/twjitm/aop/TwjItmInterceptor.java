@@ -1,5 +1,6 @@
 package com.twjitm.aop;
 
+import com.twjitm.user.entity.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,12 @@ public class TwjItmInterceptor implements HandlerInterceptor {
         String type = servletPath.split("\\.")[1];
         System.out.println(type);
         if (type.equals(RequestEndType.DO_REQ)) {
+            String sessionId=request.getSession().getId();
+            Object object=request.getSession().getAttribute(sessionId);
+            if(object==null){//未登录
+                response.sendRedirect("/");
+                return  false;
+            }
             //前台请求
             request.setAttribute("reqType", (RequestEndType.DO_REQ));
         } else if (type.equals(RequestEndType.JSON_REQ)) {
