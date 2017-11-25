@@ -1,5 +1,7 @@
 package com.twjitm.test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -135,7 +137,8 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        create(World.class, World.class);
+     //   create(World.class, World.class);
+        mapTest();
     }
 
     public static <X, Y extends X> void create(Class<Y> clazz, Class<X> inter) {
@@ -165,6 +168,12 @@ public class Test {
 
 
     public void mroge(int[] array1, int[] array2[]) {
+
+    }
+
+    public static void mapTest(){
+        Map<String ,Object> hashMap=new HashMap<String, Object>();
+        hashMap.put(null,null);
 
     }
 

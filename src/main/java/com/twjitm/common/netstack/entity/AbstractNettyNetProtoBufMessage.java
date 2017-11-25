@@ -1,5 +1,6 @@
 package com.twjitm.common.netstack.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.twjitm.common.annotation.MessageCommandAnntation;
 import io.netty.handler.codec.CodecException;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -10,11 +11,16 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * 基础protobuf协议消息
  */
 public abstract class AbstractNettyNetProtoBufMessage extends AbstractNettyNetMessage {
-    public AbstractNettyNetProtoBufMessage() {
+    public AbstractNettyNetProtoBufMessage(String json) {
+        super(json);
         setNettyNetMessageHead(new NettyNetMessageHead());
         setNettyNetMessageBody(new NettyNetMessageBody());
     }
-
+    public AbstractNettyNetProtoBufMessage() {
+        super(null);
+        setNettyNetMessageHead(new NettyNetMessageHead());
+        setNettyNetMessageBody(new NettyNetMessageBody());
+    }
     public NettyNetMessageHead getNetMessageHead() {
         return getNettyNetMessageHead();
     }
@@ -48,4 +54,12 @@ public abstract class AbstractNettyNetProtoBufMessage extends AbstractNettyNetMe
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE).replaceAll("\n", "");
     }
 
+    @Override
+    public void initNettyNetMessageHead(String json) {
+        this.nettyNetMessageHead= JSON.parseObject(json,NettyNetMessageHead.class);
+    }
+
+    public static int getCmdToJson(String json)  {
+        return JSON.parseObject(json,NettyNetMessageHead.class).getCmd();
+    }
 }

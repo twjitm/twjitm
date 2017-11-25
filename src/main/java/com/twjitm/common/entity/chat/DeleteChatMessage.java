@@ -12,7 +12,16 @@ import io.netty.handler.codec.CodecException;
 public class DeleteChatMessage extends AbstractNettyNetProtoBufMessage {
 
 
-    public DeleteChatMessage() {
+    public DeleteChatMessage(String json) {
+        super(json);
+    }
+
+    public void decoderNetJsonMessageBody(String json) {
+
+    }
+
+    public void encodeNetJsonMessageBody(String json) {
+
     }
 
     public void release() throws CodecException {

@@ -1,6 +1,6 @@
 package com.twjitm.common.listener;
 
-import com.twjitm.common.RealcomServer;
+import com.twjitm.common.RealcomTCPServer;
 import com.twjitm.common.factory.thread.TwjThreadFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -12,7 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 public class StartupServerListener implements ApplicationListener<ContextRefreshedEvent> {
 
     public void start() {
-        RealcomServer.getInItStance().startServer();
+        RealcomTCPServer.getInItStance().startServer();
     }
 
     public void onApplicationEvent(ContextRefreshedEvent evt) {

@@ -33,7 +33,7 @@ public class Globals {
     public static void startUp() throws Exception {
         LocalManager.getInstance().get(DisPatcherEx.class).startup();
         LocalManager.getInstance().get(MessageRegistryFactoryEx.class).startup();
-        ;
+
     }
 
     public static void stop() {

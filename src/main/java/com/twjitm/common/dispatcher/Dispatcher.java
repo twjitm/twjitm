@@ -7,9 +7,11 @@ import com.twjitm.common.factory.classload.FileClassLoader;
 import com.twjitm.common.logic.handler.AbstractBaseHandler;
 import com.twjitm.common.logic.handler.BaseHandler;
 import com.twjitm.common.manager.LocalManager;
+import com.twjitm.common.netstack.entity.AbstractNettyNetMessage;
 import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.utils.PackageScaner;
 import io.netty.channel.Channel;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -31,10 +33,19 @@ public class Dispatcher implements IDispatcher {
 
     public void dispatchAction(Channel channel, Object byteBuf) throws Exception {
         MessageRegistryFactory messageRegistryFactory = LocalManager.getInstance().getRegistryFactory();
-        short messageCommId = 2;// byteBuf.getShort(BaseMessage.MESSAGE_COMMID_INDEX);
+        String date=((TextWebSocketFrame) byteBuf).text();
+        short messageCommId = (short) AbstractNettyNetProtoBufMessage.getCmdToJson(date);// byteBuf.getShort(BaseMessage.MESSAGE_COMMID_INDEX);
         AbstractNettyNetProtoBufMessage baseMessage = messageRegistryFactory.get(messageCommId);
-       // baseMessage.decodeMessage(byteBuf);
-        dispatcher((AbstractNettyNetProtoBufMessage) byteBuf);
+        //baseMessage.decodeMessage(byteBuf);
+        if(byteBuf instanceof TextWebSocketFrame){
+            baseMessage.initNettyNetMessageHead(date);
+            baseMessage.decoderNetJsonMessageBody(date);
+            dispatcher(baseMessage);
+        }
+        if(byteBuf instanceof AbstractNettyNetProtoBufMessage){
+            dispatcher((AbstractNettyNetProtoBufMessage) byteBuf);
+        }
+
     }
 
     /**

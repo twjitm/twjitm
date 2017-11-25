@@ -1,5 +1,6 @@
 package com.twjitm.common.netstack.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.twjitm.common.netstack.INettyMessage;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +15,10 @@ public abstract class AbstractNettyNetMessage implements INettyMessage{
      * 增加默认属性(附带逻辑调用需要的属性)
      */
     private final ConcurrentHashMap<Object, Object> attributes = new ConcurrentHashMap<Object, Object>(3);
+
+    public AbstractNettyNetMessage(String json) {
+        nettyNetMessageHead= JSON.parseObject(json,NettyNetMessageHead.class);
+    }
 
     public NettyNetMessageHead getNettyNetMessageHead() {
         return nettyNetMessageHead;
@@ -40,4 +45,15 @@ public abstract class AbstractNettyNetMessage implements INettyMessage{
     public  void remove(Object key){
        attributes.remove(key);
     }
+
+    /**
+     * 初始化协议头
+     * @param json
+     */
+    public  abstract void  initNettyNetMessageHead(String json);
+    public  abstract  void decoderNetJsonMessageBody(String json);
+    public  abstract  void encodeNetJsonMessageBody(String json);
+    public  static   int getCmdToJson(String json){
+     return 0;
+    };
 }

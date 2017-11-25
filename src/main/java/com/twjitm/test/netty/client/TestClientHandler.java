@@ -22,7 +22,7 @@ public class TestClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-
+        System.out.println("------------发生异常--------------");
     }
 
     @Override
@@ -45,8 +45,6 @@ public class TestClientHandler extends ChannelInboundHandlerAdapter {
         chatMessageProBuf.setReceiveSession("ggg");
         chatMessageProBuf.setReceiveUId(1);
         chatMessageProBuf.setBaseMessageBuf(builder);
-        ChatMessage chatMessage=new ChatMessage();
-        chatMessage.setContext("twjitm");
-        ctx.channel().writeAndFlush(chatMessageProBuf.build());
+
     }
 }

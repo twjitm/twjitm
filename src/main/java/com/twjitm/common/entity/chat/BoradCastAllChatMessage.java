@@ -11,6 +11,13 @@ import java.util.List;
 public class BoradCastAllChatMessage extends AbstractNettyNetProtoBufMessage {
     private List<ChatMessage> messages;
 
+    public BoradCastAllChatMessage() {
+        super(null);
+    }
+    public BoradCastAllChatMessage(String json) {
+        super(json);
+    }
+
     public List<ChatMessage> getMessages() {
         return messages;
     }
@@ -30,6 +37,14 @@ public class BoradCastAllChatMessage extends AbstractNettyNetProtoBufMessage {
     }
 
     public void decoderNetProtoBufMessageBody() throws CodecException, Exception {
+
+    }
+
+    public void decoderNetJsonMessageBody(String json) {
+
+    }
+
+    public void encodeNetJsonMessageBody(String json) {
 
     }
 }

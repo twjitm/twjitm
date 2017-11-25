@@ -9,7 +9,7 @@ import io.netty.handler.codec.CodecException;
 
 /**
  * Created by 文江 on 2017/10/27.
- * 聊天消息类型
+ * 基于tcp或者是udp的聊天消息：聊天消息类型
  */
 @MessageCommandAnntation(messagecmd = MessageComm.PRIVATE_CHAT_MESSAGE)
 public class ChatMessage extends AbstractNettyNetProtoBufMessage {
@@ -20,11 +20,8 @@ public class ChatMessage extends AbstractNettyNetProtoBufMessage {
     private String receiveNickName;//接收者昵称
     private String receiveHaldUrl;//接收者头像
     private boolean read;//接收者是否阅读
+    private String json;
 
-
-    public ChatMessage() {
-
-    }
 
     public void release() throws CodecException {
 
@@ -36,6 +33,11 @@ public class ChatMessage extends AbstractNettyNetProtoBufMessage {
         getNetMessageBody().setBytes(bytes);
     }
 
+    /**
+     * proto方式解码
+     * @throws CodecException
+     * @throws Exception
+     */
     public void decoderNetProtoBufMessageBody() throws CodecException, Exception {
         byte[] bytes =  getNettyNetMessageBody().getBytes();
         BaseMessageProto.ChatMessageProBuf req= BaseMessageProto.ChatMessageProBuf.parseFrom(bytes);
@@ -43,12 +45,13 @@ public class ChatMessage extends AbstractNettyNetProtoBufMessage {
     }
 
     public ChatMessage(String json) {
-        ChatMessage chatMessage = JSON.parseObject(json, ChatMessage.class);
-        this.chatType = chatMessage.getChatType();
-        this.context = chatMessage.getContext();
-        this.read = chatMessage.isRead();
+        super(json);
+        this.json=json;
     }
 
+    public ChatMessage() {
+        super(null);
+    }
 
     public int getChatType() {
         return chatType;
@@ -111,5 +114,19 @@ public class ChatMessage extends AbstractNettyNetProtoBufMessage {
 
     public void setReceiveUId(long receiveUId) {
         this.receiveUId = receiveUId;
+    }
+
+    /**
+     * json格式编解码
+     */
+    public void decoderNetJsonMessageBody(String json) {
+        ChatMessage chatMessage = JSON.parseObject(json, ChatMessage.class);
+        this.chatType = chatMessage.getChatType();
+        this.context = chatMessage.getContext();
+        this.read = chatMessage.isRead();
+    }
+
+    public void encodeNetJsonMessageBody(String json) {
+
     }
 }

@@ -121,7 +121,7 @@
         window.WebSocket = window.MozWebSocket;
     }
     if (window.WebSocket) {
-        socket = new WebSocket("ws://127.0.0.1:8088/ws");
+        socket = new WebSocket("ws://127.0.0.1:9090/ws");
         socket.onmessage = function (event) {
             // var ta = document.getElementById('responseText');
             console.log(event.data)
@@ -174,8 +174,15 @@
      * @param messageContext
      */
     function bulidMessageToJson(messageContext) {
+        var head=0x00;
+        var version=1;
+        var length=0;
+        //聊天消息协议
+        var cmd=2;
+
+        var messageHead='{"head":"'+head+'","version":"'+version+'","length":'+length+',"cmd":"'+cmd+'"';
         var json = "";
-        json = '{"chatType":"' + 2 + '","context":"' + messageContext + '","messageType":"' + 1 + '" }';
+        json =messageHead+',"chatType":"' + 2 + '","context":"' + messageContext + '","messageType":"' + 1 + '" }';
         return json;
     }
 

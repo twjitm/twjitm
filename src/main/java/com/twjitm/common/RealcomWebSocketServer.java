@@ -10,32 +10,18 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
 /**
- * Created by 文江 on 2017/9/25.
- * 长连接服务启动类
- * 佛祖保佑！永无bug
+ * Created by 文江 on 2017/11/25.
+ * http服务器启动类
+ * 佛祖保佑，永无bug
  */
-/*
- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- @@@@  @@@@@@@@        @@  @@@@@@@  @@        @@  @@@@@@@@@  @@@@@@@@@@
- @@@@  @@@@@@@@  @@@@  @@@  @@@@@  @@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@@@
- @@@@  @@@@@@@@  @@@@  @@@@  @@@  @@@@       @@@  @@@@@@@@@  @@@@@@@@@@
- @@@@  @@@@@@@@  @@@@  @@@@@  @  @@@@@  @@@@@@@@  @@@@@@@@@  @@@@@@@@@@
- @@@@        @@        @@@@@@   @@@@@@        @@        @@@        @@@@
- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- */
-public class RealcomServer {
-    private static RealcomServer realcomServer;
-    private static Logger logger = LogManager.getLogManager().getLogger(RealcomServer.class.getName());
-
-    public static RealcomServer getInItStance() {
-        if (realcomServer == null) {
-            return realcomServer = new RealcomServer();
+public class RealcomWebSocketServer {
+    private static RealcomWebSocketServer inItStance;
+    public static RealcomWebSocketServer getInItStance() {
+        if(inItStance==null){
+            inItStance=new RealcomWebSocketServer();
         }
-        return realcomServer;
+        return inItStance;
     }
 
     public void startServer() {
@@ -53,7 +39,7 @@ public class RealcomServer {
             System.out.println("WebsocketChatServer 启动了");
 
             // 绑定端口，开始接收进来的连接
-            ChannelFuture f = b.bind("127.0.0.1", 8088).sync(); // (7)
+            ChannelFuture f = b.bind("127.0.0.1", 9090).sync(); // (7)
             // 等待服务器  socket 关闭 。
             // 在这个例子中，这不会发生，但你可以优雅地关闭你的服务器。
             try {
@@ -64,7 +50,6 @@ public class RealcomServer {
             }
 
             f.channel().closeFuture().sync();
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
@@ -83,7 +68,7 @@ public class RealcomServer {
     }
 
     public static void main(String[] args) {
-        RealcomServer.getInItStance().startServer();
+        RealcomWebSocketServer.getInItStance().startServer();
     }
 
 }

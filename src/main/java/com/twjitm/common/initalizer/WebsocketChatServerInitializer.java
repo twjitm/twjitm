@@ -1,5 +1,7 @@
 package com.twjitm.common.initalizer;
 
+import com.twjitm.common.handler.HttpRequestHandler;
+import com.twjitm.common.handler.NettyCommonSessionWebSocketHandler;
 import com.twjitm.common.netstack.coder.decode.NettyNetProtoBufMessageTCPDecoder;
 import com.twjitm.common.netstack.coder.decode.RepeatNettyMessageDecoder;
 import com.twjitm.common.netstack.coder.encode.NettyNetProtoBufMessageTCPEncoder;
@@ -11,8 +13,10 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
  * Created by 文江 on 2017/9/25.
@@ -22,17 +26,18 @@ public class WebsocketChatServerInitializer extends ChannelInitializer<SocketCha
     public void initChannel(SocketChannel ch) throws Exception {//2
         ChannelPipeline pipeline = ch.pipeline();
 
-         //pipeline.addLast(new HttpServerCodec());
-        // pipeline.addLast(new HttpObjectAggregator(64 * 1024));
-        //  pipeline.addLast(new ChunkedWriteHandler());
+         pipeline.addLast(new HttpServerCodec());
+         pipeline.addLast(new HttpObjectAggregator(64 * 1024));
+          pipeline.addLast(new ChunkedWriteHandler());
         //请求handler
-        // pipeline.addLast(new HttpRequestHandler("/ws"));
-        // pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
-        //pipeline.addLast(new NettyCommonSessionWebSocketHandler());
-       pipeline.addLast(new ProtobufVarint32FrameDecoder());
+         pipeline.addLast(new HttpRequestHandler("/ws"));
+        pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+    //    pipeline.addLast(new NettyNetProtoBufMessageTCPDecoder());
+        pipeline.addLast(new NettyCommonSessionWebSocketHandler());
+     //  pipeline.addLast(new ProtobufVarint32FrameDecoder());
        // pipeline.addLast(new RepeatNettyMessageDecoder());
-        pipeline.addLast(new NettyNetProtoBufMessageTCPDecoder());
-        pipeline.addLast(new NettyNetProtoBufMessageTCPEncoder());
-        pipeline.addLast(new TestServerHandler());
+       // pipeline.addLast(new NettyNetProtoBufMessageTCPDecoder());
+    //    pipeline.addLast(new NettyNetProtoBufMessageTCPEncoder());
+        pipeline.addLast(new NettyCommonSessionWebSocketHandler());
     }
 }

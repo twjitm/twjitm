@@ -54,58 +54,6 @@ public class NettyCommonSessionWebSocketHandler extends SimpleChannelInboundHand
         //  dispatcherNetty(incoming, msg.text());
     }
 
-    /**
-     * 最简单的分发器
-     * 缺点：臃肿，难用
-     * 有点：代码简单
-     *
-     * @param
-     * @param message
-     */
-//    private void dispatcherNetty(Channel incoming, String message) {
-//        BaseMessage baseMessage = null;
-//        if (message != null) {
-//            // baseMessage = new BaseMessage(message);
-//        }
-//        switch (baseMessage.getMessageType()) {
-//            case MessageType.CHAT_MESSAGE:
-//                break;
-//            case MessageType.PUBLIC_CHART_MESSAGE://单聊：聊天
-//                ChatMessage chatMessage = new ChatMessage(message);
-//                for (Channel channel : channels) {
-//                    if (channel != incoming) {
-//                        sendMessagetoClient(channel, chatMessage);
-//                    } else {
-//                        // channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.text()));
-//                    }
-//                }
-//                break;
-//            case MessageType.PRIVATE_CHAT_MESSAGE://群聊
-//                GroupChatMessage groupChatMessage = new GroupChatMessage(message);
-//                //一步发送消息通知:
-//                /**
-//                 * step1; 获取群中的所有用户；
-//                 * step2; 获取用户对否在线，在线即推送消息，若不在线，发送心跳广播协议
-//                 * step3：将消息存储在消息队列中；
-//                 */
-//
-//                break;
-//            case MessageType.PLAYER_LOGIN_MESSAGE://用户登录
-//                OnlineUserBroadCastMessage broadCastMessage = new OnlineUserBroadCastMessage(message);
-//                OnlineUserPo po = new OnlineUserPo();
-//                broadCastMessage.setMessageTime(new Date().getTime());
-//                broadCastMessage.setOutOrInType(0);
-//                //broadCastMessage.setCommId();
-//                po.setChannel(incoming);
-//                onlineUserMap.put(broadCastMessage.getUser().getId(), po);
-//                break;
-//
-//            default:
-//                System.out.println("----------------消息协议号出错了--------------");
-//                break;
-//        }
-//
-//    }
     private void sendMessagetoClient(Channel channel, AbstractNettyNetProtoBufMessage message) {
         String json = JSON.toJSONString(message);
         channel.writeAndFlush(new TextWebSocketFrame(json));

@@ -235,6 +235,14 @@
             <artifactId>protobuf-java</artifactId>
             <version>3.2.0</version>
         </dependency>
+        <!--xml解析器-->
+        <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
 
     </dependencies>
 
