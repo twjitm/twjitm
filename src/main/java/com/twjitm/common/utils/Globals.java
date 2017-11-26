@@ -6,6 +6,7 @@ import com.twjitm.common.dispatcher.IDispatcher;
 import com.twjitm.common.factory.MessageRegistryFactory;
 import com.twjitm.common.factory.MessageRegistryFactoryEx;
 import com.twjitm.common.manager.LocalManager;
+import com.twjitm.common.manager.LocalSpringBeanManager;
 import com.twjitm.common.netstack.coder.decode.INettyNetProtoBuffTCPToMessageDecoerFactory;
 import com.twjitm.common.netstack.coder.decode.INettyNetProtoBuffUDPToMessageDecoerFactory;
 import com.twjitm.common.netstack.coder.decode.NettyNetProtoBuffTCPToMessageDecoderFactory;
@@ -27,12 +28,15 @@ public class Globals {
        // LocalManager.getInstance().create(NettyNetProtoBuffHttpToMessageDecoerFactory.class,INettyNetProtoBuffHttpToMessageDecoerFactory.class);
        //解码注入
         LocalManager.getInstance().create(NettyNetProtoBufTcpMessageEncoderFactory.class,NettyNetProtoBufTcpMessageEncoderFactory.class);
+        //spring bean注入
+        LocalManager.getInstance().create(LocalSpringBeanManager.class,LocalSpringBeanManager.class);
 
     }
 
     public static void startUp() throws Exception {
         LocalManager.getInstance().get(DisPatcherEx.class).startup();
         LocalManager.getInstance().get(MessageRegistryFactoryEx.class).startup();
+        LocalManager.getInstance().get(LocalSpringBeanManager.class).startup();
 
     }
 

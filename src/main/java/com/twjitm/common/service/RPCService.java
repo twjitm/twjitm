@@ -1,9 +1,12 @@
 package com.twjitm.common.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Created by 文江 on 2017/11/5.
  * RPC远程调用
  */
+@Service
 public class RPCService implements ILocalService {
 
     public String getId() {

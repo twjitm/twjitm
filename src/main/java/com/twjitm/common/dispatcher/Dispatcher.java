@@ -10,6 +10,8 @@ import com.twjitm.common.manager.LocalManager;
 import com.twjitm.common.netstack.entity.AbstractNettyNetMessage;
 import com.twjitm.common.netstack.entity.AbstractNettyNetProtoBufMessage;
 import com.twjitm.common.utils.PackageScaner;
+import com.twjitm.receipt.enums.ReceiptStateType;
+import com.twjitm.receipt.service.IReceiptService;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
@@ -32,6 +34,7 @@ public class Dispatcher implements IDispatcher {
 
 
     public void dispatchAction(Channel channel, Object byteBuf) throws Exception {
+        test();
         MessageRegistryFactory messageRegistryFactory = LocalManager.getInstance().getRegistryFactory();
         String date=((TextWebSocketFrame) byteBuf).text();
         short messageCommId = (short) AbstractNettyNetProtoBufMessage.getCmdToJson(date);
@@ -158,5 +161,11 @@ public class Dispatcher implements IDispatcher {
         Dispatcher dispatcher = new Dispatcher();
         // System.out.println(MessageComm.MESSAGE_TRUE_RETURN.commId);
         dispatcher.loadPackage("com.twjitm.common.logic.chat.Impl", ".class");
+    }
+
+
+    public void test(){
+        IReceiptService receiptService = LocalManager.getInstance().getSpringBeanManager().getReceiptService();
+        receiptService.getReceiptByState(ReceiptStateType.DOING);
     }
 }

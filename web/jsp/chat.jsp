@@ -116,13 +116,13 @@
 
 <script type="application/javascript">
     //****************************及时通讯--------------------------------
-    var socket=WebSocketSession.getInstance();
+    var socket//=WebSocketSession.getInstance();
     if (!window.WebSocket) {
         window.WebSocket = window.MozWebSocket;
     }
     if (window.WebSocket) {
        // debugger
-
+        socket= new WebSocket("ws://127.0.0.1:9090/ws");
         socket.onmessage = function (event) {
             // var ta = document.getElementById('responseText');
             console.log(event.data)
