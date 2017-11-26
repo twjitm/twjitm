@@ -138,7 +138,8 @@ public class Test {
 
     public static void main(String[] args) {
      //   create(World.class, World.class);
-        mapTest();
+    //    mapTest();
+        seqSum(14);
     }
 
     public static <X, Y extends X> void create(Class<Y> clazz, Class<X> inter) {
@@ -170,6 +171,31 @@ public class Test {
     public void mroge(int[] array1, int[] array2[]) {
 
     }
+
+    /**
+     * 对于一个给定的正整数 n ，请你找出一共有多少种方式使 n 表示为若干个连续正整数的和，要求至少包括两个正整数。如 n=15 时，
+     * 可以有 3 种方式：（ 1+2+3+4+5 ），（ 4+5+6 ），（ 7+8 ）。
+     */
+    public static String seqSum(int n) {
+
+        if (n < 3) return null;
+        for (int i = 2; i < n / 2; i++) {
+            if ((2 * n) % i == 0) {
+                int temp1 = 2 * n - i * i + i;
+                int temp2 = 2 * n + i * i - i;
+                if (temp1 % (2 * i) == 0 && temp2 % (2 * i) == 0) {
+                    int start = temp1 / (2*i);
+                    if(start==0)break;
+                    int end = temp2 / (2*i);
+                    System.out.println(start+":"+end);
+                }
+            }
+        }
+        return "";
+    }
+
+
+
 
     public static void mapTest(){
         Map<String ,Object> hashMap=new HashMap<String, Object>();
