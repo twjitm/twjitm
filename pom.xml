@@ -242,7 +242,19 @@
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
-
+       <!--word 转化器-->
+        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j -->
+       <!-- <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j</artifactId>
+            <version>3.3.6</version>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j-ImportXHTML -->
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j-ImportXHTML</artifactId>
+            <version>3.2.0</version>
+        </dependency>
 
     </dependencies>
 

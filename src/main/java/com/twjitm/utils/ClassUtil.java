@@ -223,7 +223,7 @@ public class ClassUtil {
 /**
  * 过滤得到需要的class文件
  *
- * @author xingchencheng
+ *
  */
 class MyFilter implements FileFilter {
 

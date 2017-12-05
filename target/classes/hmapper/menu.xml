@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twjitm.menu.dao.MenuDao">
+    <resultMap id="resultMap" type="com.twjitm.menu.entity.Menu">
+        <id column="id" property="id"></id>
+        <id column="have_child" property="haveChild"></id>
+        <id column="is_hidden" property="isHidden"></id>
+        <id column="menu_img" property="menuImg"></id>
+        <id column="menu_name" property="menuName"></id>
+        <id column="order_num" property="orderNum"></id>
+        <id column="parent_id" property="parentId"></id>
+        <id column="menu_url" property="menuUrl"></id>
+    </resultMap>
+    <select id="getAllMenus" resultMap="resultMap">
+        SELECT  * from menu
+    </select>
+
+    <select id="getMenuByParentId" resultMap="resultMap" parameterType="int">
+        SELECT * FROM  menu WHERE  parent_id=#{parentId}
+    </select>
+    <!--Array:forech中的collection属性类型是array,collection的值必须是:list,item的值可以随意,Dao接口中参数名字随意 -->
+    <select id="getFirstMenus" resultMap="resultMap">
+        SELECT * FROM menu WHERE id IN
+        <foreach collection="array" item="menuId" index="index"
+                 open="(" close=")" separator=",">
+            #{menuId}
+        </foreach>
+    </select>
+
+</mapper>
