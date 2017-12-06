@@ -32,7 +32,6 @@ public interface AnswerService {
 
     public Choices getChoicesById(int id);
     public List<Papers> getAllPapers();
-    public void addPapers(Papers papers);
 
     public  boolean combination(String title, List<AnswerVo> answerVos);
 

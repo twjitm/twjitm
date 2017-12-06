@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.twjitm.answer.dao.JudgesMapper" >
-  <resultMap id="BaseResultMap" type="com.hjq.answer.entity.Judges" >
+  <resultMap id="BaseResultMap" type="com.twjitm.answer.entity.Judges" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="INTEGER" />
@@ -19,13 +19,13 @@
     delete from judge
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.hjq.answer.entity.Judges" >
+  <insert id="insert" parameterType="com.twjitm.answer.entity.Judges" >
     insert into judge (id, title, answer
       )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{answer,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.hjq.answer.entity.Judges" >
+  <insert id="insertSelective" parameterType="com.twjitm.answer.entity.Judges" >
     insert into judge
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hjq.answer.entity.Judges" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.twjitm.answer.entity.Judges" >
     update judge
     <set >
       <if test="title != null" >
@@ -62,7 +62,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hjq.answer.entity.Judges" >
+  <update id="updateByPrimaryKey" parameterType="com.twjitm.answer.entity.Judges" >
     update judge
     set title = #{title,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=INTEGER}

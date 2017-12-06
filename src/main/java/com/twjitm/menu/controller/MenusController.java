@@ -28,12 +28,12 @@ public class MenusController extends BaseController {
     @RequestMapping("menus")
     @ResponseBody
     public List<Menu> list(HttpServletRequest request) {
-        User user = getconcurrentUser(request);
+      /*  User user = getconcurrentUser(request);
         if (user == null) {
             user = new User();
             user.setRole("3");
-        }
-        List<Menu> menus = menuService.getMenuByuserType(Integer.parseInt(user.getRole()));
+        }*/
+        List<Menu> menus = menuService.getMenuByuserType(Integer.parseInt("3"));
         return menus;
     }
 }

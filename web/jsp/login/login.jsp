@@ -26,7 +26,7 @@
             <canvas id="demo-canvas"></canvas>
             <div class="logo_box">
                 <h3>欢迎你</h3>
-                <form action="<%=path%>/user/login.do" name="f" method="post">
+                <form action="<%=path%>/users/login.do" name="f" method="post">
                     <div class="input_outer">
                         <span class="u_user"></span>
                         <input name="userName" class="text" style="color: #FFFFFF !important" type="text"
@@ -55,12 +55,12 @@
         }
         $.ajax({
             type: 'POSt',
-            url: '<%=path%>/user/login.do?userName=' + userName + "&userPsd=" + psd,
+            url: '<%=path%>/users/login.do?userName=' + userName + "&userPsd=" + psd,
             date: '',
             success: function (data) {
                 console.log(typeof data)
                 if (data == "success") {
-                    window.location.href = "<%=path%>/user/index.do";
+                    window.location.href = "<%=path%>/users/index.do";
                 } else {
                     alert("用户名或者密码有问题！");
                 }

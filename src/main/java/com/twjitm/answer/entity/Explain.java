@@ -8,6 +8,7 @@ public class Explain {
     private String answer;
 
     private Integer qtype;
+    private Integer degree;
 
     public Integer getId() {
         return id;
@@ -39,5 +40,13 @@ public class Explain {
 
     public void setQtype(Integer qtype) {
         this.qtype = qtype;
+    }
+
+    public Integer getDegree() {
+        return degree;
+    }
+
+    public void setDegree(Integer degree) {
+        this.degree = degree;
     }
 }

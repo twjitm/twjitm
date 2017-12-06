@@ -1,5 +1,6 @@
 package com.twjitm.base;
 
+import com.twjitm.answer.entity.Users;
 import com.twjitm.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -37,7 +38,7 @@ public class BaseController {
     private HttpServletRequest request;
     @Resource
     private HttpSession session;
-    private Map<String, User> linePerson = new HashMap<String, User>();
+    private Map<String, Users> linePerson = new HashMap<String, Users>();
 
     /**
      * 获取当前登录用户
@@ -63,7 +64,7 @@ public class BaseController {
      * @param request
      * @param user
      */
-    protected void setconcurrentUser(User user, HttpServletRequest request) {
+    protected void setconcurrentUser(Users user, HttpServletRequest request) {
         request.getSession().setAttribute(request.getSession().getId(),user);
         System.out.println("当前session=id" + request.getSession().getId());
         session.getServletContext().setAttribute(request.getSession().getId(), user);

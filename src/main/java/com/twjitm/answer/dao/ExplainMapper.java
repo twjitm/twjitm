@@ -3,9 +3,10 @@ package com.twjitm.answer.dao;
 
 
 import com.twjitm.answer.entity.Explain;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface ExplainMapper {
     int deleteByPrimaryKey(Integer id);
 

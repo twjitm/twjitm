@@ -14,6 +14,7 @@ import com.twjitm.answer.service.QtypesService;
 import com.twjitm.utils.HtmlUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -29,8 +30,11 @@ import java.util.Random;
 @Service
 public class AnswerServiceImpl implements AnswerService {
     public QtypesService qtypesService;
+    @Resource
     public ExplainMapper explainMapper;
+    @Resource
     public ChoicesMapper choicesMapper;
+    @Resource
     public PapersMapper papersMapper;
 
     public void addExplain(Explain exception) {
@@ -50,12 +54,12 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     public void updateAnwer(Object object, int type) {
-           if(type==Qtypes.TYPE_CHOICES.getValue()){
-               Choices choices= (Choices) object;
-               choicesMapper.updateByPrimaryKey(choices);
-           }else {
-               explainMapper.updateByPrimaryKey((Explain) object);
-           }
+        if (type == Qtypes.TYPE_CHOICES.getValue()) {
+            Choices choices = (Choices) object;
+            choicesMapper.updateByPrimaryKey(choices);
+        } else {
+            explainMapper.updateByPrimaryKey((Explain) object);
+        }
     }
 
     public List<Explain> getAllExceptionBytype(int type) {
@@ -89,18 +93,17 @@ public class AnswerServiceImpl implements AnswerService {
         return null;
     }
 
-
-    public void addPapers(Papers papers) {
-
-    }
-
-
     public boolean combination(String title, List<AnswerVo> answerVos) {
+      //不满足组卷条件
+        boolean satisfy = canCombination();
+        if(!satisfy){
+           // return false;
+        }
         String setverPath = "//";
         String fileType = ".html";
         if (answerVos == null || answerVos.size() == 0) return false;
         //排序标号
-        StringBuffer stringBuffer=new StringBuffer();
+        StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("<!doctype html>");
         stringBuffer.append(HtmlUtils.getHead(title));
         stringBuffer.append("<body>");
@@ -126,53 +129,61 @@ public class AnswerServiceImpl implements AnswerService {
                     "  <h2 class=\"section-title\">" +
                     "" +
                     i +
-                    Qtypes.getTitle(answerType) +(answerVos.get(i).getScore())+
+                    Qtypes.getTitle(answerType) + (answerVos.get(i).getScore()) +
                     "</h2>"
             );
             //处理选择题
             if (answerType == Qtypes.TYPE_CHOICES.getValue()) {
                 List<Choices> choicesList = this.getAllChoices();
-                List<Integer> idList=new ArrayList<Integer>();
-                for(int j=0;j<choicesList.size();j++){
+                List<Integer> idList = new ArrayList<Integer>();
+                for (int j = 0; j < choicesList.size(); j++) {
                     idList.add(choicesList.get(j).getId());
                 }
-                int[] finalIdarray=getRandomArray(answerVos.get(i).getNumber(),idList);
-                for (int j=0;j<finalIdarray.length;j++){
+                int[] finalIdarray = getRandomArray(answerVos.get(i).getNumber(), idList);
+                for (int j = 0; j < finalIdarray.length; j++) {
                     stringBuffer.append("<p>");
-                    Choices choices=choicesMapper.selectByPrimaryKey(finalIdarray[i]);
-                    stringBuffer.append("第"+j+"题:"+choices.getTitle());
+                    Choices choices = choicesMapper.selectByPrimaryKey(finalIdarray[i]);
+                    stringBuffer.append("第" + j + "题:" + choices.getTitle());
                     stringBuffer.append("</p>");
                     stringBuffer.append("<blockquote>");
-                    String answers=choices.getAnswer();
-                    String [] anser=answers.split("#");
-                    for(int m=0;m<anser.length;m++){
+                    String answers = choices.getAnswer();
+                    String[] anser = answers.split("#");
+                    for (int m = 0; m < anser.length; m++) {
                         stringBuffer.append(anser[m]);
                     }
                     stringBuffer.append(" </blockquote>");
                 }
                 stringBuffer.append("</article>");
+            }else{
+                //非选着题
+                String BagTitle = Qtypes.getTitle(answerType);
+                List<Explain> allexceptionType = this.getAllExceptionBytype(answerType);
+                List<Integer> idList = new ArrayList<Integer>();
+                for (int j = 0; j < allexceptionType.size(); j++) {
+                    idList.add(allexceptionType.get(j).getId());
+                }
+                int[] lastAnsuwerIdlist = this.getRandomArray(answerVos.get(i).getNumber(), idList);
+                for (int j = 0; j < lastAnsuwerIdlist.length; j++) {
+                    Explain explain = this.getExceptionById(lastAnsuwerIdlist[j]);
+                    //拼接格式了
+                    stringBuffer.append("<p>");
+                    stringBuffer.append("第" + j + "题:"+explain.getTitle());
+                    stringBuffer.append("</p>");
+                    stringBuffer.append("<blockquote>");
+                    stringBuffer.append("</br>");
+                    stringBuffer.append("</blockquote>");
+                }
+                stringBuffer.append("</article>");
             }
-            //非选着题
-            String BagTitle=Qtypes.getTitle(answerType);
-            List<Explain> allexceptionType = this.getAllExceptionBytype(answerType);
-            List<Integer> idList=new ArrayList<Integer>();
-            for(int j=0;j<allexceptionType.size();j++){
-                idList.add(allexceptionType.get(j).getId());
-            }
-            int[] lastAnsuwerIdlist = this.getRandomArray(answerVos.get(i).getNumber(), idList);
-           for(int j=0;j<lastAnsuwerIdlist.length;j++){
-               Explain explain=this.getExceptionById(lastAnsuwerIdlist[j]);
-               //拼接格式了
-           }
         }
         stringBuffer.append("\n" +
                 "  </div>\n" +
                 "</body>\n" +
                 "</html>");
         boolean success = false;
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-hh-mm");
-        String dateStr=dateFormat.format(new Date());
-        File file = new File(setverPath + title+dateStr+ fileType);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-hh-mm");
+        String dateStr = dateFormat.format(new Date());
+        File file = new File(setverPath + title + dateStr + fileType);
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -181,7 +192,7 @@ public class AnswerServiceImpl implements AnswerService {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(stringBuffer.toString());
             bufferedWriter.close();
-            Papers papers=new Papers();
+            Papers papers = new Papers();
             papers.setTitle(title);
             papers.setUrl(file.getPath());
             papersMapper.insert(papers);
@@ -201,12 +212,12 @@ public class AnswerServiceImpl implements AnswerService {
         Random random = new Random();
         while (list.size() < length) {
             int randomInt = random.nextInt(region.size());
-            if(!list.contains(randomInt)){
+            if (!list.contains(randomInt)) {
                 list.add(randomInt);
             }
         }
-        for(int i=0;i<list.size();i++){
-            array[i]=region.get(list.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            array[i] = region.get(list.get(i));
         }
         return array;
     }
@@ -226,5 +237,55 @@ public class AnswerServiceImpl implements AnswerService {
         papersMapper.deleteByPrimaryKey(id);
     }
 
+    /**
+     * can combaination
+     *
+     * @return
+     */
+    public boolean canCombination() {
+        List<Choices> allxhoicse = getAllChoices();
+        if (allxhoicse == null) {
+            return false;
+        }
+        if (allxhoicse.size() < 20) {
+            return false;
+        }
+        List<Explain> gapList = getAllExceptionBytype(Qtypes.TYPE_GAP.getValue());
+        if (gapList == null) {
+            return false;
+        }
+        if (gapList.size() < 20) {
+            return false;
+        }
+        List<Explain> umom = getAllExceptionBytype(Qtypes.TYPE_NUOM.getValue());
+        if (umom == null) {
+            return false;
+        }
+        if (umom.size() < 20) {
+            return false;
+        }
+        List<Explain> ashort = getAllExceptionBytype(Qtypes.TYPW_SHORT.getValue());
+        if (ashort == null) {
+            return false;
+        }
+        if (ashort.size() < 20) {
+            return false;
+        }
+        List<Explain> judgp = getAllExceptionBytype(Qtypes.TYPE_JUDGE.getValue());
+        if (judgp == null) {
+            return false;
+        }
+        if (judgp.size() < 20) {
+            return false;
+        }
+        List<Explain> sub = getAllExceptionBytype(Qtypes.TYPE_SUBJECTATIVITY.getValue());
+        if (sub == null) {
+            return false;
+        }
+        if (sub.size() < 20) {
+            return false;
+        }
+        return true;
+    }
 
 }

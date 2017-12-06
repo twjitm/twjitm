@@ -3,9 +3,10 @@ package com.twjitm.answer.dao;
 
 
 import com.twjitm.answer.entity.Choices;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface ChoicesMapper {
 
     List<Choices> getAllChose();

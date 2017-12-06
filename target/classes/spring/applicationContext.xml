@@ -21,6 +21,7 @@
             <mvc:exclude-mapping path="/" />
             <!--用户登录请求-->
             <mvc:exclude-mapping path="/user/login.do"/>
+            <mvc:exclude-mapping path="/users/login.do"/>
            <!--用户注册请求-->
             <mvc:exclude-mapping path="/user/register.do"/>
             <!--开放接口平台-->

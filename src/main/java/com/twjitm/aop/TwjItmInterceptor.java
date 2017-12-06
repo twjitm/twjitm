@@ -30,8 +30,8 @@ public class TwjItmInterceptor implements HandlerInterceptor {
             String sessionId=request.getSession().getId();
             Object object=request.getSession().getAttribute(sessionId);
             if(object==null){//未登录
-                response.sendRedirect("/");
-                return  false;
+              //  response.sendRedirect("/");
+              //  return  false;
             }
             //前台请求
             request.setAttribute("reqType", (RequestEndType.DO_REQ));

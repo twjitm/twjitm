@@ -3,9 +3,10 @@ package com.twjitm.answer.dao;
 
 
 import com.twjitm.answer.entity.Papers;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface PapersMapper {
     int deleteByPrimaryKey(Integer id);
 

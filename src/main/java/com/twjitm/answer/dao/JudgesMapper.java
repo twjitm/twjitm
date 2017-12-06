@@ -2,7 +2,9 @@ package com.twjitm.answer.dao;
 
 
 import com.twjitm.answer.entity.Judges;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface JudgesMapper {
     int deleteByPrimaryKey(Integer id);
 

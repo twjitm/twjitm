@@ -22,29 +22,38 @@ import java.util.List;
  */
 @RequestMapping("/answer")
 @Controller
-public class AnswerContorller extends BaseController{
+public class AnswerContorller extends BaseController {
 
     @Resource
     public AnswerService answerService;
 
-    @RequestMapping("plist")
+    @RequestMapping("/plist")
     public String paperList(HttpServletRequest request) {
         request.setAttribute("plist", answerService.getallPapers());
-        return "/plist";
+        return "/answer/plist";
+    }
+    @RequestMapping("/addpaperUI")
+    public  String addPaperUI(HttpServletRequest request){
+
+        return "/answer/addpaper";
     }
 
-    @RequestMapping("elist")
+    @RequestMapping("/elist")
     public String explainList(HttpServletRequest request) {
         List<Choices> choices = answerService.getAllChoices();
         List<Explain> explains = answerService.getAllExplain();
         request.setAttribute("choices", choices);
         request.setAttribute("explains", explains);
-        return "/elist";
+        return "/answer/elist";
     }
 
     public String delete(HttpServletRequest request, Integer id) {
         answerService.deletePaper(id);
         return "redirect:/answer/plist.do";
+    }
+     @RequestMapping("/addsubjectUI")
+    public String addSubjectUI(HttpServletRequest request) {
+        return "/answer/addsubject";
     }
 
     @RequestMapping("addsubject")
@@ -53,6 +62,7 @@ public class AnswerContorller extends BaseController{
         String json = JSON.toJSONString(subjectVo);
         if (type == Qtypes.TYPE_CHOICES.getValue()) {
             Choices choices = JSON.parseObject(json, Choices.class);
+            choices.setItems(subjectVo.getItemA()+"#"+subjectVo.getItemB()+"#"+subjectVo.getItemC()+"#"+subjectVo.getItemD());
             answerService.addChoices(choices);
         } else {
             Explain explain = JSON.parseObject(json, Explain.class);
@@ -100,45 +110,44 @@ public class AnswerContorller extends BaseController{
                     HtmlUtils.htmlToWord(file, docFile);
                     response.addHeader("Content-Disposition",
                             "attachment;fileName=" + docFile.getName());// 设置文件名
-                    byte[] buffer = new byte[1024];
-                    FileInputStream fis = null;
-                    BufferedInputStream bis = null;
-                    try {
-                        fis = new FileInputStream(docFile);
-                        bis = new BufferedInputStream(fis);
-                        OutputStream os = response.getOutputStream();
-                        int i = bis.read(buffer);
-                        while (i != -1) {
-                            os.write(buffer, 0, i);
-                            i = bis.read(buffer);
-                        }
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                        e.printStackTrace();
-                    }
-                }else{
+                    wirte(response, docFile);
+                } else {
                     //下载html格式
                     response.addHeader("Content-Disposition",
                             "attachment;fileName=" + fileName);// 设置文件名
-                    byte[] buffer = new byte[1024];
-                    FileInputStream fis = null;
-                    BufferedInputStream bis = null;
-                    try {
-                        fis = new FileInputStream(file);
-                        bis = new BufferedInputStream(fis);
-                        OutputStream os = response.getOutputStream();
-                        int i = bis.read(buffer);
-                        while (i != -1) {
-                            os.write(buffer, 0, i);
-                            i = bis.read(buffer);
-                        }
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                        e.printStackTrace();
-                    }
+                    wirte(response, file);
                 }
             }
         }
         return null;
     }
+
+    /**
+     * 将文件写到前台
+     *
+     * @param response
+     * @param file
+     */
+    private void wirte(HttpServletResponse response, File file) {
+        byte[] buffer = new byte[1024];
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        try {
+            fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis);
+            OutputStream os = response.getOutputStream();
+            int i = bis.read(buffer);
+            while (i != -1) {
+                os.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+            os.close();
+            bis.close();
+            fis.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
 }

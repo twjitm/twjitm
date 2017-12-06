@@ -6,6 +6,10 @@ package com.twjitm.answer.entity;
 public class SubjectVo {
     private int qtype;
     private String  title;
+    private String itemA;
+    private String itemB;
+    private String itemC;
+    private String itemD;
     private String items;
     private String answer;
     private String degree;
@@ -50,5 +54,37 @@ public class SubjectVo {
 
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+
+    public String getItemA() {
+        return itemA;
+    }
+
+    public void setItemA(String itemA) {
+        this.itemA = itemA;
+    }
+
+    public String getItemB() {
+        return itemB;
+    }
+
+    public void setItemB(String itemB) {
+        this.itemB = itemB;
+    }
+
+    public String getItemC() {
+        return itemC;
+    }
+
+    public void setItemC(String itemC) {
+        this.itemC = itemC;
+    }
+
+    public String getItemD() {
+        return itemD;
+    }
+
+    public void setItemD(String itemD) {
+        this.itemD = itemD;
     }
 }

@@ -24,19 +24,64 @@
 <jsp:include page="../main/corepage.jsp"></jsp:include>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>账单管理</title>
+    <title>题库列表</title>
 </head>
 <body>
 <div id="wrapper">
     <jsp:include page="../main/newindex.jsp"></jsp:include>
     <div id="page-wrapper">
-        <h3 class="">欢迎使用C++题库系统</h3>
+        <h3 class="">题库列表</h3>
         <div id="page-inner">
+            <%--  <div class="row">
+                  <div class=" col-md-2">
+                      <label>模式：</label> <select class="form-control"
+                                                 onchange="changeView(this.options[this.options.selectedIndex].value)">
+                      <option value="1">视图</option>
+                      <option value="0">表格</option>
+                  </select>
+                  </div>
+              </div>--%>
             <div class="row">
 
                 <div id="tableContext">
                     <div class="panel panel-default">
                         <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover"
+                                   id="dataTables-example">
+                                <thead>
+                                <tr>
+                                    <td>编号</td>
+                                    <td>购买人</td>
+                                    <td>购买金额</td>
+                                    <td>购买时间</td>
+                                    <td>备注</td>
+                                    <td>是否结算</td>
+                                    <td>操作</td>
+                                </tr>
+                                </thead>
+                                <tbody id="booksList">
+
+                                <c:forEach items="${list}" var="lis">
+                                    <tr class="odd gradeX">
+                                        <td>${lis.id}</td>
+                                        <td>${lis.userNameVS}</td>
+                                        <td>${lis.money}元</td>
+                                        <td>
+                                            <fmt:formatDate type="time" pattern="yyyy-MM-dd"
+                                                            value="${lis.inTime}"></fmt:formatDate>
+                                        </td>
+                                        <td>${lis.remarke}</td>
+                                        <c:if test="${lis.state==1}">
+                                            <td>已结算</td>
+                                        </c:if>
+                                        <c:if test="${lis.state==0}">
+                                            <td>未结算</td>
+                                        </c:if>
+                                        <td><a href="<%=path%>/borrows/delete.do?id=${lis.id}">删除</a></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
