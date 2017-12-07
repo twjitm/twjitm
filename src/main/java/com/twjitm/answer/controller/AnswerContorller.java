@@ -32,8 +32,9 @@ public class AnswerContorller extends BaseController {
         request.setAttribute("plist", answerService.getallPapers());
         return "/answer/plist";
     }
+
     @RequestMapping("/addpaperUI")
-    public  String addPaperUI(HttpServletRequest request){
+    public String addPaperUI(HttpServletRequest request) {
 
         return "/answer/addpaper";
     }
@@ -47,11 +48,14 @@ public class AnswerContorller extends BaseController {
         return "/answer/elist";
     }
 
-    public String delete(HttpServletRequest request, Integer id) {
+    public String deletePaper(HttpServletRequest request, Integer id) {
         answerService.deletePaper(id);
         return "redirect:/answer/plist.do";
     }
-     @RequestMapping("/addsubjectUI")
+
+
+    //题目---------------------
+    @RequestMapping("/addsubjectUI")
     public String addSubjectUI(HttpServletRequest request) {
         return "/answer/addsubject";
     }
@@ -62,10 +66,11 @@ public class AnswerContorller extends BaseController {
         String json = JSON.toJSONString(subjectVo);
         if (type == Qtypes.TYPE_CHOICES.getValue()) {
             Choices choices = JSON.parseObject(json, Choices.class);
-            choices.setItems(subjectVo.getItemA()+"#"+subjectVo.getItemB()+"#"+subjectVo.getItemC()+"#"+subjectVo.getItemD());
+            choices.setItems(subjectVo.getItemA() + "#" + subjectVo.getItemB() + "#" + subjectVo.getItemC() + "#" + subjectVo.getItemD());
             answerService.addChoices(choices);
         } else {
             Explain explain = JSON.parseObject(json, Explain.class);
+            explain.setId(0);
             answerService.addExplain(explain);
         }
         return "redirect:/answer/elist.do";
@@ -85,6 +90,12 @@ public class AnswerContorller extends BaseController {
     public String updateSubject(HttpServletRequest request, SubjectVo subjectVo) {
         int type = subjectVo.getQtype();
         answerService.updateAnwer(subjectVo, type);
+        return "redirect:/answer/elist.do";
+    }
+
+    @RequestMapping("deleteSubject")
+    public String deletteSubject(HttpServletRequest request, Integer id, Integer type) {
+        answerService.deleteAnwer(id, type);
         return "redirect:/answer/elist.do";
     }
 

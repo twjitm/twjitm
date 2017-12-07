@@ -47,20 +47,34 @@
                                                     <tr class="odd gradeX">
                                                         <td>${choice.title}</td>
                                                         <td>选择题</td>
-                                                        <td>${choice.degree}❤</td>
-                                                        <td><a href="<%=path%>/answer/updateSubject.do?id=${choice.id}">修改</a><a
-                                                                href="<%=path%>/borrows/delete.do?id=${choice.id}">删除</a>
+                                                        <td>${choice.degree} 星</td>
+                                                        <td><a href="<%=path%>/answer/updateSubject.do?id=${choice.id}&type=0">修改  </a><a
+                                                                href="<%=path%>/answer/deleteSubject.do?id=${choice.id}&type=0">  删除</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
                                                 <c:forEach items="${explains}" var="explain">
                                                     <tr class="odd gradeX">
                                                         <td>${explain.title}</td>
-                                                        <td>主观题</td>
-                                                        <td>${explain.degree}❤</td>
+                                                        <c:if test="${explain.qtype==1}">
+                                                            <td>判断题</td>
+                                                        </c:if>
+                                                        <c:if test="${explain.qtype==2}">
+                                                            <td>填空题</td>
+                                                        </c:if>
+                                                        <c:if test="${explain.qtype==3}">
+                                                            <td>名词解释题</td>
+                                                        </c:if>
+                                                        <c:if test="${explain.qtype==4}">
+                                                            <td>简答题</td>
+                                                        </c:if>
+                                                        <c:if test="${explain.qtype==5}">
+                                                            <td>主观题</td>
+                                                        </c:if>
+                                                        <td>${explain.degree} 星</td>
                                                         <td>
-                                                            <a href="<%=path%>/answer/updateSubject.do?id=${explain.id}">修改</a><a
-                                                                href="<%=path%>/borrows/delete.do?id=${explain.id}">删除</a>
+                                                            <a href="<%=path%>/answer/updateSubjectUI.do?id=${explain.id}type=${explain.qtype}">修改  </a><a
+                                                                href="<%=path%>/answer/deleteSubject.do?id=${explain.id}&type=${explain.qtype}">  删除</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

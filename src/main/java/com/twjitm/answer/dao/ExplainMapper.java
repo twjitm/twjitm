@@ -1,11 +1,10 @@
 package com.twjitm.answer.dao;
 
-
-
 import com.twjitm.answer.entity.Explain;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface ExplainMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,7 +18,7 @@ public interface ExplainMapper {
     int updateByPrimaryKeySelective(Explain record);
 
     int updateByPrimaryKey(Explain record);
-
+    List<Explain> getAllExplain();
     List<Explain> getAllExceptionBytype(int type);
 
     Explain getExceptionById(int id, int type);

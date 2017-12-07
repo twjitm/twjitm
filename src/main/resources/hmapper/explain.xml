@@ -12,23 +12,26 @@
     id, title, answer, qtype, degree
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
-    from explain
+    from explains
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getAllExplain" resultMap="BaseResultMap">
+    SELECT  <include refid="Base_Column_List" />from explains
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from explain
+    delete from explains
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.twjitm.answer.entity.Explain" >
-    insert into explain (id, title, answer, 
+    insert into explains (id, title, answer, 
       qtype, degree)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
       #{qtype,jdbcType=INTEGER}, #{degree,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.twjitm.answer.entity.Explain" >
-    insert into explain
+    insert into explains
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -65,7 +68,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.twjitm.answer.entity.Explain" >
-    update explain
+    update explains
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
@@ -83,11 +86,20 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.twjitm.answer.entity.Explain" >
-    update explain
+    update explains
     set title = #{title,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
       qtype = #{qtype,jdbcType=INTEGER},
       degree = #{degree,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getAllExceptionBytype" resultMap="BaseResultMap">
+    SELECT
+  </select>
+  <select id="getExceptionById" resultMap="BaseResultMap">
+    SELECT
+  </select>
+  <select id="getexplainsByTypeAndDegres" resultMap="BaseResultMap">
+    SELECT
+  </select>
 </mapper>

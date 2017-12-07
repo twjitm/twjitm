@@ -27,24 +27,24 @@
                             </select>
                                 <label>题目类容：</label> <textarea class="form-control" rows="5"
                                                                name="title"
-                                                               placeholder="题目描述"></textarea>
+                                                               placeholder="题目描述" required="required"></textarea>
                                 <div id="tableContext" style="display:display">
                                 <label>选项A：</label> <input class="form-control" name="itemA" placeholder="选项A"
-                                                          required="required"></input>
+                                                         ></input>
                                 <label>选项B：</label> <input class="form-control" name="itemB" placeholder="选项B"
-                                                           required="required"></input>
+                                                          ></input>
                                 <label>选项C：</label> <input class="form-control" name="itemC" placeholder="选项C"
-                                                           required="required"></input>
+                                                           ></input>
                                 <label>选项D：</label> <input class="form-control" name="itemD" placeholder="选项D"
-                                                           required="required"></input>
+                                                           ></input>
                                 </div>
                                 <label>答案：</label> <textarea class="form-control" rows="5"
                                                              name="answer"
-                                                             placeholder="答案描述"></textarea>
+                                                             placeholder="答案描述" required="required"></textarea>
                                 <label>难度系数：</label><select class="form-control" name="degree">
-                                <option value="0">1星</option>
-                                <option value="1">2星</option>
-                                <option value="2">3星</option>
+                                <option value="1">1星</option>
+                                <option value="2">2星</option>
+                                <option value="3">3星</option>
                             </select>
 
                             </div>

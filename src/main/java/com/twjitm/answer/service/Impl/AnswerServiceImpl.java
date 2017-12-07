@@ -23,7 +23,6 @@ import java.util.*;
  */
 @Service
 public class AnswerServiceImpl implements AnswerService {
-    public QtypesService qtypesService;
     @Resource
     public ExplainMapper explainMapper;
     @Resource
@@ -62,7 +61,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 
     public List<Explain> getAllExplain() {
-        return null;
+        return explainMapper.getAllExplain();
     }
 
     public Explain getExceptionById(int id) {
