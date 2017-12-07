@@ -3,6 +3,7 @@ package com.twjitm.answer.dao;
 
 
 import com.twjitm.answer.entity.Choices;
+import com.twjitm.answer.entity.Explain;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface ChoicesMapper {
     int updateByPrimaryKeySelective(Choices record);
 
     int updateByPrimaryKey(Choices record);
+
+    List<Choices> getChoicesByDegres(int degres);
+
 }

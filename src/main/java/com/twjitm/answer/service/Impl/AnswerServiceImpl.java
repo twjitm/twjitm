@@ -4,10 +4,7 @@ package com.twjitm.answer.service.Impl;
 import com.twjitm.answer.dao.ChoicesMapper;
 import com.twjitm.answer.dao.ExplainMapper;
 import com.twjitm.answer.dao.PapersMapper;
-import com.twjitm.answer.entity.AnswerVo;
-import com.twjitm.answer.entity.Choices;
-import com.twjitm.answer.entity.Explain;
-import com.twjitm.answer.entity.Papers;
+import com.twjitm.answer.entity.*;
 import com.twjitm.answer.enums.Qtypes;
 import com.twjitm.answer.service.AnswerService;
 import com.twjitm.answer.service.QtypesService;
@@ -19,10 +16,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by 文江 on 2017/11/30.
@@ -94,10 +88,10 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     public boolean combination(String title, List<AnswerVo> answerVos) {
-      //不满足组卷条件
+        //不满足组卷条件
         boolean satisfy = canCombination();
-        if(!satisfy){
-           // return false;
+        if (!satisfy) {
+            // return false;
         }
         String setverPath = "//";
         String fileType = ".html";
@@ -154,7 +148,7 @@ public class AnswerServiceImpl implements AnswerService {
                     stringBuffer.append(" </blockquote>");
                 }
                 stringBuffer.append("</article>");
-            }else{
+            } else {
                 //非选着题
                 String BagTitle = Qtypes.getTitle(answerType);
                 List<Explain> allexceptionType = this.getAllExceptionBytype(answerType);
@@ -167,7 +161,7 @@ public class AnswerServiceImpl implements AnswerService {
                     Explain explain = this.getExceptionById(lastAnsuwerIdlist[j]);
                     //拼接格式了
                     stringBuffer.append("<p>");
-                    stringBuffer.append("第" + j + "题:"+explain.getTitle());
+                    stringBuffer.append("第" + j + "题:" + explain.getTitle());
                     stringBuffer.append("</p>");
                     stringBuffer.append("<blockquote>");
                     stringBuffer.append("</br>");
@@ -238,7 +232,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     /**
-     * can combaination
+     * 组卷条件检测
      *
      * @return
      */
@@ -288,4 +282,34 @@ public class AnswerServiceImpl implements AnswerService {
         return true;
     }
 
+
+        //统计
+    public ChartVo analyseDegree() {
+        Map<String, List<Choices>> mapChoices = new HashMap<String, List<Choices>>();
+        for (int i = 1; i < 4; i++) {
+            List<Choices> list = getChoicesByDegres(i);
+            mapChoices.put(Qtypes.TYPE_CHOICES.getValue() + "#" + i, list);
+        }
+        Map<String, List<Explain>> mapExplain = new HashMap<String, List<Explain>>();
+        int[] valuesType = Qtypes.getAllExplainTypeValue();
+        for (int i = 0; i < valuesType.length; i++) {//type
+            for (int degres = 1; degres < 4; degres++) {
+                mapExplain.put(i + "#" + degres, this.getExplainByTypeAndDegers(i, degres));
+            }
+        }
+        ChartVo chartVo=new ChartVo();
+        chartVo.setMapCho(mapChoices);
+        chartVo.setMapExp(mapExplain);
+        return chartVo;
+    }
+
+    private List<Choices> getChoicesByDegres(int degres) {
+        List<Choices> choices = choicesMapper.getChoicesByDegres(degres);
+        return choices;
+    }
+
+    private List<Explain> getExplainByTypeAndDegers(int type, int degres) {
+        List<Explain> lsit = explainMapper.getExplainByTypeAndDegres(type, degres);
+        return lsit;
+    }
 }

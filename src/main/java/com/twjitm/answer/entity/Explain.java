@@ -8,6 +8,7 @@ public class Explain {
     private String answer;
 
     private Integer qtype;
+
     private Integer degree;
 
     public Integer getId() {

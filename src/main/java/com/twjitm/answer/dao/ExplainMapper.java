@@ -23,4 +23,6 @@ public interface ExplainMapper {
     List<Explain> getAllExceptionBytype(int type);
 
     Explain getExceptionById(int id, int type);
+
+    List<Explain> getExplainByTypeAndDegres(int type, int degres);
 }

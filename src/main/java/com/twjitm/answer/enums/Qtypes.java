@@ -35,27 +35,32 @@ public enum Qtypes {
     }
 
     public static String getTitle(int value) {
-       String title=null;
+        String title = null;
         switch (value) {
             case 0:
-                title=TYPE_CHOICES.getTitle();
+                title = TYPE_CHOICES.getTitle();
                 break;
             case 1:
-                title=TYPE_JUDGE.getTitle();
+                title = TYPE_JUDGE.getTitle();
                 break;
             case 2:
-                title=TYPE_GAP.getTitle();
+                title = TYPE_GAP.getTitle();
                 break;
             case 3:
-                title=TYPE_NUOM.getTitle();
+                title = TYPE_NUOM.getTitle();
                 break;
             case 4:
-                title=TYPW_SHORT.getTitle();
+                title = TYPW_SHORT.getTitle();
                 break;
             case 5:
-                title=TYPE_SUBJECTATIVITY.getTitle();
+                title = TYPE_SUBJECTATIVITY.getTitle();
                 break;
         }
         return title;
+    }
+
+    public static int[] getAllExplainTypeValue() {
+        int[] value = {TYPE_JUDGE.getValue(), TYPE_GAP.getValue(), TYPE_NUOM.getValue(), TYPW_SHORT.getValue(), TYPE_SUBJECTATIVITY.getValue()};
+        return value;
     }
 }

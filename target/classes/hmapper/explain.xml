@@ -1,45 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.twjitm.answer.dao.ChoicesMapper" >
-  <resultMap id="BaseResultMap" type="com.twjitm.answer.entity.Choices" >
+<mapper namespace="com.twjitm.answer.dao.ExplainMapper" >
+  <resultMap id="BaseResultMap" type="com.twjitm.answer.entity.Explain" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="items" property="items" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="qtype" property="qtype" jdbcType="INTEGER" />
     <result column="degree" property="degree" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, items, answer, degree
+    id, title, answer, qtype, degree
   </sql>
-  <select id="getAllChose"  resultMap="BaseResultMap">
-   select
-    <include refid="Base_Column_List" />
-    from choices
-  </select>
-  <select id="getChoicesByDegres" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    from choices WHERE degree=#{degree,jdbcType=INTEGER}
-  </select>
-
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from choices
+    from explain
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from choices
+    delete from explain
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.twjitm.answer.entity.Choices" >
-    insert into choices (id, title, items, 
-      answer, degree)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{items,jdbcType=VARCHAR}, 
-      #{answer,jdbcType=VARCHAR}, #{degree,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.twjitm.answer.entity.Explain" >
+    insert into explain (id, title, answer, 
+      qtype, degree)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{qtype,jdbcType=INTEGER}, #{degree,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.twjitm.answer.entity.Choices" >
-    insert into choices
+  <insert id="insertSelective" parameterType="com.twjitm.answer.entity.Explain" >
+    insert into explain
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -47,11 +36,11 @@
       <if test="title != null" >
         title,
       </if>
-      <if test="items != null" >
-        items,
-      </if>
       <if test="answer != null" >
         answer,
+      </if>
+      <if test="qtype != null" >
+        qtype,
       </if>
       <if test="degree != null" >
         degree,
@@ -64,28 +53,28 @@
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="items != null" >
-        #{items,jdbcType=VARCHAR},
-      </if>
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="qtype != null" >
+        #{qtype,jdbcType=INTEGER},
       </if>
       <if test="degree != null" >
         #{degree,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.twjitm.answer.entity.Choices" >
-    update choices
+  <update id="updateByPrimaryKeySelective" parameterType="com.twjitm.answer.entity.Explain" >
+    update explain
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="items != null" >
-        items = #{items,jdbcType=VARCHAR},
-      </if>
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="qtype != null" >
+        qtype = #{qtype,jdbcType=INTEGER},
       </if>
       <if test="degree != null" >
         degree = #{degree,jdbcType=INTEGER},
@@ -93,11 +82,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.twjitm.answer.entity.Choices" >
-    update choices
+  <update id="updateByPrimaryKey" parameterType="com.twjitm.answer.entity.Explain" >
+    update explain
     set title = #{title,jdbcType=VARCHAR},
-      items = #{items,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
+      qtype = #{qtype,jdbcType=INTEGER},
       degree = #{degree,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

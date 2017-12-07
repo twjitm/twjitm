@@ -84,7 +84,6 @@ public class AnswerContorller extends BaseController {
     @RequestMapping("/updateSubject")
     public String updateSubject(HttpServletRequest request, SubjectVo subjectVo) {
         int type = subjectVo.getQtype();
-        String json = JSON.toJSONString(subjectVo);
         answerService.updateAnwer(subjectVo, type);
         return "redirect:/answer/elist.do";
     }

@@ -60,6 +60,6 @@ return null;
 
     public static void main(String[] args) {
         System.out.println(StringToMd5("123456"));
-        System.out.println( md5ToString(StringToMd5("123456")));
+        System.out.println( md5ToString("ghdGgISCzOOZTOOmVn=="));
     }
 }

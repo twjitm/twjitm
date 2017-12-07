@@ -2,10 +2,7 @@ package com.twjitm.answer.service;
 
 
 
-import com.twjitm.answer.entity.AnswerVo;
-import com.twjitm.answer.entity.Choices;
-import com.twjitm.answer.entity.Explain;
-import com.twjitm.answer.entity.Papers;
+import com.twjitm.answer.entity.*;
 
 import java.util.List;
 
@@ -39,5 +36,7 @@ public interface AnswerService {
     public List<Papers>getallPapers();
     public Papers getPapersById(int id);
     public void deletePaper(int id);
+    //统计图表用
+    public ChartVo analyseDegree();
 
 }
