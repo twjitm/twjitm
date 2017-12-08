@@ -10,6 +10,7 @@ import com.twjitm.base.BaseController;
 import com.twjitm.utils.HtmlUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,18 +28,6 @@ public class AnswerContorller extends BaseController {
     @Resource
     public AnswerService answerService;
 
-    @RequestMapping("/plist")
-    public String paperList(HttpServletRequest request) {
-        request.setAttribute("plist", answerService.getallPapers());
-        return "/answer/plist";
-    }
-
-    @RequestMapping("/addpaperUI")
-    public String addPaperUI(HttpServletRequest request) {
-
-        return "/answer/addpaper";
-    }
-
     @RequestMapping("/elist")
     public String explainList(HttpServletRequest request) {
         List<Choices> choices = answerService.getAllChoices();
@@ -47,12 +36,6 @@ public class AnswerContorller extends BaseController {
         request.setAttribute("explains", explains);
         return "/answer/elist";
     }
-
-    public String deletePaper(HttpServletRequest request, Integer id) {
-        answerService.deletePaper(id);
-        return "redirect:/answer/plist.do";
-    }
-
 
     //题目---------------------
     @RequestMapping("/addsubjectUI")
@@ -99,9 +82,87 @@ public class AnswerContorller extends BaseController {
         return "redirect:/answer/elist.do";
     }
 
+    //-----------统计
+    @RequestMapping("/answerNum")
+    @ResponseBody
+    public String answerNUm(HttpServletRequest request) {
+        String nums;
+        List<Choices> choices = answerService.getAllChoices();
+        nums = choices.size() + ",";
+        for (int i = 1; i < 6; i++) {
+            List<Explain> list = answerService.getAllExceptionBytype(i);
+            nums = nums + list.size() + ",";
+        }
+        nums = nums.substring(0, nums.length() - 1);
+        return nums;
+    }
+
+    @RequestMapping("/answerdesNum")
+    @ResponseBody
+    public String answerdesNum(HttpServletRequest request, int type) {
+        String nums;
+        int one = 0;
+        int two = 0;
+        int three = 0;
+        if (type == 0) {
+            List<Choices> allchose = answerService.getAllChoices();
+            for (Choices choices : allchose) {
+                switch (choices.getDegree()) {
+                    case 1:
+                        one++;
+                        break;
+                    case 2:
+                        two++;
+                        break;
+                    case 3:
+                        three++;
+                        break;
+                }
+            }
+            nums=one+","+two+","+three;
+            return nums;
+        }else {
+           List<Explain>allexplain= answerService.getAllExceptionBytype(type);
+           for (Explain explain:allexplain){
+               switch (explain.getDegree()) {
+                   case 1:
+                       one++;
+                       break;
+                   case 2:
+                       two++;
+                       break;
+                   case 3:
+                       three++;
+                       break;
+               }
+           }
+            nums=one+","+two+","+three;
+        }
+        return nums;
+    }
+
+//----------统计end
+
+    //------------------------试卷
+    @RequestMapping("/plist")
+    public String paperList(HttpServletRequest request) {
+        request.setAttribute("plist", answerService.getallPapers());
+        return "/answer/plist";
+    }
+
+    @RequestMapping("/addpaperUI")
+    public String addPaperUI(HttpServletRequest request) {
+        return "/answer/addpaper";
+    }
+
     @RequestMapping("/combination")
-    public String combination(HttpServletRequest request, String title, List<AnswerVo> list) {
-        answerService.combination(title, list);
+    public String combination(HttpServletRequest request, String title, List<PapersVo> list) {
+        answerService.combination(request, title, list);
+        return "redirect:/answer/plist.do";
+    }
+
+    public String deletePaper(HttpServletRequest request, Integer id) {
+        answerService.deletePaper(id);
         return "redirect:/answer/plist.do";
     }
 
@@ -158,6 +219,11 @@ public class AnswerContorller extends BaseController {
             // TODO: handle exception
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/charts")
+    public String chartUI(HttpServletRequest request) {
+        return "/answer/charts";
     }
 
 }

@@ -46,13 +46,13 @@ public class BaseController {
      * @param request
      * @return
      */
-    protected User getconcurrentUser(HttpServletRequest request) {
+    protected Users getconcurrentUser(HttpServletRequest request) {
         //System.out.println("当前session=id"+request.getSession().getId());
-        User user = (User) session.getServletContext().getAttribute(request.getSession().getId());
+        Users user = (Users) session.getServletContext().getAttribute(request.getSession().getId());
         //	    	(Users) this.request.getSession().getAttribute("user");
         if (user == null) {
             //默认用户
-            user = new User();
+            user = new Users();
             user.setId(0);
         }
         return user;
@@ -91,7 +91,7 @@ public class BaseController {
 
     }
 
-    public User getUser(HttpServletRequest request) {
+    public Users getUser(HttpServletRequest request) {
         return getconcurrentUser(request);
     }
 

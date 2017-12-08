@@ -3,7 +3,7 @@ package com.twjitm.answer.entity;
 /**
  * Created by 文江 on 2017/11/30.
  */
-public class AnswerVo {
+public class PapersVo {
     private int score;
     private  int type;
     private  int number;

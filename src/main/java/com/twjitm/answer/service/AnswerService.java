@@ -4,6 +4,7 @@ package com.twjitm.answer.service;
 
 import com.twjitm.answer.entity.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public interface AnswerService {
     public Choices getChoicesById(int id);
     public List<Papers> getAllPapers();
 
-    public  boolean combination(String title, List<AnswerVo> answerVos);
+    public  boolean combination(HttpServletRequest request,String title, List<PapersVo> answerVos);
 
         //papers
     public List<Papers>getallPapers();

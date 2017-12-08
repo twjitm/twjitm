@@ -7,11 +7,11 @@ import com.twjitm.answer.dao.PapersMapper;
 import com.twjitm.answer.entity.*;
 import com.twjitm.answer.enums.Qtypes;
 import com.twjitm.answer.service.AnswerService;
-import com.twjitm.answer.service.QtypesService;
 import com.twjitm.utils.HtmlUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -86,13 +86,14 @@ public class AnswerServiceImpl implements AnswerService {
         return null;
     }
 
-    public boolean combination(String title, List<AnswerVo> answerVos) {
+    public boolean combination(HttpServletRequest request, String title, List<PapersVo> answerVos) {
         //不满足组卷条件
         boolean satisfy = canCombination();
         if (!satisfy) {
             // return false;
         }
-        String setverPath = "//";
+        String realPath = request.getServletContext().getRealPath(
+                "WEB-INF/File/");
         String fileType = ".html";
         if (answerVos == null || answerVos.size() == 0) return false;
         //排序标号
@@ -136,7 +137,7 @@ public class AnswerServiceImpl implements AnswerService {
                 for (int j = 0; j < finalIdarray.length; j++) {
                     stringBuffer.append("<p>");
                     Choices choices = choicesMapper.selectByPrimaryKey(finalIdarray[i]);
-                    stringBuffer.append("第" + j + "题:" + choices.getTitle());
+                    stringBuffer.append("(" + j + "):" + choices.getTitle());
                     stringBuffer.append("</p>");
                     stringBuffer.append("<blockquote>");
                     String answers = choices.getAnswer();
@@ -160,7 +161,7 @@ public class AnswerServiceImpl implements AnswerService {
                     Explain explain = this.getExceptionById(lastAnsuwerIdlist[j]);
                     //拼接格式了
                     stringBuffer.append("<p>");
-                    stringBuffer.append("第" + j + "题:" + explain.getTitle());
+                    stringBuffer.append("(" + j + "):" + explain.getTitle());
                     stringBuffer.append("</p>");
                     stringBuffer.append("<blockquote>");
                     stringBuffer.append("</br>");
@@ -176,7 +177,8 @@ public class AnswerServiceImpl implements AnswerService {
         boolean success = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-hh-mm");
         String dateStr = dateFormat.format(new Date());
-        File file = new File(setverPath + title + dateStr + fileType);
+        String fileUrlDb= title + dateStr + fileType;
+        File file = new File(realPath +fileUrlDb);
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -187,7 +189,7 @@ public class AnswerServiceImpl implements AnswerService {
             bufferedWriter.close();
             Papers papers = new Papers();
             papers.setTitle(title);
-            papers.setUrl(file.getPath());
+            papers.setUrl(fileUrlDb);
             papersMapper.insert(papers);
             success = true;
         } catch (Exception e) {
@@ -310,5 +312,18 @@ public class AnswerServiceImpl implements AnswerService {
     private List<Explain> getExplainByTypeAndDegers(int type, int degres) {
         List<Explain> lsit = explainMapper.getExplainByTypeAndDegres(type, degres);
         return lsit;
+    }
+
+
+    public static void main(String[] args) {
+      List<Integer> list=new ArrayList<Integer>();
+        for(int i=0;i<100;i++){
+            list.add(i);
+        }
+         AnswerServiceImpl answerService=new AnswerServiceImpl();
+        int[] random=answerService.getRandomArray(10,list);
+        for(int i=0;i<random.length;i++){
+            System.out.println(random[i]);
+        }
     }
 }

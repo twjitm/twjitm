@@ -19,9 +19,9 @@ public interface ExplainMapper {
 
     int updateByPrimaryKey(Explain record);
     List<Explain> getAllExplain();
-    List<Explain> getAllExceptionBytype(int type);
+    List<Explain> getAllExceptionBytype(int qtype);
 
-    Explain getExceptionById(int id, int type);
+    Explain getExceptionById(int id, int qtype);
 
-    List<Explain> getExplainByTypeAndDegres(int type, int degres);
+    List<Explain> getExplainByTypeAndDegres(int qtype, int degres);
 }

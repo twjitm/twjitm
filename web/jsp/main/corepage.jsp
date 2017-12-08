@@ -10,6 +10,7 @@
 <%-- <script src="<%=path%>/js/layer/jquery-3.1.1.min.js"></script> --%>
 <script type="text/javascript" src="<%=path%>/js/chat/jquery.min.js"></script>
 <script type="text/javascript" src="<%=path%>/js/chat/chat.js"></script>
+<script type="text/javascript" src="<%=path%>/js/charts/Chart.js"></script>
 <%--<script src="<%=path%>/js/newpagejs/jquery-1.10.2.js"></script>--%>
 <script src="<%=path%>/js/newpagejs/dataTables/jquery.dataTables.js"></script>
 <script src="<%=path%>/js/newpagejs/dataTables/dataTables.bootstrap.js"></script>
@@ -19,8 +20,8 @@
 
 <script src="<%=path%>/js/newpagejs/custom-scripts.js"></script>
 
-<script src="<%=path%>/js/newpagejs/easypiechart.js"></script>
-<script src="<%=path%>/js/newpagejs/easypiechart-data.js"></script>
+<%--<script src="<%=path%>/js/newpagejs/easypiechart.js"></script>
+<script src="<%=path%>/js/newpagejs/easypiechart-data.js"></script>--%>
 
 <script src="<%=path%>/js/layer/layer.js"></script>
 <script src="<%=path%>/js/reads/readcore.js"></script>

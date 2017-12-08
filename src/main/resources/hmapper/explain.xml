@@ -93,13 +93,13 @@
       degree = #{degree,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getAllExceptionBytype" resultMap="BaseResultMap">
-    SELECT
+  <select id="getAllExceptionBytype" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT <include refid="Base_Column_List" />from explains WHERE qtype=#{qtype}
   </select>
-  <select id="getExceptionById" resultMap="BaseResultMap">
-    SELECT
+  <select id="getExceptionById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT <include refid="Base_Column_List" />from explains WHERE id=#{id}
   </select>
-  <select id="getexplainsByTypeAndDegres" resultMap="BaseResultMap">
-    SELECT
+  <select id="getexplainsByTypeAndDegres" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT <include refid="Base_Column_List" />from explains WHERE qtype=#{qtype} and degree=#{degres}
   </select>
 </mapper>
