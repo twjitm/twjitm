@@ -143,6 +143,7 @@
                 alert("系统错误！");
             }
         })
+
         //难度系数分部图-----------------------
         //选择题
         var choicesDegres=document.getElementById("choicesDegres").getContext("2d");

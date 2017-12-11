@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RequestMapping("/answer")
 @Controller
-public class AnswerContorller extends BaseController {
+public class AnswerController extends BaseController {
 
     @Resource
     public AnswerService answerService;
