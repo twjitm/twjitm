@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,24 +120,24 @@ public class AnswerController extends BaseController {
                         break;
                 }
             }
-            nums=one+","+two+","+three;
+            nums = one + "," + two + "," + three;
             return nums;
-        }else {
-           List<Explain>allexplain= answerService.getAllExceptionBytype(type);
-           for (Explain explain:allexplain){
-               switch (explain.getDegree()) {
-                   case 1:
-                       one++;
-                       break;
-                   case 2:
-                       two++;
-                       break;
-                   case 3:
-                       three++;
-                       break;
-               }
-           }
-            nums=one+","+two+","+three;
+        } else {
+            List<Explain> allexplain = answerService.getAllExceptionBytype(type);
+            for (Explain explain : allexplain) {
+                switch (explain.getDegree()) {
+                    case 1:
+                        one++;
+                        break;
+                    case 2:
+                        two++;
+                        break;
+                    case 3:
+                        three++;
+                        break;
+                }
+            }
+            nums = one + "," + two + "," + three;
         }
         return nums;
     }
@@ -152,15 +153,37 @@ public class AnswerController extends BaseController {
 
     @RequestMapping("/addpaperUI")
     public String addPaperUI(HttpServletRequest request) {
-        return "/answer/addpaper";
+        return "/answer/papers";
     }
 
     @RequestMapping("/combination")
-    public String combination(HttpServletRequest request, String title, List<PapersVo> list) {
-        answerService.combination(request, title, list);
-        return "redirect:/answer/plist.do";
+    @ResponseBody
+    public String combination(HttpServletRequest request, String title, String data) {
+        System.out.println(data);
+        //Qtypes
+        String[] splitdata = data.split(";");
+        List<PapersVo> list = new ArrayList<PapersVo>();
+        for (int i = 0; i < splitdata.length; i++) {
+            String value = splitdata[i];
+            if (!value.equals("")) {
+                String numStr = value.split(":")[1].split(",")[0];
+                String typeStr = value.split(":")[0];
+                String scoreStr = value.split(":")[1].split(",")[1];
+                PapersVo papersVo = new PapersVo();
+                papersVo.setNumber(Integer.parseInt(numStr));
+                papersVo.setType(Integer.parseInt(typeStr));
+                papersVo.setScore(Integer.parseInt(scoreStr));
+                list.add(papersVo);
+            }
+        }
+        boolean success = answerService.combination(request, title, list);
+        if (success) {
+            return "success";
+        } else
+            return "error";
     }
-        @RequestMapping("/deletePaper")
+
+    @RequestMapping("/deletePaper")
     public String deletePaper(HttpServletRequest request, Integer id) {
         answerService.deletePaper(id);
         return "redirect:/answer/plist.do";

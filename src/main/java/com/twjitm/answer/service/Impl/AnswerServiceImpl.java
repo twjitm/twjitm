@@ -90,7 +90,7 @@ public class AnswerServiceImpl implements AnswerService {
         //不满足组卷条件
         boolean satisfy = canCombination();
         if (!satisfy) {
-            // return false;
+            return false;
         }
         String realPath = request.getServletContext().getRealPath(
                 "WEB-INF/File/");
@@ -353,15 +353,15 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
 
-    public static void main(String[] args) {
-        List<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < 100; i++) {
-            list.add(i);
-        }
-        AnswerServiceImpl answerService = new AnswerServiceImpl();
-        int[] random = answerService.getRandomArray(10, list);
-        for (int i = 0; i < random.length; i++) {
-            System.out.println(random[i]);
-        }
-    }
+//    public static void main(String[] args) {
+//        List<Integer> list = new ArrayList<Integer>();
+//        for (int i = 0; i < 100; i++) {
+//            list.add(i);
+//        }
+//        AnswerServiceImpl answerService = new AnswerServiceImpl();
+//        int[] random = answerService.getRandomArray(10, list);
+//        for (int i = 0; i < random.length; i++) {
+//            System.out.println(random[i]);
+//        }
+//    }
 }

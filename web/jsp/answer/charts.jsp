@@ -28,14 +28,16 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">题型数量分部图</h3>
+                                  <div style="text-align: center">
+                                <h3 class="">题型数量分部图</h3></div>
                                 <canvas id="answerNumChart" width="400" height="400"></canvas>
                             </div>
                         </div>
 
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">选择题难度分部图</h3>
+                                <div style="text-align: center">
+                                    <h3 class="">选择题难度分部图</h3></div>
                                 <canvas id="choicesDegres" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -46,14 +48,16 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">判断题难度分部图</h3>
+                                <div style="text-align: center">
+                                    <h3 class="">判断题难度分部图</h3></div>
                                 <canvas id="judgeDegres" width="400" height="400"></canvas>
                             </div>
                         </div>
 
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">填空题难度分部图</h3>
+                                <div style="text-align: center">
+                                    <h3 class="">填空题难度分部图</h3></div>
                                 <canvas id="gapDegres" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -65,14 +69,16 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">简答题难度分部图</h3>
+                                <div style="text-align: center">
+                                    <h3 class="">名词解释题难度分部图</h3></div>
                                 <canvas id="shortsDegres" width="400" height="400"></canvas>
                             </div>
                         </div>
 
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">名词解释题难度分部图</h3>
+                                <div style="text-align: center">
+                                    <h3 class="">简答题难度分部图</h3></div>
                                 <canvas id="nuomDegres" width="400" height="400"></canvas>
                             </div>
                         </div>
@@ -84,7 +90,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <h3 class="">主观题难度分部图</h3>
+                                <div style="text-align: center"><h3 class="">主观题难度分部图</h3></div>
                                 <canvas id="subDegres" width="400" height="400"></canvas>
                             </div>
                         </div>
