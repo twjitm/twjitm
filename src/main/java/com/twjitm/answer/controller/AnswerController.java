@@ -160,7 +160,7 @@ public class AnswerController extends BaseController {
         answerService.combination(request, title, list);
         return "redirect:/answer/plist.do";
     }
-
+        @RequestMapping("/deletePaper")
     public String deletePaper(HttpServletRequest request, Integer id) {
         answerService.deletePaper(id);
         return "redirect:/answer/plist.do";

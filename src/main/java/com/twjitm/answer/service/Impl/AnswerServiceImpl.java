@@ -129,11 +129,22 @@ public class AnswerServiceImpl implements AnswerService {
             //处理选择题
             if (answerType == Qtypes.TYPE_CHOICES.getValue()) {
                 List<Choices> choicesList = this.getAllChoices();
+                //难度系数类key，对应难度系数的目id
+                Map<Integer, List<Integer>> idMap = new HashMap<Integer, List<Integer>>();
                 List<Integer> idList = new ArrayList<Integer>();
                 for (int j = 0; j < choicesList.size(); j++) {
-                    idList.add(choicesList.get(j).getId());
+                    choicesList.get(j).getDegree();
+                    if (idMap.containsKey(choicesList.get(j).getDegree())) {
+                        idMap.get(choicesList.get(j).getDegree()).add(choicesList.get(j).getId());
+                    } else {
+                        List<Integer> list = new ArrayList<Integer>();
+                        list.add(choicesList.get(j).getId());
+                        idMap.put(choicesList.get(j).getDegree(), list);
+                    }
+                    //idList.add(choicesList.get(j).getId());
                 }
-                int[] finalIdarray = getRandomArray(answerVos.get(i).getNumber(), idList);
+                int[] finalIdarray = getRandomArray(answerVos.get(i).getNumber(), idMap);
+
                 for (int j = 0; j < finalIdarray.length; j++) {
                     stringBuffer.append("<p>");
                     Choices choices = choicesMapper.selectByPrimaryKey(finalIdarray[i]);
@@ -152,11 +163,16 @@ public class AnswerServiceImpl implements AnswerService {
                 //非选着题
                 String BagTitle = Qtypes.getTitle(answerType);
                 List<Explain> allexceptionType = this.getAllExceptionBytype(answerType);
-                List<Integer> idList = new ArrayList<Integer>();
+                Map<Integer, List<Integer>> idMap = new HashMap<Integer, List<Integer>>();
                 for (int j = 0; j < allexceptionType.size(); j++) {
-                    idList.add(allexceptionType.get(j).getId());
+                    if (idMap.containsKey(allexceptionType.get(j).getDegree())) {
+                        idMap.get(allexceptionType.get(j).getDegree());
+                    } else {
+                        List<Integer> list = new ArrayList<Integer>();
+                        list.add(allexceptionType.get(j).getId());
+                    }
                 }
-                int[] lastAnsuwerIdlist = this.getRandomArray(answerVos.get(i).getNumber(), idList);
+                int[] lastAnsuwerIdlist = this.getRandomArray(answerVos.get(i).getNumber(), idMap);
                 for (int j = 0; j < lastAnsuwerIdlist.length; j++) {
                     Explain explain = this.getExceptionById(lastAnsuwerIdlist[j]);
                     //拼接格式了
@@ -177,8 +193,8 @@ public class AnswerServiceImpl implements AnswerService {
         boolean success = false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-hh-mm");
         String dateStr = dateFormat.format(new Date());
-        String fileUrlDb= title + dateStr + fileType;
-        File file = new File(realPath +fileUrlDb);
+        String fileUrlDb = title + dateStr + fileType;
+        File file = new File(realPath + fileUrlDb);
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -200,21 +216,43 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
 
-    private int[] getRandomArray(int length, List<Integer> region) {
-
+    private int[] getRandomArray(int length, Map<Integer, List<Integer>> region) {
+        double easy = 0.4;
+        double general = 0.3;
+        double difficulty = 0.3;
         int[] array = new int[length];
         List<Integer> list = new ArrayList<Integer>();
-        Random random = new Random();
-        while (list.size() < length) {
-            int randomInt = random.nextInt(region.size());
-            if (!list.contains(randomInt)) {
-                list.add(randomInt);
+        for (Map.Entry<Integer, List<Integer>> entry : region.entrySet()) {
+            List<Integer> idList = entry.getValue();
+            int wight = 0;
+            if (entry.getKey() == 1) {
+                wight = (int) (easy * length);
+            } else if (entry.getKey() == 2) {
+                wight = (int) (general * length);
             }
+            if (entry.getKey() == 3) {
+                wight = (int) (difficulty * length);
+            }
+            getData(list, wight, idList);
         }
         for (int i = 0; i < list.size(); i++) {
-            array[i] = region.get(list.get(i));
+            array[i] = list.get(i);
         }
         return array;
+    }
+
+    public void getData(List<Integer> list, int wight, List<Integer> idList) {
+        Random random = new Random();
+        if (wight > 0) {
+            int addtag = 0;
+            while (addtag < wight) {
+                int top = random.nextInt(idList.size() - 1);
+                if (!list.contains(idList.get(top))) {
+                    list.add(idList.get(top));
+                    addtag++;
+                }
+            }
+        }
     }
 
 
@@ -284,7 +322,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
 
-        //统计
+    //统计
     public ChartVo analyseDegree() {
         Map<String, List<Choices>> mapChoices = new HashMap<String, List<Choices>>();
         for (int i = 1; i < 4; i++) {
@@ -298,7 +336,7 @@ public class AnswerServiceImpl implements AnswerService {
                 mapExplain.put(i + "#" + degres, this.getExplainByTypeAndDegers(i, degres));
             }
         }
-        ChartVo chartVo=new ChartVo();
+        ChartVo chartVo = new ChartVo();
         chartVo.setMapCho(mapChoices);
         chartVo.setMapExp(mapExplain);
         return chartVo;
@@ -316,13 +354,13 @@ public class AnswerServiceImpl implements AnswerService {
 
 
     public static void main(String[] args) {
-      List<Integer> list=new ArrayList<Integer>();
-        for(int i=0;i<100;i++){
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = 0; i < 100; i++) {
             list.add(i);
         }
-         AnswerServiceImpl answerService=new AnswerServiceImpl();
-        int[] random=answerService.getRandomArray(10,list);
-        for(int i=0;i<random.length;i++){
+        AnswerServiceImpl answerService = new AnswerServiceImpl();
+        int[] random = answerService.getRandomArray(10, list);
+        for (int i = 0; i < random.length; i++) {
             System.out.println(random[i]);
         }
     }
