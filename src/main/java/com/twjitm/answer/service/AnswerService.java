@@ -31,7 +31,7 @@ public interface AnswerService {
     public Choices getChoicesById(int id);
     public List<Papers> getAllPapers();
 
-    public  boolean combination(HttpServletRequest request,String title, List<PapersVo> answerVos);
+    public  boolean combination(int degree,String title, List<PapersVo> answerVos);
 
         //papers
     public List<Papers>getallPapers();

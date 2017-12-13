@@ -176,7 +176,7 @@ public class AnswerController extends BaseController {
                 list.add(papersVo);
             }
         }
-        boolean success = answerService.combination(request, title, list);
+        boolean success = answerService.combination( 1,title, list);
         if (success) {
             return "success";
         } else
