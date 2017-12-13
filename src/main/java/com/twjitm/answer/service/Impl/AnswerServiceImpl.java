@@ -86,7 +86,7 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Papers> getAllPapers() {
         return null;
     }
-
+     //抽样算法
     public boolean combination(int degre, String title, List<PapersVo> answerVos) {
         //不满足组卷条件
         boolean satisfy = canCombination();
@@ -217,9 +217,9 @@ public class AnswerServiceImpl implements AnswerService {
         return success;
     }
 
-     //抽取题库题目
+     //实现正态分布抽取抽样样本算法
     private int[] getRandomArray(int degre, int length, Map<Integer, List<Integer>> region) {
-        //************一般比******************
+        //************难度系数******************
         double[] arrays = getDegres(degre);
         double easy = arrays[0];
         double general = arrays[1];
@@ -245,7 +245,7 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return array;
     }
-    //核心抽题算法
+    //核心抽样算法获取数据
     public void getData(List<Integer> list, int wight, List<Integer> idList) {
         Random random = new Random();
         if (wight > 0) {
@@ -259,7 +259,7 @@ public class AnswerServiceImpl implements AnswerService {
             }
         }
     }
-      //获取抽题算法暗度系数基数
+      //正态分布算法难度系数基数
     public double[] getDegres(int degreType) {
         String dataStr;
         switch (degreType) {
@@ -379,7 +379,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 
     public static void main(String[] args) {
-        Map<Integer, List<Integer>> idMap = new HashMap<Integer, List<Integer>>();
+       /* Map<Integer, List<Integer>> idMap = new HashMap<Integer, List<Integer>>();
         List<Integer> list = new ArrayList<Integer>();
         for (int i = 1; i < 31; i++) {
             list.add(i);
@@ -400,6 +400,10 @@ public class AnswerServiceImpl implements AnswerService {
         int[] random = answerService.getRandomArray(1, 20, idMap);
         for (int i = 0; i < random.length; i++) {
             System.out.println(random[i]);
-        }
+        }*/
+       String b="abc";
+       String a=new String("abc");
+        String c=a;
+        System.out.println(c==a);
     }
 }

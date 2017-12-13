@@ -31,14 +31,10 @@ public class UserServiceImpl implements IUsersService {
     }
 
     public Users login(String name, String psd) {
-        List<Users> list = this.getUser();
         String md5=Md5Utils.StringToMd5(psd);
-        for (Users user : list) {
-            if (user.getuAccount().equals(name) && user.getuPsd().equals(md5)) {
-                return user;
-            }
-        }
-        return null;
+        System.out.println(md5);
+        Users users= usersMapper.login(name,md5);
+        return users;
     }
 
 

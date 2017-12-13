@@ -20,4 +20,6 @@ public interface UsersMapper {
     int updateByPrimaryKey(Users record);
 
     List<Users> getAllUser();
+
+    Users login(String uAccount, String uPsd);
 }

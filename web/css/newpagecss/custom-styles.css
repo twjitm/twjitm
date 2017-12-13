@@ -498,7 +498,7 @@ background: #17191B;
 	
 }
 .top-navbar {
-	background: #4bb777;
+	background: #1d7541;
 	border-bottom:none;
 	
 }
@@ -506,7 +506,7 @@ background: #17191B;
 margin-right: 2px;
 }
 .top-navbar .navbar-brand:hover { 
-color: #4bb777;
+color: #1d7541;
 
 background-color: rgb(43, 46, 51);
 }

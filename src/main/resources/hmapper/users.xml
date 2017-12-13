@@ -79,4 +79,8 @@
       u_psd = #{uPsd,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="login"  resultType="com.twjitm.answer.entity.Users">
+    SELECT * from users WHERE  u_account=#{arg0} and u_psd=#{arg1}
+  </select>
+  <select id="getAllUser" resultMap="BaseResultMap"></select>
 </mapper>
