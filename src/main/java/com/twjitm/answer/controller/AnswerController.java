@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,7 +177,7 @@ public class AnswerController extends BaseController {
                 list.add(papersVo);
             }
         }
-        boolean success = answerService.combination( 1,title, list);
+        boolean success = answerService.combination(request ,1,title, list);
         if (success) {
             return "success";
         } else
@@ -194,8 +195,10 @@ public class AnswerController extends BaseController {
         Papers papers = answerService.getPapersById(pId);
         String fileName = papers.getUrl();
         if (fileName != null) {
-            String realPath = request.getServletContext().getRealPath(
-                    "WEB-INF/File/");
+          //  String realPath = request.getServletContext().getRealPath(
+                  //  "WEB-INF/File/");
+            URL url =Thread.currentThread().getContextClassLoader().getResource(""); //request.getServletContext().getRealPath("/");
+            String realPath = url.getPath();
             File file = new File(realPath, fileName);
             if (file.exists()) {
                 response.setContentType("application/force-download");// 设置强制下载不打开

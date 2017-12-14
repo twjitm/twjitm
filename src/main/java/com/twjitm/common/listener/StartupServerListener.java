@@ -16,13 +16,15 @@ public class StartupServerListener implements ApplicationListener<ContextRefresh
     }
 
     public void onApplicationEvent(ContextRefreshedEvent evt) {
-        if (evt.getApplicationContext().getParent() == null) {
-            TwjThreadFactory factory = new TwjThreadFactory();
-            factory.newThread(new Runnable() {
-                public void run() {
-                    start();
-                }
-            }).start();
-        }
+//        if (evt.getApplicationContext().getParent() == null) {
+//            ClassLoader classLoader=this.getClass().getClassLoader();
+//            classLoader.getResource("com.twjitm.common");
+//            TwjThreadFactory factory = new TwjThreadFactory();
+//            factory.newThread(new Runnable() {
+//                public void run() {
+//                    start();
+//                }
+//            }).start();
+//        }
     }
 }

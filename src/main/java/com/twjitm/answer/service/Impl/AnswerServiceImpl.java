@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -87,7 +88,7 @@ public class AnswerServiceImpl implements AnswerService {
         return null;
     }
      //抽样算法
-    public boolean combination(int degre, String title, List<PapersVo> answerVos) {
+    public boolean combination(HttpServletRequest request, int degre, String title, List<PapersVo> answerVos) {
         //不满足组卷条件
         boolean satisfy = canCombination();
         if (!satisfy) {
@@ -95,7 +96,8 @@ public class AnswerServiceImpl implements AnswerService {
         }
        /* String realPath = request.getServletContext().getRealPath(
                 "WEB-INF/File/");*/
-        String realPath = "/WEB-INF/File/";
+        URL url =Thread.currentThread().getContextClassLoader().getResource(""); //request.getServletContext().getRealPath("/");
+        String realPath = url.getPath();
         String fileType = ".html";
         if (answerVos == null || answerVos.size() == 0) return false;
         //排序标号
@@ -124,7 +126,6 @@ public class AnswerServiceImpl implements AnswerService {
             stringBuffer.append("<article class=\"markup\">" +
                     "  <h2 class=\"section-title\">" +
                     "" +
-                    i +
                     Qtypes.getTitle(answerType) + (answerVos.get(i).getScore()) +
                     "</h2>"
             );
@@ -149,16 +150,24 @@ public class AnswerServiceImpl implements AnswerService {
 
                 for (int j = 0; j < finalIdarray.length; j++) {
                     stringBuffer.append("<p>");
-                    Choices choices = choicesMapper.selectByPrimaryKey(finalIdarray[i]);
-                    stringBuffer.append("(" + j + "):" + choices.getTitle());
-                    stringBuffer.append("</p>");
-                    stringBuffer.append("<blockquote>");
-                    String answers = choices.getAnswer();
-                    String[] anser = answers.split("#");
-                    for (int m = 0; m < anser.length; m++) {
-                        stringBuffer.append(anser[m]);
+                    Choices choices = choicesMapper.selectByPrimaryKey(finalIdarray[j]);
+                    if(choices!=null){
+                        stringBuffer.append("(" +( j +1)+ "):" + choices.getTitle());
+                        stringBuffer.append("</p>");
+                        stringBuffer.append("<blockquote>");
+                        String answers = choices.getItems();
+                        String[] anser = answers.split("#");
+                        for (int m = 0; m < anser.length; m++) {
+                            char Num=65;
+                            Num= (char) (Num+m);
+                            stringBuffer.append(Num);
+                            stringBuffer.append(":");
+                            stringBuffer.append(anser[m]);
+                            stringBuffer.append(".");
+                            stringBuffer.append("&nbsp&nbsp&nbsp&nbsp&nbsp");
+                        }
+                        stringBuffer.append(" </blockquote>");
                     }
-                    stringBuffer.append(" </blockquote>");
                 }
                 stringBuffer.append("</article>");
             } else {
@@ -178,12 +187,14 @@ public class AnswerServiceImpl implements AnswerService {
                 for (int j = 0; j < lastAnsuwerIdlist.length; j++) {
                     Explain explain = this.getExceptionById(lastAnsuwerIdlist[j]);
                     //拼接格式了
-                    stringBuffer.append("<p>");
-                    stringBuffer.append("(" + j + "):" + explain.getTitle());
-                    stringBuffer.append("</p>");
-                    stringBuffer.append("<blockquote>");
-                    stringBuffer.append("</br>");
-                    stringBuffer.append("</blockquote>");
+                    if(explain!=null){
+                        stringBuffer.append("<p>");
+                        stringBuffer.append("(" + (j+1)+ "):" + explain.getTitle());
+                        stringBuffer.append("</p>");
+                        stringBuffer.append("<blockquote>");
+                        stringBuffer.append("</br>");
+                        stringBuffer.append("</blockquote>");
+                    }
                 }
                 stringBuffer.append("</article>");
             }
@@ -198,7 +209,8 @@ public class AnswerServiceImpl implements AnswerService {
         String fileUrlDb = title + dateStr + fileType;
         File file = new File(realPath + fileUrlDb);
         try {
-            if (!file.exists()) {
+            if (!file.exists() && !file.isDirectory()) {
+                //file.mkdir();
                 file.createNewFile();
             }
             FileWriter fileWriter = new FileWriter(file);
@@ -240,7 +252,8 @@ public class AnswerServiceImpl implements AnswerService {
             }
             getData(list, wight, idList);
         }
-        for (int i = 0; i < array.length; i++) {
+        int size= array.length>list.size()?list.size():array.length;
+        for (int i = 0; i < size; i++) {
             array[i] = list.get(i);
         }
         return array;
@@ -250,8 +263,14 @@ public class AnswerServiceImpl implements AnswerService {
         Random random = new Random();
         if (wight > 0) {
             int addtag = 0;
+            if(wight>idList.size()){
+                list.addAll(idList);
+                return;
+            }
             while (addtag < wight) {
-                int top = random.nextInt(idList.size() - 1);
+                System.out.println("抽题中。。。。。。。。。。。。。。。");
+                int randmova=idList.size() - 1<1?1:idList.size() - 1;
+                int top = random.nextInt(randmova);
                 if (!list.contains(idList.get(top))) {
                     list.add(idList.get(top));
                     addtag++;

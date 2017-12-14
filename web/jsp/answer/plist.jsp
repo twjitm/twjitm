@@ -47,7 +47,8 @@
                                                         <td>${list.id}</td>
                                                         <td>${list.title}</td>
                                                         <td>
-                                                            <a href="<%=path%>/answer/updateSubject.do?id=${list.id}">下载</a>
+                                                            <a href="<%=path%>/answer/download.do?pId=${list.id}&fileType=html">下载html</a>
+                                                            <a href="<%=path%>/answer/download.do?pId=${list.id}&fileType=doc">下载doc</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

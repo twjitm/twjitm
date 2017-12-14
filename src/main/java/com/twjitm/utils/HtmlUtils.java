@@ -329,7 +329,7 @@ public class HtmlUtils {
 
     public static String getHead(String title) {
         String head = "<head>\n" +
-                "  <meta charset=\"utf-8\">\n" +
+                "  <meta charset=\"gb2312\">\n" +
                 "  <meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0\">\n" +
                 "\n" +
                 "  <title>河北大学 2018 " + title + "卷</title>\n" +

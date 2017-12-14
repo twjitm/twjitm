@@ -18,11 +18,12 @@
             <mvc:mapping path="/*/*.do"/>
             <mvc:mapping path="/*/*.json"/>
             <!--去除拦截-->
-            <mvc:exclude-mapping path="/" />
-            <!--用户登录请求-->
+            <mvc:exclude-mapping path="/"/>
+            <!--基本网络框架用户登录请求-->
             <mvc:exclude-mapping path="/user/login.do"/>
+            <!--业务框架用户登录请求-->
             <mvc:exclude-mapping path="/users/login.do"/>
-           <!--用户注册请求-->
+            <!--用户注册请求-->
             <mvc:exclude-mapping path="/user/register.do"/>
             <!--开放接口平台-->
             <bean class="com.twjitm.aop.TwjItmInterceptor"></bean>

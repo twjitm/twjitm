@@ -97,13 +97,12 @@
             layer.msg("标题不能为空");
             return;
         }
-        var index =  parent.layer.load(2, {shade: false} ); //0代表加载的风格，支持0-2
+       /* var index =  parent.layer.load(2, {shade: false} ); //0代表加载的风格，支持0-2*/
         $.ajax({
             type: 'POSt',
             url: '<%=path%>/answer/combination.do?title='+titles +"&data="+data,
             date: '',
             success: function (data) {
-                index.close();
                 console.log(typeof data)
                 if (data == "success") {
                     window.location.href = "<%=path%>/answer/plist.do";
