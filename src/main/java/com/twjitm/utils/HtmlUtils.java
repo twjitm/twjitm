@@ -1,16 +1,23 @@
 package com.twjitm.utils;
 
-import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+
+import java.io.*;
 
 /**
  * Created by 文江 on 2017/12/2.
  */
 public class HtmlUtils {
+    private static HtmlUtils utils;
+    public  static  HtmlUtils getInStance(){
+        if(utils==null){
+            utils=new HtmlUtils();
+        }
+        return utils;
+    }
+    private   final String styleFile="G:\\\\git\\\\out\\\\artifacts\\\\twjitm_war_exploded\\\\WEB-INF\\\\classes\\\\style.css";
+
     private static String getDefautCss() {
         String css = "/*\n" +
                 "\n" +
@@ -238,7 +245,6 @@ public class HtmlUtils {
                 "   text-align:center;\n" +
                 "}\n" +
                 "\n" +
-                "/* sharing tools & ribbons */\n" +
                 "\n" +
                 ".wrap-ribbons {\n" +
                 "  float: right;\n" +
@@ -329,8 +335,8 @@ public class HtmlUtils {
 
     public static String getHead(String title) {
         String head = "<head>\n" +
-                "  <meta charset=\"gb2312\">\n" +
-                "  <meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0\">\n" +
+                "  <meta charset=\"gbk\"/>\n" +
+                "  <meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0\"/>\n" +
                 "\n" +
                 "  <title>河北大学 2018 " + title + "卷</title>\n" +
                 "  \n" +
@@ -349,34 +355,102 @@ public class HtmlUtils {
     /**
      * html 转Word
      * @param html
-     * @param word
      */
-    public static void htmlToWord(File html, File word) {
-        InputStream templateStream = null;
-        try {
-            // Get the template input stream from the application resources.
-            final URL resource = html.toURI().toURL();
+    @Deprecated
+//    public static void htmlToWord(File html, File word) {
+//        InputStream templateStream = null;
+//        try {
+//            // Get the template input stream from the application resources.
+//            final URL resource = html.toURI().toURL();
+//            // Instanciate the Docx4j objects.
+//            WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
+//            XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
+//
+//            // XHTMLImporter.setRunFormatting(FormattingOption.CLASS_PLUS_OTHER);
+//            // Load the XHTML document.
+//          //  XHTMLImporter.setHyperlinkStyle("G:\\git\\out\\artifacts\\twjitm_war_exploded\\WEB-INF\\classes\\style.css");
+//            wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(resource));
+//            // Save it as a DOCX document on disc.
+//            wordMLPackage.save(word);
+//            // Desktop.getDesktop().open(outputFile);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Error converting file " + html, e);
+//        } finally {
+//            if (templateStream != null) {
+//                try {
+//                    templateStream.close();
+//                } catch (Exception ex) {
+//                    System.out.println("error");
+//
+//                }
+//            }
+//        }
+//    }error
 
-            // Instanciate the Docx4j objects.
-            WordprocessingMLPackage wordMLPackage = WordprocessingMLPackage.createPackage();
-            XHTMLImporterImpl XHTMLImporter = new XHTMLImporterImpl(wordMLPackage);
-            // Load the XHTML document.
-            wordMLPackage.getMainDocumentPart().getContent().addAll(XHTMLImporter.convert(resource));
-            // Save it as a DOCX document on disc.
-            wordMLPackage.save(word);
-            // Desktop.getDesktop().open(outputFile);
-        } catch (Exception e) {
-            throw new RuntimeException("Error converting file " + html, e);
-        } finally {
-            if (templateStream != null) {
-                try {
-                    templateStream.close();
-                } catch (Exception ex) {
-                    System.out.println("error");
 
-                }
-            }
-        }
+    public  void htmlToWord2(File html, String docPath) throws Exception {
+
+        InputStream bodyIs = new FileInputStream(html);
+        InputStream cssIs = new FileInputStream(styleFile);
+        String body = getContent(bodyIs);
+        String css = getContent(cssIs);
+        //拼一个标准的HTML格式文档
+        String content = "<html><head><style>" + css + "</style></head><body>" + body + "</body></html>";
+        InputStream is = new ByteArrayInputStream(content.getBytes("GBK"));
+        OutputStream os = new FileOutputStream(docPath);
+        inputStreamToWord(is, os);
     }
 
+    /**
+     * 把is写入到对应的word输出流os中
+     * 不考虑异常的捕获，直接抛出
+     * @param is
+     * @param os
+     * @throws IOException
+     */
+    private  void inputStreamToWord(InputStream is, OutputStream os) throws IOException {
+        POIFSFileSystem fs = new POIFSFileSystem();
+        //对应于org.apache.poi.hdf.extractor.WordDocument
+
+        fs.createDocument(is, "WordDocument");
+        fs.writeFilesystem(os);
+        os.close();
+        is.close();
+    }
+
+    /**
+     * 把输入流里面的内容以UTF-8编码当文本取出。
+     * 不考虑异常，直接抛出
+     * @param ises
+     * @return
+     * @throws IOException
+     */
+    private  String getContent(InputStream... ises) throws IOException {
+        if (ises != null) {
+            StringBuilder result = new StringBuilder();
+            BufferedReader br;
+            String line;
+            for (InputStream is : ises) {
+                br = new BufferedReader(new InputStreamReader(is, "gb2312"));
+                while ((line=br.readLine()) != null) {
+                    result.append(line);
+                }
+            }
+            return result.toString();
+        }
+        return null;
+    }
+
+
+    public static void main(String[] args) {
+        File html=new File("G:\\\\\\\\git\\\\\\\\out\\\\\\\\artifacts\\\\\\\\twjitm_war_exploded\\\\\\\\WEB-INF\\\\\\\\classes\\\\\\\\1112017-09-52.html");
+        //"G:\\\\git\\\\out\\\\artifacts\\\\twjitm_war_exploded\\\\WEB-INF\\\\classes\\\\1112017-09-52.html"
+      String docPath="G:\\\\git\\\\out\\\\artifacts\\\\twjitm_war_exploded\\\\WEB-INF\\\\classes\\\\1112017-09-52.doc";
+        HtmlUtils utils=new HtmlUtils();
+        try {
+            utils.htmlToWord2(html,docPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

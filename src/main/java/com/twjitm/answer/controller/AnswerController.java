@@ -8,6 +8,7 @@ import com.twjitm.answer.enums.Qtypes;
 import com.twjitm.answer.service.AnswerService;
 import com.twjitm.base.BaseController;
 import com.twjitm.utils.HtmlUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,7 @@ import java.util.List;
 @RequestMapping("/answer")
 @Controller
 public class AnswerController extends BaseController {
+    private Logger logger=Logger.getLogger(AnswerController.class);
 
     @Resource
     public AnswerService answerService;
@@ -194,17 +196,25 @@ public class AnswerController extends BaseController {
     public String downloadAnswer(HttpServletRequest request, Integer pId, String fileType, HttpServletResponse response) {
         Papers papers = answerService.getPapersById(pId);
         String fileName = papers.getUrl();
+      String[] fileAllPath=  fileName.split("\\.");
         if (fileName != null) {
           //  String realPath = request.getServletContext().getRealPath(
                   //  "WEB-INF/File/");
             URL url =Thread.currentThread().getContextClassLoader().getResource(""); //request.getServletContext().getRealPath("/");
             String realPath = url.getPath();
             File file = new File(realPath, fileName);
+            System.out.println(file.getPath());
             if (file.exists()) {
                 response.setContentType("application/force-download");// 设置强制下载不打开
                 if (fileType.equals(FileTypes.FILE_DOC)) {
-                    File docFile = new File(realPath + "." + fileType);
-                    HtmlUtils.htmlToWord(file, docFile);
+                  //  HtmlUtils.htmlToWord2(file.getPath(),docFile.getPath());
+                    try {
+                        HtmlUtils.getInStance().htmlToWord2(file, realPath + fileAllPath[0]+"." + fileType);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        logger.info("error***************************");
+                    }
+                    File docFile = new File(realPath + fileAllPath[0]+"." + fileType);
                     response.addHeader("Content-Disposition",
                             "attachment;fileName=" + docFile.getName());// 设置文件名
                     wirte(response, docFile);

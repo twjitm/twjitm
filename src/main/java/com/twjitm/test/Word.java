@@ -1,12 +1,5 @@
 package com.twjitm.test;
 
-import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-
 /**
  * Created by 文江 on 2017/12/5.
  */

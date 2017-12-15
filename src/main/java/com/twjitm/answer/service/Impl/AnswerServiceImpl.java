@@ -102,7 +102,8 @@ public class AnswerServiceImpl implements AnswerService {
         if (answerVos == null || answerVos.size() == 0) return false;
         //排序标号
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("<!doctype html>");
+        stringBuffer.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");
+        stringBuffer.append("<html>");
         stringBuffer.append(HtmlUtils.getHead(title));
         stringBuffer.append("<body>");
         stringBuffer.append("<div>");
@@ -201,6 +202,7 @@ public class AnswerServiceImpl implements AnswerService {
         }
         stringBuffer.append("\n" +
                 "  </div>\n" +
+                "  </div>\n"+
                 "</body>\n" +
                 "</html>");
         boolean success = false;
@@ -208,6 +210,7 @@ public class AnswerServiceImpl implements AnswerService {
         String dateStr = dateFormat.format(new Date());
         String fileUrlDb = title + dateStr + fileType;
         File file = new File(realPath + fileUrlDb);
+        File noStyleFile=new File(realPath + fileUrlDb);
         try {
             if (!file.exists() && !file.isDirectory()) {
                 //file.mkdir();
