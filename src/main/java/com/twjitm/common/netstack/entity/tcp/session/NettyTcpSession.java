@@ -6,6 +6,8 @@ import io.netty.channel.Channel;
  * Created by 文江 on 2017/12/19.
  */
 public class NettyTcpSession extends NettySession{
+private INettyNetMessageSender nettyNetMessageSender;
+privatte
 
     public NettyTcpSession(Channel channel) {
         super(channel);

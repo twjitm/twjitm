@@ -1,5 +1,6 @@
 package com.twjitm.common.manager;
 
+import com.twjitm.common.logic.net.NettyNetMessageProcessLogic;
 import com.twjitm.common.service.ILocalService;
 import com.twjitm.common.service.RPCService;
 import com.twjitm.receipt.service.IReceiptService;
@@ -19,8 +20,9 @@ public class LocalSpringBeanManager implements ILocalService{
 
     private IUserService userService;
     private RPCService rpcService;
-
+    private NettyNetMessageProcessLogic nettyNetMessageProcessLogic;
     private ClassPathXmlApplicationContext applicationContext;
+
 
     public IReceiptService getReceiptService() {
         return receiptService= (IReceiptService) this.applicationContext.getBean("IReceiptService");
@@ -36,6 +38,14 @@ public class LocalSpringBeanManager implements ILocalService{
 
     public void setUserService(IUserService userService) {
         this.userService = userService;
+    }
+
+    public NettyNetMessageProcessLogic getNettyNetMessageProcessLogic() {
+        return (NettyNetMessageProcessLogic) this.applicationContext.getBean("NettyNetMessageProcessLogic");
+    }
+
+    public void setNettyNetMessageProcessLogic(NettyNetMessageProcessLogic nettyNetMessageProcessLogic) {
+        this.nettyNetMessageProcessLogic = nettyNetMessageProcessLogic;
     }
 
     public String getId() {
