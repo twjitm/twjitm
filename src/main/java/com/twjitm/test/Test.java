@@ -139,7 +139,8 @@ public class Test {
     public static void main(String[] args) {
      //   create(World.class, World.class);
     //    mapTest();
-        seqSum(14);
+     //   seqSum(14);
+        forTest();
     }
 
     public static <X, Y extends X> void create(Class<Y> clazz, Class<X> inter) {
@@ -201,6 +202,13 @@ public class Test {
         Map<String ,Object> hashMap=new HashMap<String, Object>();
         hashMap.put(null,null);
 
+    }
+    public static void forTest(){
+        int a=0;
+        for(int i=0;i<10;i++){
+            a+=a++;
+        }
+        System.out.println(a);
     }
 
 }
