@@ -7,7 +7,7 @@ import io.netty.channel.Channel;
  */
 public class NettyTcpSession extends NettySession{
 private INettyNetMessageSender nettyNetMessageSender;
-privatte
+
 
     public NettyTcpSession(Channel channel) {
         super(channel);
