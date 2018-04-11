@@ -27,7 +27,7 @@ public class TwjItmInterceptor implements HandlerInterceptor {
         if (servletPath.indexOf(".") < 0) {
             return false;
         }
-        String type = servletPath.split("\\.")[1];
+    /*    String type = servletPath.split("\\.")[1];
         logger.info("！！！！！这个是我的如部署文件啦");
         logger.info(type);
         if (type.equals(RequestEndType.DO_REQ)) {
@@ -42,7 +42,7 @@ public class TwjItmInterceptor implements HandlerInterceptor {
         } else if (type.equals(RequestEndType.JSON_REQ)) {
             //后台服务器请求
             request.setAttribute("reqType", (RequestEndType.JSON_REQ));
-        }
+        }*/
         return true;
     }
 

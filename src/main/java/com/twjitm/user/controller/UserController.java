@@ -1,10 +1,10 @@
 //package com.twjitm.user.controller;
 //
 //import com.twjitm.answer.entity.Users;
-//import com.twjitm.answer.service.IUsersService;
+//import com.twjitm.answer.server.IUsersService;
 //import com.twjitm.base.BaseController;
 //import com.twjitm.user.entity.User;
-//import com.twjitm.user.service.IUserService;
+//import com.twjitm.user.server.IUserService;
 //import org.apache.log4j.LogManager;
 //import org.apache.log4j.Logger;
 //import org.springframework.beans.factory.annotation.Autowired;

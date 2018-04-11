@@ -1,7 +1,6 @@
 package com.twjitm.base;
 
 import com.twjitm.answer.entity.Users;
-import com.twjitm.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;

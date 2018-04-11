@@ -3536,7 +3536,7 @@ module.exports = function(Chart) {
 		currentStep: 0, // the current animation step
 		numSteps: 60, // default number of steps
 		easing: '', // the easing to use for this animation
-		render: null, // render function used by the animation service
+		render: null, // render function used by the animation server
 
 		onAnimationProgress: null, // user specified callback to fire on each step of the animation
 		onAnimationComplete: null, // user specified callback to fire when the animation finishes
@@ -6090,9 +6090,9 @@ module.exports = function(Chart) {
 	 * @prop {Number} bottom - Bottom edge of the item. Set by layout system and cannot be used in update
 	 */
 
-	// The layout service is very self explanatory.  It's responsible for the layout within a chart.
-	// Scales, Legends and Plugins all rely on the layout service and can easily register to be placed anywhere they need
-	// It is this service's responsibility of carrying out that layout.
+	// The layout server is very self explanatory.  It's responsible for the layout within a chart.
+	// Scales, Legends and Plugins all rely on the layout server and can easily register to be placed anywhere they need
+	// It is this server's responsibility of carrying out that layout.
 	Chart.layoutService = {
 		defaults: {},
 
@@ -6481,7 +6481,7 @@ defaults._set('global', {
 module.exports = function(Chart) {
 
 	/**
-	 * The plugin service singleton
+	 * The plugin server singleton
 	 * @namespace Chart.plugins
 	 * @since 2.1.0
 	 */

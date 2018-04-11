@@ -162,7 +162,7 @@ public class AnswerController extends BaseController {
     @RequestMapping("/combination")
     @ResponseBody
     public String combination(HttpServletRequest request, String title, String data) {
-        System.out.println(data);
+        logger.info(data);
         //Qtypes
         String[] splitdata = data.split(";");
         List<PapersVo> list = new ArrayList<PapersVo>();

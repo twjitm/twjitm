@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<servers>
-    <server id="10001" name="httpservice1" port="9090" ip="127.0.0.1" ></server>
-    <server id="10002" name="httpservice1" port="9091" ip="127.0.0.1" ></server>
-    <server id="10003" name="httpservice1" port="9091" ip="127.0.0.1" ></server>
-</servers>
