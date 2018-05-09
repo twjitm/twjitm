@@ -176,14 +176,19 @@ public class AnswerServiceImpl implements AnswerService {
                 String BagTitle = Qtypes.getTitle(answerType);
                 List<Explain> allexceptionType = this.getAllExceptionBytype(answerType);
                 Map<Integer, List<Integer>> idMap = new HashMap<Integer, List<Integer>>();
+
+                // 根据难度系数分组
                 for (int j = 0; j < allexceptionType.size(); j++) {
+
                     if (idMap.containsKey(allexceptionType.get(j).getDegree())) {
-                        idMap.get(allexceptionType.get(j).getDegree());
+                        idMap.get(allexceptionType.get(j).getDegree()).add(allexceptionType.get(j).getId());
                     } else {
                         List<Integer> list = new ArrayList<Integer>();
                         list.add(allexceptionType.get(j).getId());
+                        idMap.put(allexceptionType.get(j).getDegree(),list);
                     }
                 }
+
                 int[] lastAnsuwerIdlist = this.getRandomArray(degre, answerVos.get(i).getNumber(), idMap);
                 for (int j = 0; j < lastAnsuwerIdlist.length; j++) {
                     Explain explain = this.getExceptionById(lastAnsuwerIdlist[j]);

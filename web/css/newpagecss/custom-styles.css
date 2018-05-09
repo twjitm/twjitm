@@ -10,12 +10,12 @@ http://creativecommons.org/licenses/by/3.0/
 ------------------------------------------------*/
 body {
     font-family: 'Open Sans', sans-serif;
-  background-color: #283643;
+  background-color: #009bdb;
 }
 
  #wrapper {
     width: 100%;
-    background: #283643;
+    background: #009bdb;
 }
 
 #page-wrapper {
@@ -383,7 +383,7 @@ font-size: 24px;
 font-weight: 700;
 text-transform: uppercase;
 line-height: 30px;
-background: #283643;
+background: #009bdb;
 }
 .navbar-brand b{
 color: #4BD28C;
@@ -472,7 +472,7 @@ color: #fff !important;
 	padding:0;
 }
 .sidebar-collapse .nav > li > a {
-	color: #B5B5B5;
+	color: #000;
 	background:transparent;
 	text-shadow:none;
 	
@@ -494,11 +494,11 @@ background: #17191B;
  
 .navbar-side {
 	border:none;
-	background-color: rgb(40, 54, 67);
+	background-color: #009bdb;
 	
 }
 .top-navbar {
-	background: #1d7541;
+	background: #3b200c;
 	border-bottom:none;
 	
 }
@@ -521,7 +521,7 @@ border:0px solid black;
     background: transparent;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-background-color: #283643;
+background-color: #009bdb;
 }
 .navbar-default .navbar-toggle {
 border-color: #fff;
@@ -548,7 +548,7 @@ background-color: #FFF;
     background-color: #CFCECE;
     padding: 8px 9px;
     top: -15px;
-    color: #283643;
+    color: #009bdb;
 	cursor:pointer;
 }
 ul.dropdown-menu.dropdown-messages li a div {

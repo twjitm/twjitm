@@ -5,11 +5,11 @@ package com.twjitm.answer.enums;
  */
 public enum Qtypes {
     TYPE_CHOICES(0, "一、选着题"),
-    TYPE_JUDGE(1, "一、判断题"),
-    TYPE_GAP(2, "一、填空题"),
-    TYPE_NUOM(3, "一、名称解释题"),
-    TYPW_SHORT(4, "一、简答题"),
-    TYPE_SUBJECTATIVITY(5, "一、主观题");
+    TYPE_JUDGE(1, "二、判断题"),
+    TYPE_GAP(2, "三、填空题"),
+    TYPE_NUOM(3, "四、名称解释题"),
+    TYPW_SHORT(4, "五、简答题"),
+    TYPE_SUBJECTATIVITY(5, "六、主观题");
     private int value;
     private String title;
 

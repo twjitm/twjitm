@@ -1,7 +1,6 @@
 package com.twjitm.common.utils;
 
-import org.apache.logging.log4j.core.config.Loggers;
-import org.slf4j.Logger;
+
 import sun.net.www.protocol.file.FileURLConnection;
 
 import java.io.File;
