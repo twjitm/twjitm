@@ -23,8 +23,8 @@
         <div class="submit"><input type="button" value="登录" onclick="login()"></div>
         <div class="clear"></div>
         <div class="new">
-            <h3><a href="#">Forgot password ?</a></h3>
-            <h4><a href="#">New here ? Sign Up</a></h4>
+            <%--<h3><a href="#">Forgot password ?</a></h3>
+            <h4><a href="#">New here ? Sign Up</a></h4>--%>
             <div class="clear"></div>
         </div>
     </form>
