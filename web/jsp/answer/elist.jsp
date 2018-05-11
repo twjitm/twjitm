@@ -73,7 +73,7 @@
                                                         </c:if>
                                                         <td>${explain.degree} 星</td>
                                                         <td>
-                                                            <a href="<%=path%>/answer/updateSubjectUI.do?id=${explain.id}type=${explain.qtype}">修改  </a><a
+                                                            <a href="<%=path%>/answer/updateSubjectUI.do?id=${explain.id}&type=${explain.qtype}">修改  </a><a
                                                                 href="<%=path%>/answer/deleteSubject.do?id=${explain.id}&type=${explain.qtype}">  删除</a>
                                                         </td>
                                                     </tr>
